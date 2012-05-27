@@ -3,6 +3,12 @@ import java.awt.event.ActionEvent;
 import org.cytoscape.application.swing.AbstractCyAction;
 /*An interface that describes how an action should be placed within the menus and/or toolbars of the Swing application.*/
 import org.cytoscape.app.CyAppAdapter;
+import org.cytoscape.application.CyApplicationManager;
+import org.cytoscape.model.CyEdge;
+import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyNode;
+import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 
 
 public class MenuAction extends AbstractCyAction
