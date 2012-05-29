@@ -1,9 +1,9 @@
-import org.cytoscape.app.AbstractCyApp;
-import org.cytoscape.app.CyAppAdapter;
+import org.cytoscape.app.swing.AbstractCySwingApp;
+import org.cytoscape.app.swing.CySwingAppAdapter;
 
-public class HideSingletonNodesApp extends AbstractCyApp 
+public class HideSingletonNodesApp extends AbstractCySwingApp 
 {
-	public HideSingletonNodesApp(CyAppAdapter adapter)
+	public HideSingletonNodesApp(CySwingAppAdapter adapter)
 	{
 		super(adapter);
 		adapter.getCySwingApplication().addAction(new MenuAction(adapter));
