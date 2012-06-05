@@ -1,0 +1,7 @@
+
+--This line, and those below, will be ignored--
+
+AM   HideSingletonNodesApp.jar
+M    MenuAction.java
+A    app-manifest.txt
+AM   MenuAction.class

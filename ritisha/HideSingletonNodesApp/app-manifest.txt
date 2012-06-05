@@ -1,0 +1,4 @@
+Cytoscape-App-Version: 0.1
+Cytoscape-App-Name: HideSingletonNodesApp
+Cytoscape-App: HideSingletonNodesApp
+Cytoscape-App-Works-With: 3.0
