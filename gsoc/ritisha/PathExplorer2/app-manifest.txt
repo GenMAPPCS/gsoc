@@ -1,0 +1,5 @@
+Cytoscape-App-Version: 0.1
+Cytoscape-App-Name: PathExplorer
+Cytoscape-App: PathExplorer
+Cytoscape-App-Works-With: 3.0
+

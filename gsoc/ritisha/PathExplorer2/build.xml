@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!-- build.xml - Build file for Cytoscape Simple App -->
+<project name="PathExplorer" default="jar" basedir=".">
+
+	<!-- Name of App -->
+	<property name="app.name" value="PathExplorer" />
+
+	<!-- The directory containing source code -->
+	<property name="src.dir" value="src" />
+
+	<!--  The directory containing library jar files -->
+	<property name="lib.dir" value="lib"/>
+
+	<!-- Temporary build directories -->
+	<property name="build.dir" value="build" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	
+	<!-- The Cytoscape3 API jar -->
+	<property name="cy3api.jar" value="Cytoscape3-api.jar"/>
+	
+	<!-- The manifest file -->
+	<property name="manifest.file" value="app-manifest.txt"/>
+
+	<!-- Global "magic" property for <javac> -->
+	<property name="build.compiler" value="modern" />
+
+	<!-- Classpath with all lib JAR Files and all Cytoscape API classes -->
+	<path id="classpath">
+		
+		<pathelement path="${cy3api.jar}" />
+		
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- Target to create the build directories prior to compilation -->
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+	</target>
+
+	<!--  Target to clean out all directories -->
+	<target name="clean" description="Removes all generated files.">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!--  Target to compile all App Code -->
+	<target name="compile" depends="prepare" description="Compiles all App source code.">
+		<javac debug="Yes" srcdir="${src.dir}" destdir="${build.classes}">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<!--  Create PlugIn Jar File (Unobfuscated) -->
+	<target name="jar" depends="compile" description="Creates App jar file.">
+		
+		<jar destfile="${build.dir}/${app.name}.jar"
+			manifest="${manifest.file}">
+			<fileset dir="${build.classes}" />
+		</jar>
+
+		<echo message="${app.name}.jar is now complete.  It is located in build/ directory" />
+	</target>
+
+</project>
