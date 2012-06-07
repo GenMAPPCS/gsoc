@@ -32,7 +32,7 @@ public class AddAsSource implements CyNodeViewContextMenuFactory{
 				mySteadyFlow.implementSteadyFlow();	
 			}
 		});
-		float gravity = (float) 0.0;
+		float gravity = 1.0f;
 		CyMenuItem addAsSource = new CyMenuItem(menuItem, gravity);
 		return addAsSource;
 	}
