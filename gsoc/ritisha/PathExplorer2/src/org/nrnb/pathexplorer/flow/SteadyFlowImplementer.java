@@ -54,12 +54,7 @@ public class SteadyFlowImplementer {
 			    
 			    edgeFactory = new MyEdgeViewTaskFactory();
 			    edgeFactory.createTaskIterator(netView.getEdgeView(edge), netView);
-			    
 			}
-		}
-		
+		}	
 	}
-	
-	
-
 }
