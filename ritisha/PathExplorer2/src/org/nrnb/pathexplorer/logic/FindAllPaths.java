@@ -12,7 +12,7 @@ public class FindAllPaths
 {
 	private CyNetwork net;
 	private CyNode sourceNode;
-	ArrayList<LinkedList<CyNode>> allPaths;
+	ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
 	
 	//Constructor
 	public FindAllPaths (CyNetwork net, CyNode sourceNode)
