@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
@@ -29,7 +31,7 @@ public class SteadyFlowImplementer {
 			System.out.println("null error");
 	}
 	
-	public void implementSteadyFlow()
+	public void implementSteadyFlow(CySwingAppAdapter adapter)
 	{
 		CyNode node1;
 		List<CyEdge> edgeList = new ArrayList<CyEdge>();
@@ -44,7 +46,7 @@ public class SteadyFlowImplementer {
 			MyNodeViewTaskFactory nodeFactory;
 			MyEdgeViewTaskFactory edgeFactory;
 			
-			nodeFactory = new MyNodeViewTaskFactory();
+			nodeFactory = new MyNodeViewTaskFactory(adapter);
 			nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
 			
 			while(itr1.hasNext())
@@ -56,7 +58,7 @@ public class SteadyFlowImplementer {
 			    	System.out.println("edges: "+edgeList.size()+", first edge list= "+edgeList.get(0).toString());
 			    	edge = edgeList.get(0);
 			    
-			    	nodeFactory = new MyNodeViewTaskFactory();
+			    	nodeFactory = new MyNodeViewTaskFactory(adapter);
 			    	nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
 			    
 			    	edgeFactory = new MyEdgeViewTaskFactory();
