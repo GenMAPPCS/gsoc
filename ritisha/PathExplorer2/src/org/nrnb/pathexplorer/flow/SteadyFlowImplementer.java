@@ -49,10 +49,11 @@ public class SteadyFlowImplementer {
 			
 			while(itr1.hasNext())
 			{
-				edgeList.clear();
-				edgeList.addAll(net.getConnectingEdgeList(node1, node1=itr1.next(), CyEdge.Type.OUTGOING));
+				edgeList = net.getConnectingEdgeList(node1, node1=itr1.next() , CyEdge.Type.OUTGOING);
+				
 			    if(!edgeList.isEmpty())
 			    {
+			    	System.out.println("edges: "+edgeList.size()+", first edge list= "+edgeList.get(0).toString());
 			    	edge = edgeList.get(0);
 			    
 			    	nodeFactory = new MyNodeViewTaskFactory();
