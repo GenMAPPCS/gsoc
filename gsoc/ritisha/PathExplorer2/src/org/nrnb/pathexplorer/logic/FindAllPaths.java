@@ -12,7 +12,7 @@ public class FindAllPaths
 {
 	private CyNetwork net;
 	private CyNode sourceNode;
-	ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
+	List<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
 	
 	//Constructor
 	public FindAllPaths (CyNetwork net, CyNode sourceNode)
@@ -23,19 +23,20 @@ public class FindAllPaths
 			this.sourceNode=sourceNode;
 		}
 		else
-			System.out.println("null pointer error");
+			System.out.println("Network and Source node Null error");
 		
 	}
 	
 	//Method to find all paths. Taking the source node, finds all simple paths between it and all other nodes. Puts all these simplePaths in allPaths
-	public ArrayList<LinkedList<CyNode>> allPathsMethod()
+	public List<LinkedList<CyNode>> allPathsMethod()
 	{
 		List<CyNode> allNodes = net.getNodeList();
 		LinkedList<CyNode> visited = new LinkedList<CyNode>();
-		List<LinkedList<CyNode>> temp = new ArrayList<LinkedList<CyNode>>();
+		List<LinkedList<CyNode>> temp = new ArrayList<LinkedList<CyNode>>(); //keeps track of simple paths
 		for(CyNode destiNode : allNodes)
 		{
 			visited.clear();
+			temp.clear();
 			visited.add(sourceNode);
 			temp = DFS(net, visited, destiNode);
 			if(!temp.equals(null))
@@ -48,11 +49,9 @@ public class FindAllPaths
 	private List<LinkedList<CyNode>> DFS(CyNetwork net, LinkedList<CyNode> visited, CyNode destiNode)
 	{
 		CyNode last = visited.getLast();
-		List<CyNode> adjNodes = net.getNeighborList(last, CyEdge.Type.OUTGOING);
-		LinkedList<CyNode> tempPath = new LinkedList<CyNode>();
+		List<CyNode> adjNodes = new ArrayList<CyNode>();
+		adjNodes = net.getNeighborList(last, CyEdge.Type.OUTGOING);
 		List<LinkedList<CyNode>> simplePaths = new ArrayList<LinkedList<CyNode>>();
-		tempPath.add(sourceNode);
-		simplePaths.add(tempPath);
 		
 		for(CyNode currNode : adjNodes)
 		{
@@ -62,9 +61,7 @@ public class FindAllPaths
 			if(currNode.equals(destiNode))
 			{
 				visited.addLast(currNode);
-				tempPath.clear();
-				tempPath.addAll(visited);
-				simplePaths.add(tempPath);
+				simplePaths.add(visited);
 				visited.removeLast();
 				break;
 			}
@@ -77,7 +74,6 @@ public class FindAllPaths
 			visited.addLast(currNode);
 			DFS(net, visited, destiNode);
 			visited.removeLast();
-			
 		}
 		
 		return simplePaths;

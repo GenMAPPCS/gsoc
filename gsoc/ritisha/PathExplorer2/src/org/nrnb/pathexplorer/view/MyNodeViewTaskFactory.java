@@ -11,9 +11,9 @@ public class MyNodeViewTaskFactory extends AbstractNodeViewTaskFactory{
 	
 	private CySwingAppAdapter adapter;
 	public MyNodeViewTaskFactory (CySwingAppAdapter adapter){
-		this.adapter = adapter;
-		
+		this.adapter = adapter;	
 	}
+	
 	public TaskIterator createTaskIterator(View<CyNode> nodeView, CyNetworkView netView) {
 		return new TaskIterator(new MyNodeViewTask(nodeView, netView, adapter));
 	}
