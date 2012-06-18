@@ -19,20 +19,21 @@ public class MyNodeViewTask extends AbstractTask{
 		this.nodeView = nodeView;
 		this.netView = netView;
 		this.adapter = adapter;
+		System.out.println("in node view task");
 	}
 
 	public void run(TaskMonitor tm) throws Exception {
 		
 		// Double node border size
-		double newXSize =  nodeView.getVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH)*2;
+		double newNodeBorderSize =  nodeView.getVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH)*2;
 				
-		nodeView.setVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH, newXSize);
+		nodeView.setVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH, newNodeBorderSize);
 		
 		nodeView.setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH,
-				newXSize);
+				newNodeBorderSize);
 		
 		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
-		VisualStyle style = visualMappingManager.getCurrentVisualStyle();
+		VisualStyle style = visualMappingManager.getDefaultVisualStyle();
 		style.apply(netView);
 		netView.updateView();
 	} 

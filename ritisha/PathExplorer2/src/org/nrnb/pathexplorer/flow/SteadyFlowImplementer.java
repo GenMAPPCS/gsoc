@@ -10,6 +10,8 @@ import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.work.TaskIterator;
+import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.view.MyEdgeViewTaskFactory;
 import org.nrnb.pathexplorer.view.MyNodeViewTaskFactory;
 
@@ -28,7 +30,7 @@ public class SteadyFlowImplementer {
 			this.net = netView.getModel();
 		}
 		else
-			System.out.println("null error");
+			System.out.println("All paths and network view null error");
 	}
 	
 	public void implementSteadyFlow(CySwingAppAdapter adapter)
@@ -37,17 +39,21 @@ public class SteadyFlowImplementer {
 		List<CyEdge> edgeList = new ArrayList<CyEdge>();
 		CyEdge edge;
 		Iterator<CyNode> itr1;
+		TaskIterator tItr, tempTaskItr;
+		TaskMonitor tm = null;
 		
+		MyNodeViewTaskFactory nodeFactory;
+		nodeFactory = new MyNodeViewTaskFactory(adapter);
+		
+		MyEdgeViewTaskFactory edgeFactory;
+		edgeFactory = new MyEdgeViewTaskFactory(adapter);
+			
 		for(LinkedList<CyNode> myPath : allPaths)
 		{
 			itr1 = myPath.iterator();
 			node1 = (CyNode) itr1.next();
 	
-			MyNodeViewTaskFactory nodeFactory;
-			MyEdgeViewTaskFactory edgeFactory;
-			
-			nodeFactory = new MyNodeViewTaskFactory(adapter);
-			nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
+			tItr = nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
 			
 			while(itr1.hasNext())
 			{
@@ -58,14 +64,22 @@ public class SteadyFlowImplementer {
 			    	System.out.println("edges: "+edgeList.size()+", first edge list= "+edgeList.get(0).toString());
 			    	edge = edgeList.get(0);
 			    
-			    	nodeFactory = new MyNodeViewTaskFactory(adapter);
-			    	nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
-			    
-			    	edgeFactory = new MyEdgeViewTaskFactory();
-			    	edgeFactory.createTaskIterator(netView.getEdgeView(edge), netView);
+			    	tempTaskItr = nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
+			    	tItr.append(tempTaskItr);
+			    	tempTaskItr = edgeFactory.createTaskIterator(netView.getEdgeView(edge), netView);
+			    	tItr.append(tempTaskItr);
 			    }
 			    else
 			    	System.out.println("empty edge list error");
+			}
+			while(tItr.hasNext())
+			{
+				try {
+					tItr.next().run(tm);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}	
 	}

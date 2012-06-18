@@ -2,6 +2,7 @@ package org.nrnb.pathexplorer.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class AddAsSource implements CyNodeViewContextMenuFactory{
 			public void actionPerformed(ActionEvent event)
 			{
 				FindAllPaths pathsFinder = new FindAllPaths(netView.getModel(), nodeView.getModel());
-				List<LinkedList<CyNode>> allPaths;
+				List<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
 				allPaths = pathsFinder.allPathsMethod();
 				SteadyFlowImplementer mySteadyFlow = new SteadyFlowImplementer(allPaths, netView);
 				mySteadyFlow.implementSteadyFlow(adapter);	
