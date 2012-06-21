@@ -3,8 +3,6 @@ package org.nrnb.pathexplorer.flow;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-
 import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
@@ -17,11 +15,11 @@ import org.nrnb.pathexplorer.view.MyNodeViewTaskFactory;
 
 public class SteadyFlowImplementer {
 	
-	private List<LinkedList<CyNode>> allPaths;
+	private ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
 	private CyNetworkView netView;
 	private CyNetwork net;
 	
-	public SteadyFlowImplementer(List<LinkedList<CyNode>> allPaths, CyNetworkView netView )
+	public SteadyFlowImplementer(ArrayList<LinkedList<CyNode>> allPaths, CyNetworkView netView )
 	{
 		if(!allPaths.equals(null) && !netView.equals(null))
 		{
@@ -35,8 +33,8 @@ public class SteadyFlowImplementer {
 	
 	public void implementSteadyFlow(CySwingAppAdapter adapter)
 	{
-		CyNode node1;
-		List<CyEdge> edgeList = new ArrayList<CyEdge>();
+		CyNode node1, node2;
+		ArrayList<CyEdge> edgeList = new ArrayList<CyEdge>();
 		CyEdge edge;
 		Iterator<CyNode> itr1;
 		TaskIterator tItr, tempTaskItr;
@@ -52,12 +50,16 @@ public class SteadyFlowImplementer {
 		{
 			itr1 = myPath.iterator();
 			node1 = (CyNode) itr1.next();
-	
 			tItr = nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
+			if(itr1.hasNext())
+			{
+				node2 = (CyNode) itr1.next();
+				tItr.append(nodeFactory.createTaskIterator(netView.getNodeView(node2), netView));
+			}
 			
 			while(itr1.hasNext())
 			{
-				edgeList = net.getConnectingEdgeList(node1, node1=itr1.next() , CyEdge.Type.OUTGOING);
+				edgeList = (ArrayList<CyEdge>)net.getConnectingEdgeList(node1, node1=itr1.next() , CyEdge.Type.OUTGOING);
 				
 			    if(!edgeList.isEmpty())
 			    {
