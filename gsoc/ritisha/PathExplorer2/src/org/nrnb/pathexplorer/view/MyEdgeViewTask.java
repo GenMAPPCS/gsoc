@@ -27,7 +27,7 @@ public class MyEdgeViewTask extends AbstractTask {
 		
 		// Double edge width size
 		System.out.println("running edge view task");
-		double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*100;
+		double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*10;
 				
 		edgeView.setVisualProperty(BasicVisualLexicon.EDGE_WIDTH, newEdgeWidthSize);
 		
