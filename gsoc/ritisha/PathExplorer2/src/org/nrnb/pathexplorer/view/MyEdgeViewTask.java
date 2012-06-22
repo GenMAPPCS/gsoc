@@ -20,12 +20,14 @@ public class MyEdgeViewTask extends AbstractTask {
 		this.edgeView = edgeView;
 		this.netView = netView;
 		this.adapter = adapter;
+		System.out.println("in edge view task");
 	}
 
 	public void run(TaskMonitor tm) throws Exception {
 		
 		// Double edge width size
-		double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*4;
+		System.out.println("running edge view task");
+		double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*100;
 				
 		edgeView.setVisualProperty(BasicVisualLexicon.EDGE_WIDTH, newEdgeWidthSize);
 		

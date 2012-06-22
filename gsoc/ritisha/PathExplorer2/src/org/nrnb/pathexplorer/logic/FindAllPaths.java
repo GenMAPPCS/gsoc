@@ -2,24 +2,32 @@ package org.nrnb.pathexplorer.logic;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+
+import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.view.model.CyNetworkView;
+import org.nrnb.pathexplorer.flow.SteadyFlowImplementer;
 
 public class FindAllPaths
 {
 	private CyNetwork net;
+	private CyNetworkView netView;
 	private CyNode sourceNode;
-	ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
-	ArrayList<LinkedList<CyNode>> simplePaths = new ArrayList<LinkedList<CyNode>>();
+	private CySwingAppAdapter adapter;
+	//ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
+	//ArrayList<LinkedList<CyNode>> simplePaths = new ArrayList<LinkedList<CyNode>>();
 	
 	//Constructor
-	public FindAllPaths (CyNetwork net, CyNode sourceNode)
+	public FindAllPaths (CyNetworkView netView, CyNode sourceNode, CySwingAppAdapter adapter)
 	{
-		if(!net.equals(null) && !sourceNode.equals(null))
+		if(!netView.equals(null) && !sourceNode.equals(null))
 		{
-			this.net=net;
-			this.sourceNode=sourceNode;
+			this.netView = netView;
+			this.net = netView.getModel();
+			this.sourceNode = sourceNode;
+			this.adapter = adapter;
 		}
 		else
 			System.out.println("Network and Source node Null error");
@@ -27,41 +35,44 @@ public class FindAllPaths
 	}
 	
 	//Method to find all paths. Taking the source node, finds all simple paths between it and all other nodes. Puts all these simplePaths in allPaths
-	public ArrayList<LinkedList<CyNode>> allPathsMethod()
+	public void allPathsMethod()
 	{
 		ArrayList<CyNode> allNodes = (ArrayList<CyNode>) net.getNodeList();
 		LinkedList<CyNode> visited = new LinkedList<CyNode>();
-		ArrayList<LinkedList<CyNode>> temp = new ArrayList<LinkedList<CyNode>>(); //keeps track of simple paths
 		for(CyNode destiNode : allNodes)
 		{
+			if(destiNode.equals(sourceNode))
+				continue;
 			visited.clear();
-			simplePaths.clear();
-			temp.clear();
+			//simplePaths.clear();
 			visited.add(sourceNode);
-			temp = DFS(net, visited, destiNode);
-			if(!temp.equals(null))
-				allPaths.addAll(temp);	
+			DFS(net, visited, destiNode);
+			//System.out.println("simplePath1 size: " + simplePaths.get(0).size());
+			//if(!simplePaths.equals(null))
+				//allPaths.addAll(simplePaths);	
 		}
-		System.out.println("allPaths: " + allPaths.toString());
-		return allPaths;
+		/*System.out.println("allPaths: " + allPaths.size());
+		System.out.println("first path: " + allPaths.get(0).size());
+		return allPaths;*/
 	}
 	
 	//Method to find simplePaths
-	private ArrayList<LinkedList<CyNode>> DFS(CyNetwork net, LinkedList<CyNode> visited, CyNode destiNode)
+	private void DFS(CyNetwork net, LinkedList<CyNode> visited, CyNode destiNode)
 	{
+		SteadyFlowImplementer mySteadyFlow = new SteadyFlowImplementer(visited, netView);
 		CyNode last = visited.getLast();
 		ArrayList<CyNode> adjNodes = new ArrayList<CyNode>();
 		adjNodes = (ArrayList<CyNode>)net.getNeighborList(last, CyEdge.Type.OUTGOING);
 		
 		for(CyNode currNode : adjNodes)
 		{
-			if(visited.contains(currNode))
-				continue;
-			
 			if(currNode.equals(destiNode))
 			{
 				visited.addLast(currNode);
-				simplePaths.add(visited);
+				//System.out.println("Adding a path to simplePaths with size " + visited.size());
+				//simplePaths.add(visited);
+				//System.out.println("After adding a path to simplePaths by getting it: " + simplePaths.get(0).size());
+				mySteadyFlow.implementSteadyFlow(adapter);
 				visited.removeLast();
 				break;
 			}
@@ -75,8 +86,6 @@ public class FindAllPaths
 			DFS(net, visited, destiNode);
 			visited.removeLast();
 		}
-		System.out.println("simplePath: " + simplePaths.toString());
-		return simplePaths;
 	}
 	
 }
