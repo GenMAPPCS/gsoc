@@ -2,8 +2,6 @@ package org.nrnb.pathexplorer.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import javax.swing.JMenuItem;
 
 import org.cytoscape.app.swing.CySwingAppAdapter;
@@ -12,7 +10,6 @@ import org.cytoscape.application.swing.CyNodeViewContextMenuFactory;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
-import org.nrnb.pathexplorer.flow.SteadyFlowImplementer;
 import org.nrnb.pathexplorer.logic.FindAllPaths;
 
 
@@ -29,11 +26,10 @@ public class AddAsSource implements CyNodeViewContextMenuFactory{
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event)
 			{
-				FindAllPaths pathsFinder = new FindAllPaths(netView.getModel(), nodeView.getModel());
-				ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
-				allPaths = pathsFinder.allPathsMethod();
-				SteadyFlowImplementer mySteadyFlow = new SteadyFlowImplementer(allPaths, netView);
-				mySteadyFlow.implementSteadyFlow(adapter);	
+				FindAllPaths pathsFinder = new FindAllPaths(netView , nodeView.getModel(), adapter);
+				pathsFinder.allPathsMethod();
+				//SteadyFlowImplementer mySteadyFlow = new SteadyFlowImplementer(allPaths, netView);
+				//mySteadyFlow.implementSteadyFlow(adapter);	
 			}
 		});
 		float gravity = 1.0f;

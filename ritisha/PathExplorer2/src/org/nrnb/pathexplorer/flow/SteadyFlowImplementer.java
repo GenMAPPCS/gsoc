@@ -15,15 +15,15 @@ import org.nrnb.pathexplorer.view.MyNodeViewTaskFactory;
 
 public class SteadyFlowImplementer {
 	
-	private ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
+	private LinkedList<CyNode> path = new LinkedList<CyNode>();
 	private CyNetworkView netView;
 	private CyNetwork net;
 	
-	public SteadyFlowImplementer(ArrayList<LinkedList<CyNode>> allPaths, CyNetworkView netView )
+	public SteadyFlowImplementer(LinkedList<CyNode> path, CyNetworkView netView )
 	{
-		if(!allPaths.equals(null) && !netView.equals(null))
+		if(!path.equals(null) && !netView.equals(null))
 		{
-			this.allPaths = allPaths;
+			this.path = path;
 			this.netView = netView;
 			this.net = netView.getModel();
 		}
@@ -33,12 +33,12 @@ public class SteadyFlowImplementer {
 	
 	public void implementSteadyFlow(CySwingAppAdapter adapter)
 	{
-		CyNode node1, node2;
-		ArrayList<CyEdge> edgeList = new ArrayList<CyEdge>();
+		CyNode node1;
 		CyEdge edge;
-		Iterator<CyNode> itr1;
+		Iterator<CyNode> itr;
 		TaskIterator tItr, tempTaskItr;
 		TaskMonitor tm = null;
+		ArrayList<CyEdge> edgeList = new ArrayList<CyEdge>();
 		
 		MyNodeViewTaskFactory nodeFactory;
 		nodeFactory = new MyNodeViewTaskFactory(adapter);
@@ -46,42 +46,33 @@ public class SteadyFlowImplementer {
 		MyEdgeViewTaskFactory edgeFactory;
 		edgeFactory = new MyEdgeViewTaskFactory(adapter);
 			
-		for(LinkedList<CyNode> myPath : allPaths)
-		{
-			itr1 = myPath.iterator();
-			node1 = (CyNode) itr1.next();
-			tItr = nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
-			if(itr1.hasNext())
-			{
-				node2 = (CyNode) itr1.next();
-				tItr.append(nodeFactory.createTaskIterator(netView.getNodeView(node2), netView));
-			}
+		itr = path.iterator();
+		node1 = (CyNode) itr.next();
+		tItr = nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
 			
-			while(itr1.hasNext())
-			{
-				edgeList = (ArrayList<CyEdge>)net.getConnectingEdgeList(node1, node1=itr1.next() , CyEdge.Type.OUTGOING);
-				
-			    if(!edgeList.isEmpty())
-			    {
-			    	System.out.println("edges: "+edgeList.size()+", first edge list= "+edgeList.get(0).toString());
-			    	edge = edgeList.get(0);
-			    
-			    	tempTaskItr = nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
-			    	tItr.append(tempTaskItr);
-			    	tempTaskItr = edgeFactory.createTaskIterator(netView.getEdgeView(edge), netView);
-			    	tItr.append(tempTaskItr);
-			    }
-			    else
-			    	System.out.println("empty edge list error");
-			}
-			while(tItr.hasNext())
-			{
-				try {
-					tItr.next().run(tm);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		while(itr.hasNext())
+		{
+			edgeList = (ArrayList<CyEdge>)net.getConnectingEdgeList(node1, node1=itr.next() , CyEdge.Type.OUTGOING);
+			
+		    if(!edgeList.isEmpty())
+		    {
+		    	edge = edgeList.get(0);
+		    
+		    	tempTaskItr = nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
+		    	tItr.append(tempTaskItr);
+		    	tempTaskItr = edgeFactory.createTaskIterator(netView.getEdgeView(edge), netView);
+		    	tItr.append(tempTaskItr);
+		    }
+		    else
+		    	System.out.println("empty edge error");
+		}
+		while(tItr.hasNext())
+		{
+			try {
+				tItr.next().run(tm);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}	
 	}
