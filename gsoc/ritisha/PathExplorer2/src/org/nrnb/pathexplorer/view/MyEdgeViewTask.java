@@ -1,5 +1,7 @@
 package org.nrnb.pathexplorer.view;
 
+import javax.swing.SwingUtilities;
+
 import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.view.model.CyNetworkView;
@@ -24,20 +26,25 @@ public class MyEdgeViewTask extends AbstractTask {
 	}
 
 	public void run(TaskMonitor tm) throws Exception {
-		
-		// Double edge width size
-		System.out.println("running edge view task");
-		double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*10;
-				
-		edgeView.setVisualProperty(BasicVisualLexicon.EDGE_WIDTH, newEdgeWidthSize);
-		
-		edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH,
-				newEdgeWidthSize);
-		
-		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
-		VisualStyle style = visualMappingManager.getDefaultVisualStyle();
-		style.apply(netView);
-		netView.updateView();
-	} 
+	    
+	    // Double edge width size
+	    System.out.println("running edge view task");
+	    final double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*4.0;
 
+	    SwingUtilities.invokeLater(new Runnable() {
+	        public void run() {
+	        	System.out.println("run in run");
+	            edgeView.setVisualProperty(BasicVisualLexicon.EDGE_WIDTH, newEdgeWidthSize);
+	            
+	            edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH,
+	                    newEdgeWidthSize);
+	            
+	            VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
+	            VisualStyle style = visualMappingManager.getDefaultVisualStyle();
+	            style.apply(netView);
+	            netView.updateView();
+	        }
+	    });
+
+	}
 }
