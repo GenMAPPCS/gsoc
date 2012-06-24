@@ -30,14 +30,15 @@ public class AddAsSource implements CyNodeViewContextMenuFactory{
 	public CyMenuItem createMenuItem(final CyNetworkView netView, final View<CyNode> nodeView)
 	{
 		
-		JMenuItem menuItem = new JMenuItem("Add as Source");
+		JMenuItem menuItem = new JMenuItem("Add as Source color test");
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event)
 			{
-				if(!visualMappingManager.getDefaultVisualStyle().equals(originalStyle))
+				/*if(visualMappingManager.getDefaultVisualStyle().equals(originalStyle))
 				{
+					System.out.println("hu********************");
 					originalStyle.apply(netView);
-				}
+				}*/
 				FindAllPaths pathsFinder = new FindAllPaths(netView , nodeView.getModel(), adapter);
 				pathsFinder.allPathsMethod();
 				//SteadyFlowImplementer mySteadyFlow = new SteadyFlowImplementer(allPaths, netView);

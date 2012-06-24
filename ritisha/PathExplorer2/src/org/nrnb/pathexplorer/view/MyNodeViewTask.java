@@ -1,5 +1,8 @@
 package org.nrnb.pathexplorer.view;
 
+import java.awt.Color;
+import java.awt.Paint;
+
 import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
@@ -26,11 +29,15 @@ public class MyNodeViewTask extends AbstractTask{
 		
 		// Double node border size
 		double newNodeBorderSize =  nodeView.getVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH)*2;
-				
+		final Color newColor =  new Color((float)0.5, (float).2, (float).1);	
+		
 		nodeView.setVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH, newNodeBorderSize);
+		nodeView.setVisualProperty(BasicVisualLexicon.NODE_PAINT, (Paint)newColor);
 		
 		nodeView.setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH,
 				newNodeBorderSize);
+		nodeView.setLockedValue(BasicVisualLexicon.NODE_PAINT,
+				(Paint)newColor);
 		
 		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
 		VisualStyle style = visualMappingManager.getDefaultVisualStyle();
