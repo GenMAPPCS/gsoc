@@ -55,7 +55,7 @@ public class SteadyFlowImplementer {
 		while(itr.hasNext())
 		{
 			edgeList.clear();
-			edgeList = (ArrayList<CyEdge>)net.getConnectingEdgeList(node1, node1=itr.next() , CyEdge.Type.OUTGOING);
+			edgeList = (ArrayList<CyEdge>)net.getConnectingEdgeList(node1, node1=itr.next(), CyEdge.Type.ANY);
 			System.out.println("last node: " + node1.toString());
 		    if(!edgeList.isEmpty())
 		    {
