@@ -40,7 +40,7 @@ public class SteadyFlowImplementer {
 		Iterator<CyNode> itr;
 		TaskIterator tItr, tempTaskItr;
 		TaskMonitor tm = null;
-		ArrayList<CyEdge> edgeList = new ArrayList<CyEdge>();
+		ArrayList<CyEdge> edgeList;
 		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
 		MyNodeViewTaskFactory nodeFactory;
 		nodeFactory = new MyNodeViewTaskFactory(visualMappingManager);
@@ -54,8 +54,7 @@ public class SteadyFlowImplementer {
 			
 		while(itr.hasNext())
 		{
-			edgeList.clear();
-			edgeList = (ArrayList<CyEdge>)net.getConnectingEdgeList(node1, node1=itr.next(), CyEdge.Type.ANY);
+			edgeList = new ArrayList<CyEdge>(net.getConnectingEdgeList(node1, node1=itr.next(), CyEdge.Type.ANY));
 			System.out.println("last node: " + node1.toString());
 		    if(!edgeList.isEmpty())
 		    {
