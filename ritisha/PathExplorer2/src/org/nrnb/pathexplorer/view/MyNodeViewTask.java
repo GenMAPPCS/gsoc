@@ -3,7 +3,6 @@ package org.nrnb.pathexplorer.view;
 import java.awt.Color;
 import java.awt.Paint;
 
-import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
@@ -16,13 +15,14 @@ import org.cytoscape.work.TaskMonitor;
 public class MyNodeViewTask extends AbstractTask{
 	private View<CyNode> nodeView;
 	private CyNetworkView netView;
-	private CySwingAppAdapter adapter;
+	//private CySwingAppAdapter adapter;
+	private VisualMappingManager visualMappingManager;
 	
-	public MyNodeViewTask(View<CyNode> nodeView, CyNetworkView netView, CySwingAppAdapter adapter) {
+	public MyNodeViewTask(View<CyNode> nodeView, CyNetworkView netView, VisualMappingManager visualMappingManager) {
 		this.nodeView = nodeView;
 		this.netView = netView;
-		this.adapter = adapter;
-		System.out.println("in node view task");
+		//this.adapter = adapter;
+		this.visualMappingManager = visualMappingManager;
 	}
 
 	public void run(TaskMonitor tm) throws Exception {
@@ -39,7 +39,7 @@ public class MyNodeViewTask extends AbstractTask{
 		nodeView.setLockedValue(BasicVisualLexicon.NODE_PAINT,
 				(Paint)newColor);
 		
-		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
+		//VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
 		VisualStyle style = visualMappingManager.getDefaultVisualStyle();
 		style.apply(netView);
 		netView.updateView();
