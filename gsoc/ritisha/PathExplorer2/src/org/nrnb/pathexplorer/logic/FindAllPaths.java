@@ -16,6 +16,7 @@ public class FindAllPaths
 	private CyNetworkView netView;
 	private CyNode sourceNode;
 	private CySwingAppAdapter adapter;
+	private SteadyFlowImplementer mySteadyFlow;
 	//ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
 	//ArrayList<LinkedList<CyNode>> simplePaths = new ArrayList<LinkedList<CyNode>>();
 	
@@ -28,13 +29,14 @@ public class FindAllPaths
 			this.net = netView.getModel();
 			this.sourceNode = sourceNode;
 			this.adapter = adapter;
+			this.mySteadyFlow = new SteadyFlowImplementer(this.adapter, this.netView);
 		}
 		else
 			System.out.println("Network and Source node Null error");
 		
 	}
 	
-	//Method to find all paths. Taking the source node, finds all simple paths between it and all other nodes. Puts all these simplePaths in allPaths
+	//Method to find all paths. Taking the source node, finds all simple paths between it and all other nodes.
 	public void allPathsMethod()
 	{
 		ArrayList<CyNode> allNodes = (ArrayList<CyNode>) net.getNodeList();
@@ -59,7 +61,6 @@ public class FindAllPaths
 	//Method to find simplePaths
 	private void DFS(CyNetwork net, LinkedList<CyNode> visited, CyNode destiNode)
 	{
-		SteadyFlowImplementer mySteadyFlow = new SteadyFlowImplementer(visited, netView);
 		CyNode last = visited.getLast();
 		ArrayList<CyNode> adjNodes = new ArrayList<CyNode>();
 		adjNodes = (ArrayList<CyNode>)net.getNeighborList(last, CyEdge.Type.OUTGOING);
@@ -71,8 +72,8 @@ public class FindAllPaths
 				visited.addLast(currNode);
 				//System.out.println("Adding a path to simplePaths with size " + visited.size());
 				//simplePaths.add(visited);
-				//System.out.println("After adding a path to simplePaths by getting it: " + simplePaths.get(0).size());
-				mySteadyFlow.implementSteadyFlow(adapter);
+				System.out.println("\n******Path: " + visited.toString());
+				mySteadyFlow.implementSteadyFlow(visited);
 				visited.removeLast();
 				break;
 			}

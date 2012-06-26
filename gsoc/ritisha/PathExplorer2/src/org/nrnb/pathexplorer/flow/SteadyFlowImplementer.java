@@ -8,6 +8,7 @@ import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.work.TaskIterator;
 import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.view.MyEdgeViewTaskFactory;
@@ -15,15 +16,16 @@ import org.nrnb.pathexplorer.view.MyNodeViewTaskFactory;
 
 public class SteadyFlowImplementer {
 	
-	private LinkedList<CyNode> path = new LinkedList<CyNode>();
+	//private LinkedList<CyNode> path = new LinkedList<CyNode>();
 	private CyNetworkView netView;
 	private CyNetwork net;
+	private CySwingAppAdapter adapter;
 	
-	public SteadyFlowImplementer(LinkedList<CyNode> path, CyNetworkView netView )
+	public SteadyFlowImplementer(CySwingAppAdapter adapter, CyNetworkView netView )
 	{
-		if(!path.equals(null) && !netView.equals(null))
+		if(!netView.equals(null))
 		{
-			this.path = path;
+			this.adapter = adapter;
 			this.netView = netView;
 			this.net = netView.getModel();
 		}
@@ -31,7 +33,7 @@ public class SteadyFlowImplementer {
 			System.out.println("All paths and network view null error");
 	}
 	
-	public void implementSteadyFlow(CySwingAppAdapter adapter)
+	public void implementSteadyFlow(LinkedList<CyNode> path)
 	{
 		CyNode node1;
 		CyEdge edge;
@@ -39,12 +41,12 @@ public class SteadyFlowImplementer {
 		TaskIterator tItr, tempTaskItr;
 		TaskMonitor tm = null;
 		ArrayList<CyEdge> edgeList = new ArrayList<CyEdge>();
-		
+		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
 		MyNodeViewTaskFactory nodeFactory;
-		nodeFactory = new MyNodeViewTaskFactory(adapter);
+		nodeFactory = new MyNodeViewTaskFactory(visualMappingManager);
 		
 		MyEdgeViewTaskFactory edgeFactory;
-		edgeFactory = new MyEdgeViewTaskFactory(adapter);
+		edgeFactory = new MyEdgeViewTaskFactory(visualMappingManager);
 			
 		itr = path.iterator();
 		node1 = (CyNode) itr.next();
@@ -52,8 +54,9 @@ public class SteadyFlowImplementer {
 			
 		while(itr.hasNext())
 		{
+			edgeList.clear();
 			edgeList = (ArrayList<CyEdge>)net.getConnectingEdgeList(node1, node1=itr.next() , CyEdge.Type.OUTGOING);
-			
+			System.out.println("last node: " + node1.toString());
 		    if(!edgeList.isEmpty())
 		    {
 		    	edge = edgeList.get(0);
@@ -66,7 +69,7 @@ public class SteadyFlowImplementer {
 		    else
 		    	System.out.println("empty edge error");
 		}
-		while(tItr.hasNext())
+		do
 		{
 			try {
 				tItr.next().run(tm);
@@ -74,6 +77,6 @@ public class SteadyFlowImplementer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}	
+		}while(tItr.hasNext());
 	}
 }

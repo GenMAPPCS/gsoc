@@ -30,7 +30,7 @@ public class AddAsSource implements CyNodeViewContextMenuFactory{
 	public CyMenuItem createMenuItem(final CyNetworkView netView, final View<CyNode> nodeView)
 	{
 		
-		JMenuItem menuItem = new JMenuItem("Add as Source color test");
+		JMenuItem menuItem = new JMenuItem("Add as Source1");
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event)
 			{
