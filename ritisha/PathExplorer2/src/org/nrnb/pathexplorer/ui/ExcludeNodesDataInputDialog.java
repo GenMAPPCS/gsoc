@@ -21,8 +21,8 @@ import org.cytoscape.model.CyNode;
 
 public class ExcludeNodesDataInputDialog extends JFrame {
 
-	private JComboBox<String> nodeProperty;
-	private JComboBox<String> operator;
+	private JComboBox nodeProperty;
+	private JComboBox operator;
 	private JTextField nodePropertyValue;
 	private JButton addButton;
 	private JButton goButton;
@@ -42,8 +42,8 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 		allColumns = new ArrayList<CyColumn>();
 		String defaultNodeProperty = "Node Property";
 		     
-		nodeProperty = new JComboBox<String>();
-		operator = new JComboBox<String>();
+		nodeProperty = new JComboBox();
+		operator = new JComboBox();
 		addButton = new JButton("Add");
 		goButton = new JButton("Go");
 		panel1 = new JPanel();
