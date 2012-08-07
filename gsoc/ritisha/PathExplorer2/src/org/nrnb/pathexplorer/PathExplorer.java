@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.cytoscape.app.swing.AbstractCySwingApp;
 import org.cytoscape.app.swing.CySwingAppAdapter;
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CyNodeViewContextMenuFactory;
 import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.CyNode;
@@ -24,8 +25,9 @@ public class PathExplorer extends AbstractCySwingApp {
 	
 	CyTableFactory myTableFactory;
 	CyNetworkManager myNetManager;
+	CyApplicationManager myAppManager;
 	List<CyNode> allNodes = new ArrayList<CyNode>();
-	Set<CyNetwork> allNets = new HashSet<CyNetwork>();
+	CyNetwork currNet;
 	
 	public PathExplorer(CySwingAppAdapter adapter)
 	{
@@ -41,10 +43,9 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	myNodeTableSUID = myNodeTable.getSUID();
 	  	
 	  	myNetManager = adapter.getCyNetworkManager();
-	  	allNets = myNetManager.getNetworkSet();
-	  	
-	  	for(CyNetwork myNet : allNets)
-	  		allNodes.addAll(myNet.getNodeList());
+	  	myAppManager = adapter.getCyApplicationManager();
+	  	currNet = myAppManager.getCurrentNetwork();
+	  	allNodes = currNet.getNodeList();
 	  	
 	  	for(CyNode currNode : allNodes)
 	  	{
