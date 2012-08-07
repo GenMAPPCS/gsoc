@@ -3,25 +3,17 @@ package org.nrnb.pathexplorer.logic;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyColumn;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.model.CyNode;
-import org.cytoscape.model.CyTableManager;
 
 //this class currently handles setting of the inclusionFactor value in myNodeTable. A similar one for edges
 //will be made
 
 public class InclusionFactorHandler {
 	
-	private CySwingAppAdapter adapter;
-	public InclusionFactorHandler(CySwingAppAdapter adapt)
-	{
-		this.adapter = adapt;
-	}
-
 	public void handleIF(CyColumn selectedCol, String selectedOp, 
 			Object selectedVal, CyNetwork myNet)
 	{
@@ -29,9 +21,8 @@ public class InclusionFactorHandler {
 		CyTable myNodeTable, myDefaultNodeTable;
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		CyRow row1, row2;
-		CyTableManager myTableManager = adapter.getCyTableManager();
 		myDefaultNodeTable = myNet.getDefaultNodeTable();
-		myNodeTable = myTableManager.getTable(mySUID);
+		myNodeTable = myNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		allNodes = myNet.getNodeList();
 		
 		//based on type of selectedColumn, proceed further

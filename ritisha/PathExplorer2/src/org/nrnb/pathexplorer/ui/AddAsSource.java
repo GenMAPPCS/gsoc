@@ -34,15 +34,8 @@ public class AddAsSource implements CyNodeViewContextMenuFactory{
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event)
 			{
-				/*if(visualMappingManager.getDefaultVisualStyle().equals(originalStyle))
-				{
-					System.out.println("hu********************");
-					originalStyle.apply(netView);
-				}*/
 				FindAllPaths pathsFinder = new FindAllPaths(netView , nodeView.getModel(), adapter);
 				pathsFinder.allPathsMethod();
-				//SteadyFlowImplementer mySteadyFlow = new SteadyFlowImplementer(allPaths, netView);
-				//mySteadyFlow.implementSteadyFlow(adapter);	
 			}
 		});
 		float gravity = 1.0f;
