@@ -7,6 +7,8 @@ import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.model.CyRow;
+import org.cytoscape.model.CyTable;
 import org.cytoscape.view.model.CyNetworkView;
 import org.nrnb.pathexplorer.flow.SteadyFlowImplementer;
 
@@ -17,6 +19,7 @@ public class FindAllPaths
 	private CyNode sourceNode;
 	private CySwingAppAdapter adapter;
 	private SteadyFlowImplementer mySteadyFlow;
+	private CyTable myNodeTable;
 	//ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
 	//ArrayList<LinkedList<CyNode>> simplePaths = new ArrayList<LinkedList<CyNode>>();
 	
@@ -30,6 +33,7 @@ public class FindAllPaths
 			this.sourceNode = sourceNode;
 			this.adapter = adapter;
 			this.mySteadyFlow = new SteadyFlowImplementer(this.adapter, this.netView);
+			myNodeTable = net.getTable(CyNode.class, "IFTable");
 		}
 		else
 			System.out.println("Network and Source node Null error");
@@ -40,6 +44,16 @@ public class FindAllPaths
 	public void allPathsMethod()
 	{
 		ArrayList<CyNode> allNodes = (ArrayList<CyNode>) net.getNodeList();
+		//adding code for exclude nodes with...
+		CyRow row;
+		for(CyNode currNode : allNodes)
+		{
+			//check what is the inclusionFactor for that node, if false, remove that node
+			row = myNodeTable.getRow(currNode);
+			if(!(boolean)row.getRaw("inclusionFactor"))
+				allNodes.remove(currNode);
+		}
+		
 		LinkedList<CyNode> visited = new LinkedList<CyNode>();
 		for(CyNode destiNode : allNodes)
 		{
@@ -62,9 +76,19 @@ public class FindAllPaths
 	private void DFS(CyNetwork net, LinkedList<CyNode> visited, CyNode destiNode)
 	{
 		CyNode last = visited.getLast();
+		CyRow row;
 		ArrayList<CyNode> adjNodes = new ArrayList<CyNode>();
 		adjNodes = (ArrayList<CyNode>)net.getNeighborList(last, CyEdge.Type.OUTGOING);
 		
+		//adding code for exclude nodes with..
+		for(CyNode currNode : adjNodes)
+		{
+			//check what is the inclusionFactor for that node, if false, remove that node
+			row = myNodeTable.getRow(currNode);
+			if(!(boolean)row.getRaw("inclusionFactor"))
+				adjNodes.remove(currNode);
+		}
+	
 		for(CyNode currNode : adjNodes)
 		{
 			if(currNode.equals(destiNode))

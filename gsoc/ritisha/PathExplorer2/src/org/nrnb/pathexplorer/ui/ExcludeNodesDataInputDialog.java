@@ -22,14 +22,13 @@ import org.nrnb.pathexplorer.logic.InclusionFactorHandler;
 
 public class ExcludeNodesDataInputDialog extends JFrame {
 
-	private JComboBox nodeProperty;
-	private JComboBox operator;
+	private JComboBox<String> nodeProperty;
+	private JComboBox<String> operator;
 	private JComboBox<String> nodePropertyValueString;
 	private JTextField nodePropertyValueNums;
 	private JButton goButton;
 	private JPanel panel1;
 	private CyNetwork myNet;
-	private Long myNodeTableSUID;
 	private String selectedNodeProperty;
 	private String selectedOperator;
 	private Collection<CyColumn> allNodeTableColumns;
@@ -37,15 +36,14 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 	private Object selectedNodePropertyVal;
 	private CySwingAppAdapter adapter;
 	
-	public ExcludeNodesDataInputDialog(CyNetwork myNetwork, Long mySUID, CySwingAppAdapter adapt)
+	public ExcludeNodesDataInputDialog(CyNetwork myNetwork, CySwingAppAdapter adapt)
 	{
 		//Initialize all variables except nodePropertyValues
 		super("Exclude Nodes with..");
 		this.myNet = myNetwork;
-		myNodeTableSUID = mySUID;
 		this.adapter = adapt;
-		nodeProperty = new JComboBox();
-		operator = new JComboBox();
+		nodeProperty = new JComboBox<String>();
+		operator = new JComboBox<String>();
 		goButton = new JButton("Go");
 		panel1 = new JPanel();
 		selectedNodePropertyVal = new Object();
@@ -180,7 +178,7 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 			{
 				//take the values, set the apt InclusionFactor
 				InclusionFactorHandler myIFHandler = new InclusionFactorHandler(adapter);
-				myIFHandler.handleIF(myNodeTableSUID, selectedColumn, selectedOperator, 
+				myIFHandler.handleIF(selectedColumn, selectedOperator, 
 					selectedNodePropertyVal, myNet);
         	}
 		}

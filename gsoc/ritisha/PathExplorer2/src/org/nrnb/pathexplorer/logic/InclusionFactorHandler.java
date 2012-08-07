@@ -22,7 +22,7 @@ public class InclusionFactorHandler {
 		this.adapter = adapt;
 	}
 
-	public void handleIF(Long mySUID, CyColumn selectedCol, String selectedOp, 
+	public void handleIF(CyColumn selectedCol, String selectedOp, 
 			Object selectedVal, CyNetwork myNet)
 	{
 		//get the default node table and myNodeTable and list of all nodes in the network
