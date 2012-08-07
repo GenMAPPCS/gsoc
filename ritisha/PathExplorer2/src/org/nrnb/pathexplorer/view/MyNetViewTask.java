@@ -8,18 +8,15 @@ import org.nrnb.pathexplorer.ui.ExcludeNodesDataInputDialog;
 
 public class MyNetViewTask extends AbstractNetworkViewTask {
 	
-	private Long myNodeTableSUID;
 	private CySwingAppAdapter adapter;
 	
-	public MyNetViewTask(CyNetworkView netView, Long myNodeTableSUID, CySwingAppAdapter adapter)
+	public MyNetViewTask(CyNetworkView netView, CySwingAppAdapter adapter)
 	{
 		super(netView);	
-		this.myNodeTableSUID = myNodeTableSUID;
 		this.adapter = adapter;
 	}
 	
 	public void run(TaskMonitor tm) throws Exception {
-		ExcludeNodesDataInputDialog inputDialog = new ExcludeNodesDataInputDialog(view.getModel(),
-				myNodeTableSUID, adapter);
+		ExcludeNodesDataInputDialog inputDialog = new ExcludeNodesDataInputDialog(view.getModel(), adapter);
 	}
 }

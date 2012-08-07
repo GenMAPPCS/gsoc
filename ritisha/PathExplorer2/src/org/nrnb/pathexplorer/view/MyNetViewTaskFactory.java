@@ -8,12 +8,10 @@ import org.cytoscape.work.TaskIterator;
 public class MyNetViewTaskFactory extends AbstractNetworkViewTaskFactory {
 	
 	CySwingAppAdapter adapter;
-	Long myNodeTableSUID;
 	
-	public MyNetViewTaskFactory(CySwingAppAdapter adapter, Long myNodeTableSUID)
+	public MyNetViewTaskFactory(CySwingAppAdapter adapter)
 	{
 		this.adapter = adapter;
-		this.myNodeTableSUID = myNodeTableSUID;
 	}
 	
 	public boolean isReady(CyNetworkView myNetView)
@@ -26,7 +24,7 @@ public class MyNetViewTaskFactory extends AbstractNetworkViewTaskFactory {
 	
 	public TaskIterator createTaskIterator(CyNetworkView netView) 
 	{
-		return new TaskIterator(new MyNetViewTask(netView, myNodeTableSUID, adapter)); //pass adapter if and when needed.
+		return new TaskIterator(new MyNetViewTask(netView, adapter));
 	}
 
 }
