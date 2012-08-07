@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.cytoscape.app.swing.AbstractCySwingApp;
 import org.cytoscape.app.swing.CySwingAppAdapter;
-import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CyNodeViewContextMenuFactory;
 import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.CyNetworkTableManager;
@@ -22,7 +21,7 @@ import org.cytoscape.task.NetworkViewTaskFactory;
 import org.nrnb.pathexplorer.logic.MyNetAddedListener;
 import org.nrnb.pathexplorer.ui.AddAsSource;
 import org.nrnb.pathexplorer.view.MyNetViewTaskFactory;
-import org.cytoscape.model.events.NetworkAddedEvent;
+import org.cytoscape.model.events.NetworkAddedListener;
 
 public class PathExplorer extends AbstractCySwingApp {
 	
@@ -35,22 +34,20 @@ public class PathExplorer extends AbstractCySwingApp {
 		super(adapter);
 	  	final CyServiceRegistrar registrar = adapter.getCyServiceRegistrar();
 		CyRow row;
-		//Long myNodeTableSUID;
 		Set<CyNetwork> allNets = new HashSet<CyNetwork>();
 	  	CyTable tempTable;
 	  	List<CyNode> allNodes = new ArrayList<CyNode>();
-		//Add inclusionFactor attribute for all node
+		
+	  	//Add inclusionFactor attribute for all node
 	  	
-	  	myTableFactory = adapter.getCyTableFactory();
 	  	myNetManager = adapter.getCyNetworkManager();
 	  	
 	  	//for all existing networks in the system
 	  	allNets = myNetManager.getNetworkSet();
 	  	for(CyNetwork currNet : allNets)
 	  	{
-	  		tempTable = myTableFactory.createTable("IFTable", "Node", CyNode.class, false, true);
+	  		tempTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 	  		tempTable.createColumn("inclusionFactor", boolean.class, true, true);
-	  		myNetTableManager.setTable(currNet, CyNode.class, "IFTable", tempTable);
 	  		
 	  		allNodes = currNet.getNodeList();
 	  		for(CyNode currNode : allNodes)
@@ -61,25 +58,8 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	}
 	  	
 	  	//for newly added networks
-	  	MyNetAddedListener addNodeTableToNet = new MyNetAddedListener(myTableFactory);
-	  	//addNodeTableToNet.handleEvent(new NetworkAddedEvent(myNetManager, CyNetwork net));
+	  	registrar.registerService(new MyNetAddedListener(), NetworkAddedListener.class, new Properties());
 	  	
-	  	
-	  	/*CyTable myNodeTable = myTableFactory.createTable("nodeTable", "Node", CyNode.class, false, true);
-	  	myNodeTable.createColumn("inclusionFactor", boolean.class, true, true);
-	  	myNodeTableSUID = myNodeTable.getSUID();
-	  	
-	  	
-	  	myAppManager = adapter.getCyApplicationManager();
-	  	currNet = myAppManager.getCurrentNetwork();
-	  	allNodes = currNet.getNodeList();
-	  	
-	  	for(CyNode currNode : allNodes)
-	  	{
-	  		row = myNodeTable.getRow(currNode);
-	  		row.set("inclusionFactor", true);
-	  	}
-	  	*/
 	  	//Add as Source in context menu of Node
 	  	
 	  	registrar.registerService(new AddAsSource(adapter),

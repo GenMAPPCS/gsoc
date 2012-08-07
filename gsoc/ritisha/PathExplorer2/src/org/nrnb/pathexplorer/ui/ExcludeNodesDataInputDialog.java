@@ -20,6 +20,7 @@ import org.cytoscape.model.CyColumn;
 import org.cytoscape.model.CyNetwork;
 import org.nrnb.pathexplorer.logic.InclusionFactorHandler;
 
+@SuppressWarnings("serial")
 public class ExcludeNodesDataInputDialog extends JFrame {
 
 	private JComboBox<String> nodeProperty;
@@ -34,14 +35,11 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 	private Collection<CyColumn> allNodeTableColumns;
 	private CyColumn selectedColumn;
 	private Object selectedNodePropertyVal;
-	private CySwingAppAdapter adapter;
-	
 	public ExcludeNodesDataInputDialog(CyNetwork myNetwork, CySwingAppAdapter adapt)
 	{
 		//Initialize all variables except nodePropertyValues
 		super("Exclude Nodes with..");
 		this.myNet = myNetwork;
-		this.adapter = adapt;
 		nodeProperty = new JComboBox<String>();
 		operator = new JComboBox<String>();
 		goButton = new JButton("Go");
@@ -177,7 +175,7 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				//take the values, set the apt InclusionFactor
-				InclusionFactorHandler myIFHandler = new InclusionFactorHandler(adapter);
+				InclusionFactorHandler myIFHandler = new InclusionFactorHandler();
 				myIFHandler.handleIF(selectedColumn, selectedOperator, 
 					selectedNodePropertyVal, myNet);
         	}

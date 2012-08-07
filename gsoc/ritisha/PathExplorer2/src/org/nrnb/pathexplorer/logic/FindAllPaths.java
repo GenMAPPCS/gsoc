@@ -20,8 +20,6 @@ public class FindAllPaths
 	private CySwingAppAdapter adapter;
 	private SteadyFlowImplementer mySteadyFlow;
 	private CyTable myNodeTable;
-	//ArrayList<LinkedList<CyNode>> allPaths = new ArrayList<LinkedList<CyNode>>();
-	//ArrayList<LinkedList<CyNode>> simplePaths = new ArrayList<LinkedList<CyNode>>();
 	
 	//Constructor
 	public FindAllPaths (CyNetworkView netView, CyNode sourceNode, CySwingAppAdapter adapter)
@@ -33,7 +31,7 @@ public class FindAllPaths
 			this.sourceNode = sourceNode;
 			this.adapter = adapter;
 			this.mySteadyFlow = new SteadyFlowImplementer(this.adapter, this.netView);
-			myNodeTable = net.getTable(CyNode.class, "IFTable");
+			myNodeTable = net.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		}
 		else
 			System.out.println("Network and Source node Null error");
@@ -50,7 +48,8 @@ public class FindAllPaths
 		{
 			//check what is the inclusionFactor for that node, if false, remove that node
 			row = myNodeTable.getRow(currNode);
-			if(!(boolean)row.getRaw("inclusionFactor"))
+			boolean temp = (boolean)row.getRaw("inclusionFactor");
+			if(!temp)
 				allNodes.remove(currNode);
 		}
 		
@@ -94,8 +93,6 @@ public class FindAllPaths
 			if(currNode.equals(destiNode))
 			{
 				visited.addLast(currNode);
-				//System.out.println("Adding a path to simplePaths with size " + visited.size());
-				//simplePaths.add(visited);
 				System.out.println("\n******Path: " + visited.toString());
 				mySteadyFlow.implementSteadyFlow(visited);
 				visited.removeLast();

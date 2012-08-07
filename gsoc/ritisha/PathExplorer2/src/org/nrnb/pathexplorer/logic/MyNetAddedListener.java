@@ -8,19 +8,16 @@ import org.cytoscape.model.CyNetworkTableManager;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
-import org.cytoscape.model.CyTableFactory;
 import org.cytoscape.model.events.NetworkAddedEvent;
 import org.cytoscape.model.events.NetworkAddedListener;
 
 public class MyNetAddedListener implements NetworkAddedListener{
 	
-	CyTableFactory myTableFactory;
 	CyNetworkTableManager myNetTableManager;
 	
-	public MyNetAddedListener(CyTableFactory myTableFactory)
+	public MyNetAddedListener()
 	{
 		super();
-		this.myTableFactory = myTableFactory;
 	}
 	
 	public void handleEvent(NetworkAddedEvent e)
@@ -28,9 +25,8 @@ public class MyNetAddedListener implements NetworkAddedListener{
 		CyNetwork myNet = e.getNetwork();
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		CyRow row;
-		CyTable tempTable = myTableFactory.createTable("IFTable", "Node", CyNode.class, false, true);
+		CyTable tempTable = myNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		tempTable.createColumn("inclusionFactor", boolean.class, true, true);
-  		myNetTableManager.setTable(myNet, CyNode.class, "IFTable", tempTable);
   		
   		allNodes = myNet.getNodeList();
   		for(CyNode currNode : allNodes)
