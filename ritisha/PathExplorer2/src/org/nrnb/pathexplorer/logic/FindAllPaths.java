@@ -47,7 +47,7 @@ public class FindAllPaths
 		for(CyNode currNode : allNodes)
 		{
 			//check what is the inclusionFactor for that node, if false, remove that node
-			row = myNodeTable.getRow(currNode);
+			row = myNodeTable.getRow(currNode.getSUID());
 			Object temp = row.getRaw("inclusionFactor");
 			if(temp.equals((Boolean)false))
 				allNodes.remove(currNode);
@@ -83,7 +83,7 @@ public class FindAllPaths
 		for(CyNode currNode : adjNodes)
 		{
 			//check what is the inclusionFactor for that node, if false, remove that node
-			row = myNodeTable.getRow(currNode);
+			row = myNodeTable.getRow(currNode.getSUID());
 			Object temp = row.getRaw("inclusionFactor");
 			if(temp.equals((Boolean)false))
 				adjNodes.remove(currNode);

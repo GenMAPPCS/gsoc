@@ -52,7 +52,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  		allNodes = currNet.getNodeList();
 	  		for(CyNode currNode : allNodes)
 	  		{
-	  			row = tempTable.getRow(currNode);
+	  			row = tempTable.getRow(currNode.getSUID());
 		  		row.set("inclusionFactor", true);
 	  		}
 	  	}

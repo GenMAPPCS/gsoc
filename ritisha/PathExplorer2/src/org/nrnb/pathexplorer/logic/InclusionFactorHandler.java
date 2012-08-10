@@ -33,10 +33,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(selectedVal.equals(row1.getRaw(selectedCol.getName())))
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}
@@ -45,10 +45,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(!selectedVal.equals(row1.getRaw(selectedCol.getName())))
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}
@@ -62,10 +62,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(row1.getRaw(selectedCol.getName()).equals(true))
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}		
@@ -74,10 +74,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(row1.getRaw(selectedCol.getName()).equals(false))
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -91,10 +91,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) == 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -103,10 +103,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) != 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -115,10 +115,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) < 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -127,10 +127,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) > 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -139,10 +139,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) <= 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -151,10 +151,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) >= 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -168,10 +168,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) == 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -180,10 +180,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) != 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -192,10 +192,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) < 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -204,10 +204,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) > 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -216,10 +216,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) <= 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -228,10 +228,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) >= 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -245,10 +245,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) == 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -257,10 +257,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) != 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -269,10 +269,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) < 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -281,10 +281,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) > 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -293,10 +293,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) <= 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
@@ -305,10 +305,10 @@ public class InclusionFactorHandler {
 			{
 				for(CyNode currNode : allNodes)
 				{
-					row1 = myDefaultNodeTable.getRow(currNode);
+					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) >= 0)
 					{
-						row2 = myNodeTable.getRow(currNode);
+						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
 					}
 				}	
