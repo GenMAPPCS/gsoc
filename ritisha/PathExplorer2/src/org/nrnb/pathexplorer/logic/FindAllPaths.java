@@ -48,8 +48,8 @@ public class FindAllPaths
 		{
 			//check what is the inclusionFactor for that node, if false, remove that node
 			row = myNodeTable.getRow(currNode);
-			boolean temp = (boolean)row.getRaw("inclusionFactor");
-			if(!temp)
+			Object temp = row.getRaw("inclusionFactor");
+			if(temp.equals((Boolean)false))
 				allNodes.remove(currNode);
 		}
 		
@@ -84,7 +84,8 @@ public class FindAllPaths
 		{
 			//check what is the inclusionFactor for that node, if false, remove that node
 			row = myNodeTable.getRow(currNode);
-			if(!(boolean)row.getRaw("inclusionFactor"))
+			Object temp = row.getRaw("inclusionFactor");
+			if(temp.equals((Boolean)false))
 				adjNodes.remove(currNode);
 		}
 	
