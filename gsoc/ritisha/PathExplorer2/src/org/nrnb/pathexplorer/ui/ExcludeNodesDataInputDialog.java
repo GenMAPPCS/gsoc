@@ -23,9 +23,9 @@ import org.nrnb.pathexplorer.logic.InclusionFactorHandler;
 @SuppressWarnings("serial")
 public class ExcludeNodesDataInputDialog extends JFrame {
 
-	private JComboBox<String> nodeProperty;
-	private JComboBox<String> operator;
-	private JComboBox<String> nodePropertyValueString;
+	private JComboBox nodeProperty;
+	private JComboBox operator;
+	private JComboBox nodePropertyValueString;
 	private JTextField nodePropertyValueNums;
 	private JButton goButton;
 	private JPanel panel1;
@@ -40,8 +40,8 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 		//Initialize all variables except nodePropertyValues
 		super("Exclude Nodes with..");
 		this.myNet = myNetwork;
-		nodeProperty = new JComboBox<String>();
-		operator = new JComboBox<String>();
+		nodeProperty = new JComboBox();
+		operator = new JComboBox();
 		goButton = new JButton("Go");
 		panel1 = new JPanel();
 		selectedNodePropertyVal = new Object();
@@ -107,7 +107,7 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 					operator.addItem("=");
 					
 					//if it is bool, add comboBox for 3rd input
-					nodePropertyValueString = new JComboBox<String>();
+					nodePropertyValueString = new JComboBox();
 					nodePropertyValueNums = null;
 					
 					nodePropertyValueString.addItem("True");
@@ -130,7 +130,7 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 					operator.addItem("Does not equal");
 					
 					//if it is string, add comboBox for 3rd input
-					nodePropertyValueString = new JComboBox<String>();
+					nodePropertyValueString = new JComboBox();
 					nodePropertyValueNums = null;
 					
 					ArrayList<String> tempList = new ArrayList<String>();
