@@ -26,12 +26,12 @@ public class MyNetAddedListener implements NetworkAddedListener{
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		CyRow row;
 		CyTable tempTable = myNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
-		tempTable.createColumn("inclusionFactor", boolean.class, true, true);
+		tempTable.createColumn("inclusionFactor", Boolean.class, true, true);
   		
   		allNodes = myNet.getNodeList();
   		for(CyNode currNode : allNodes)
   		{
-  			row = tempTable.getRow(currNode);
+  			row = tempTable.getRow(currNode.getSUID());
 	  		row.set("inclusionFactor", true);
   		}
 		
