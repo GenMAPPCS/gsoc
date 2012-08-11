@@ -16,6 +16,7 @@ public class MyEdgeViewTask extends AbstractTask {
 	private View<CyEdge> edgeView;
 	private CyNetworkView netView;
 	private VisualMappingManager visualMappingManager;
+	private double edgeWidthSizeBound;
 	//private CySwingAppAdapter adapter;
 
 	public MyEdgeViewTask(View<CyEdge> edgeView, CyNetworkView netView, VisualMappingManager visualMappingManager) {
@@ -23,26 +24,29 @@ public class MyEdgeViewTask extends AbstractTask {
 		this.netView = netView;
 		//this.adapter = adapter;
 		this.visualMappingManager = visualMappingManager;
+		edgeWidthSizeBound = edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*20.0;
 	}
 
 	public void run(TaskMonitor tm) throws Exception {
 	    
 	    // Double edge width size
-	    final double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*4.0;
-
-	    SwingUtilities.invokeLater(new Runnable() {
-	        public void run() {
-	            edgeView.setVisualProperty(BasicVisualLexicon.EDGE_WIDTH, newEdgeWidthSize);
-	            
-	            edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH,
-	                    newEdgeWidthSize);
-	            
-	            //VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
-	            VisualStyle style = visualMappingManager.getDefaultVisualStyle();
-	            style.apply(netView);
-	            netView.updateView();
-	        }
-	    });
+	    final double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*2.0;
+	    if(newEdgeWidthSize < edgeWidthSizeBound)
+	    {
+		    SwingUtilities.invokeLater(new Runnable() {
+		        public void run() {
+		            edgeView.setVisualProperty(BasicVisualLexicon.EDGE_WIDTH, newEdgeWidthSize);
+		            
+		            edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH,
+		                    newEdgeWidthSize);
+		            
+		            //VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
+		            VisualStyle style = visualMappingManager.getDefaultVisualStyle();
+		            style.apply(netView);
+		            netView.updateView();
+		        }
+		    });
+	    }
 
 	}
 }

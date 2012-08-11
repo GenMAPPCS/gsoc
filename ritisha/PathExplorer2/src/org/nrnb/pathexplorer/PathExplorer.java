@@ -22,6 +22,7 @@ import org.nrnb.pathexplorer.logic.MyNetAddedListener;
 import org.nrnb.pathexplorer.ui.AddAsSource;
 import org.nrnb.pathexplorer.ui.SetAsTarget;
 import org.nrnb.pathexplorer.view.MyNetViewTaskFactory;
+import org.nrnb.pathexplorer.view.RefreshState;
 import org.cytoscape.model.events.NetworkAddedListener;
 
 public class PathExplorer extends AbstractCySwingApp {
@@ -68,10 +69,23 @@ public class PathExplorer extends AbstractCySwingApp {
 	                                  new Properties());
 	  	System.out.println("Add as source registered");
 	  	
-	  	//Set ad Target in Node context menu
+	  	//Set as Target in Node context menu
 	  	registrar.registerService(new SetAsTarget(adapter),CyNodeViewContextMenuFactory.class,
                 new Properties());
 	  	System.out.println("Set as Target registered");
+	  	
+	  	//Refresh button in Network Context Menu
+	  	Properties refreshProps = new Properties();
+	  	refreshProps.setProperty("ENABLE_FOR", "networkAndView");
+	  	refreshProps.setProperty("PREFERRED_ACTION", "NEW");
+	  	refreshProps.setProperty("PREFERRED_MENU", "NETWORK_EDIT_MENU");
+	  	refreshProps.setProperty("ACCELERATOR", "cmd x");
+	  	refreshProps.setProperty("MENU_GRAVITY", "0.1f");
+	  	refreshProps.setProperty("TITLE", "Refresh");
+	  	
+	  	registrar.registerService(new RefreshState(adapter), 
+	  			NetworkViewTaskFactory.class, refreshProps);
+	  	System.out.println("Refresh registered..");
 	  	
 	  	//Exclude nodes with.. in context menu of network
 	  	Properties excludeNodesProps = new Properties();
