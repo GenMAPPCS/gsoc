@@ -16,30 +16,30 @@ public class FindAllPaths
 {
 	private CyNetwork net;
 	private CyNetworkView netView;
-	private CyNode sourceNode;
+	private CyNode theNode;
 	private CySwingAppAdapter adapter;
 	private SteadyFlowImplementer mySteadyFlow;
 	private CyTable myNodeTable;
 	
 	//Constructor
-	public FindAllPaths (CyNetworkView netView, CyNode sourceNode, CySwingAppAdapter adapter)
+	public FindAllPaths (CyNetworkView netView, CyNode node, CySwingAppAdapter adapter)
 	{
-		if(!netView.equals(null) && !sourceNode.equals(null))
+		if(!netView.equals(null) && !node.equals(null))
 		{
 			this.netView = netView;
 			this.net = netView.getModel();
-			this.sourceNode = sourceNode;
+			this.theNode = node;
 			this.adapter = adapter;
 			this.mySteadyFlow = new SteadyFlowImplementer(this.adapter, this.netView);
 			myNodeTable = net.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		}
 		else
-			System.out.println("Network and Source node Null error");
+			System.out.println("Network and passed node Null error");
 		
 	}
 	
 	//Method to find all paths. Taking the source node, finds all simple paths between it and all other nodes.
-	public void allPathsMethod()
+	public void allPathsMethod_source()
 	{
 		ArrayList<CyNode> allNodes = (ArrayList<CyNode>) net.getNodeList();
 		//adding code for exclude nodes with...
@@ -49,28 +49,50 @@ public class FindAllPaths
 			//check what is the inclusionFactor for that node, if false, remove that node
 			row = myNodeTable.getRow(currNode.getSUID());
 			Object temp = row.getRaw("inclusionFactor");
-			if(temp.equals((Boolean)false))
+			Boolean myBool = new Boolean(false);
+			if(temp.equals(myBool))
 				allNodes.remove(currNode);
+
 		}
 		
 		LinkedList<CyNode> visited = new LinkedList<CyNode>();
 		for(CyNode destiNode : allNodes)
 		{
-			if(destiNode.equals(sourceNode))
+			if(destiNode.equals(theNode))
 				continue;
 			visited.clear();
-			//simplePaths.clear();
-			visited.add(sourceNode);
+			visited.add(theNode);
 			DFS(net, visited, destiNode);
-			//System.out.println("simplePath1 size: " + simplePaths.get(0).size());
-			//if(!simplePaths.equals(null))
-				//allPaths.addAll(simplePaths);	
 		}
-		/*System.out.println("allPaths: " + allPaths.size());
-		System.out.println("first path: " + allPaths.get(0).size());
-		return allPaths;*/
 	}
 	
+	//Method to find all paths. Taking the target node, finds all simple paths between all other nodes and it 
+		public void allPathsMethod_target()
+		{
+			ArrayList<CyNode> allNodes = (ArrayList<CyNode>) net.getNodeList();
+			//adding code for exclude nodes with...
+			CyRow row;
+			for(CyNode currNode : allNodes)
+			{
+				//check what is the inclusionFactor for that node, if false, remove that node
+				row = myNodeTable.getRow(currNode.getSUID());
+				Object temp = row.getRaw("inclusionFactor");
+				Boolean myBool = new Boolean(false);
+				if(temp.equals(myBool))
+					allNodes.remove(currNode);
+			}
+			
+			LinkedList<CyNode> visited = new LinkedList<CyNode>();
+			for(CyNode sourceNode : allNodes)
+			{
+				if(sourceNode.equals(theNode))
+					continue;
+				visited.clear();
+				visited.add(sourceNode);
+				DFS(net, visited, theNode);	
+			}
+		}
+		
 	//Method to find simplePaths
 	private void DFS(CyNetwork net, LinkedList<CyNode> visited, CyNode destiNode)
 	{
@@ -85,8 +107,10 @@ public class FindAllPaths
 			//check what is the inclusionFactor for that node, if false, remove that node
 			row = myNodeTable.getRow(currNode.getSUID());
 			Object temp = row.getRaw("inclusionFactor");
-			if(temp.equals((Boolean)false))
+			Boolean myBool = new Boolean(false);
+			if(temp.equals(myBool))
 				adjNodes.remove(currNode);
+
 		}
 	
 		for(CyNode currNode : adjNodes)
@@ -110,5 +134,4 @@ public class FindAllPaths
 			visited.removeLast();
 		}
 	}
-	
 }

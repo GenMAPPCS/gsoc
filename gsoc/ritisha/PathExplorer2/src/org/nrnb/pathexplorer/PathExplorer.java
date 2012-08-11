@@ -20,6 +20,7 @@ import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.task.NetworkViewTaskFactory;
 import org.nrnb.pathexplorer.logic.MyNetAddedListener;
 import org.nrnb.pathexplorer.ui.AddAsSource;
+import org.nrnb.pathexplorer.ui.SetAsTarget;
 import org.nrnb.pathexplorer.view.MyNetViewTaskFactory;
 import org.cytoscape.model.events.NetworkAddedListener;
 
@@ -44,6 +45,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//for all existing networks in the system
 	  	allNets = myNetManager.getNetworkSet();
+	  	System.out.println("Got all networks, adding IF");
 	  	for(CyNetwork currNet : allNets)
 	  	{
 	  		tempTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
@@ -61,10 +63,15 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	registrar.registerService(new MyNetAddedListener(), NetworkAddedListener.class, new Properties());
 	  	
 	  	//Add as Source in context menu of Node
-	  	
 	  	registrar.registerService(new AddAsSource(adapter),
 	                                  CyNodeViewContextMenuFactory.class,
 	                                  new Properties());
+	  	System.out.println("Add as source registered");
+	  	
+	  	//Set ad Target in Node context menu
+	  	registrar.registerService(new SetAsTarget(adapter),CyNodeViewContextMenuFactory.class,
+                new Properties());
+	  	System.out.println("Set as Target registered");
 	  	
 	  	//Exclude nodes with.. in context menu of network
 	  	Properties excludeNodesProps = new Properties();
@@ -77,6 +84,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	registrar.registerService(new MyNetViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, excludeNodesProps);
+	  	System.out.println("Exclude nodes with registered..");
 	}
 	
 
