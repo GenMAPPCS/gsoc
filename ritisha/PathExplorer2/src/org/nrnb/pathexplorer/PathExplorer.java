@@ -76,12 +76,12 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//Refresh button in Network Context Menu
 	  	Properties refreshProps = new Properties();
-	  	refreshProps.setProperty("ENABLE_FOR", "networkAndView");
-	  	refreshProps.setProperty("PREFERRED_ACTION", "NEW");
-	  	refreshProps.setProperty("PREFERRED_MENU", "NETWORK_EDIT_MENU");
-	  	refreshProps.setProperty("ACCELERATOR", "cmd x");
-	  	refreshProps.setProperty("MENU_GRAVITY", "0.1f");
-	  	refreshProps.setProperty("TITLE", "Refresh");
+	  	refreshProps.setProperty(ENABLE_FOR, "networkAndView");
+	  	refreshProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	refreshProps.setProperty(PREFERRED_MENU, "NETWORK_EDIT_MENU");
+	  	refreshProps.setProperty(ACCELERATOR, "cmd x");
+	  	refreshProps.setProperty(MENU_GRAVITY, "0.1f");
+	  	refreshProps.setProperty(TITLE, "Refresh");
 	  	
 	  	registrar.registerService(new RefreshState(adapter), 
 	  			NetworkViewTaskFactory.class, refreshProps);
