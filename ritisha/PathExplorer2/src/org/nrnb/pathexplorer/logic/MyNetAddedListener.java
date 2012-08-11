@@ -22,6 +22,7 @@ public class MyNetAddedListener implements NetworkAddedListener{
 	
 	public void handleEvent(NetworkAddedEvent e)
 	{
+		System.out.println("Got new net, adding IF");
 		CyNetwork myNet = e.getNetwork();
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		CyRow row;
