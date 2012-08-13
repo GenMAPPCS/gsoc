@@ -20,13 +20,14 @@ public class MyNodeViewTask extends AbstractTask{
 		this.netView = netView;
 		//this.adapter = adapter;
 		this.visualMappingManager = visualMappingManager;
-		this.nodeBorderSizeBound = nodeView.getVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH)*20;
+		this.nodeBorderSizeBound = nodeView.getVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH)*10;
 	}
 
 	public void run(TaskMonitor tm) throws Exception {
 		
 		// Double node border size
-		double newNodeBorderSize =  nodeView.getVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH)*2;
+		double newNodeBorderSize =  nodeView.getVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH) + 
+				nodeView.getVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH)*0.5;
 		
 		if(newNodeBorderSize < nodeBorderSizeBound)
 		{

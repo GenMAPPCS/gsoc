@@ -24,13 +24,14 @@ public class MyEdgeViewTask extends AbstractTask {
 		this.netView = netView;
 		//this.adapter = adapter;
 		this.visualMappingManager = visualMappingManager;
-		edgeWidthSizeBound = edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*20.0;
+		edgeWidthSizeBound = edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*10.0;
 	}
 
 	public void run(TaskMonitor tm) throws Exception {
 	    
 	    // Double edge width size
-	    final double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*2.0;
+	    final double newEdgeWidthSize =  edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH) + 
+	    		edgeView.getVisualProperty(BasicVisualLexicon.EDGE_WIDTH)*0.5;
 	    if(newEdgeWidthSize < edgeWidthSizeBound)
 	    {
 		    SwingUtilities.invokeLater(new Runnable() {
