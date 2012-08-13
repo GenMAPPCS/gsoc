@@ -76,12 +76,12 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//Refresh button in Network Context Menu
 	  	Properties refreshProps = new Properties();
-	  	refreshProps.setProperty(ENABLE_FOR, "networkAndView");
-	  	refreshProps.setProperty(PREFERRED_ACTION, "NEW");
-	  	refreshProps.setProperty(PREFERRED_MENU, "NETWORK_EDIT_MENU");
-	  	refreshProps.setProperty(ACCELERATOR, "cmd x");
-	  	refreshProps.setProperty(MENU_GRAVITY, "0.1f");
-	  	refreshProps.setProperty(TITLE, "Refresh");
+	  	refreshProps.setProperty("enableFor", "networkAndView");
+	  	refreshProps.setProperty("preferredAction", "NEW");
+	  	refreshProps.setProperty("preferredMenu", "NETWORK_EDIT_MENU");
+	  	refreshProps.setProperty("accelerator", "cmd x");
+	  	refreshProps.setProperty("menuGravity", "0.1f");
+	  	refreshProps.setProperty("title", "Refresh");
 	  	
 	  	registrar.registerService(new RefreshState(adapter), 
 	  			NetworkViewTaskFactory.class, refreshProps);
@@ -89,12 +89,12 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//Exclude nodes with.. in context menu of network
 	  	Properties excludeNodesProps = new Properties();
-	  	excludeNodesProps.setProperty("ENABLE_FOR", "networkAndView");
-	  	excludeNodesProps.setProperty("PREFERRED_ACTION", "NEW");
-	  	excludeNodesProps.setProperty("PREFERRED_MENU", "NETWORK_EDIT_MENU");
-	  	excludeNodesProps.setProperty("ACCELERATOR", "cmd x");
-	  	excludeNodesProps.setProperty("MENU_GRAVITY", "0.1f");
-	  	excludeNodesProps.setProperty("TITLE", "Exclude Nodes With..");
+	  	excludeNodesProps.setProperty("enableFor", "networkAndView");
+	  	excludeNodesProps.setProperty("preferredAction", "NEW");
+	  	excludeNodesProps.setProperty("preferredMenu", "NETWORK_EDIT_MENU");
+	  	excludeNodesProps.setProperty("accelerator", "cmd x");
+	  	excludeNodesProps.setProperty("menuGravity", "0.1f");
+	  	excludeNodesProps.setProperty("title", "Exclude Nodes With..");
 	  	
 	  	registrar.registerService(new MyNetViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, excludeNodesProps);

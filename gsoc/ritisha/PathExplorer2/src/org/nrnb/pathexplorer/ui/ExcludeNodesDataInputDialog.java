@@ -45,6 +45,8 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 		goButton = new JButton("Go");
 		panel1 = new JPanel();
 		selectedNodePropertyVal = new Object();
+		nodePropertyValueNums = new JTextField();
+		nodePropertyValueString = new JComboBox();
 		
 		//get all columns with node properties
 		CyTable nodeTable = myNet.getDefaultNodeTable();
