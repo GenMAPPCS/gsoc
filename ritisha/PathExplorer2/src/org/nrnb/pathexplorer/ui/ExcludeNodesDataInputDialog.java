@@ -28,7 +28,7 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 	private JComboBox nodePropertyValueString;
 	private JTextField nodePropertyValueNums;
 	private JButton goButton;
-	private JPanel panel1;
+	private JPanel panel1, panel2, panel3;
 	private CyNetwork myNet;
 	private String selectedNodeProperty;
 	private String selectedOperator;
@@ -44,13 +44,24 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 		operator = new JComboBox();
 		goButton = new JButton("Go");
 		panel1 = new JPanel();
+		panel2 = new JPanel();
+		panel3 = new JPanel();
 		selectedNodePropertyVal = new Object();
 		nodePropertyValueNums = new JTextField();
 		nodePropertyValueString = new JComboBox();
+		this.allNodeTableColumns = new ArrayList<CyColumn>();
+		
+		panel1.validate();
+		panel2.invalidate();
+		
+		nodeProperty.setSize(25, 12);
+		operator.setSize(25, 12);
+		nodePropertyValueNums.setSize(25, 12);
+		nodePropertyValueString.setSize(25, 12);
+		goButton.setSize(25, 12);
 		
 		//get all columns with node properties
 		CyTable nodeTable = myNet.getDefaultNodeTable();
-		this.allNodeTableColumns = new ArrayList<CyColumn>();
 		this.allNodeTableColumns = nodeTable.getColumns();
 		     
 		//set values in the nodeProperty comboBoxe
@@ -64,6 +75,8 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 		nodeProperty.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
+				panel2.removeAll();
+				panel2.invalidate();
 				selectedNodeProperty = (String) nodeProperty.getSelectedItem();
 				
 				Class<?> selectedNodePropertyType = null;
@@ -77,12 +90,12 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 					}
 				}
 				
-				
 				if(selectedNodePropertyType.equals(Integer.TYPE) || 
 						selectedNodePropertyType.equals(Long.TYPE) ||
 						selectedNodePropertyType.equals(Double.TYPE))
 						//=, <, >, <=, >=, != 
 				{
+					operator.removeAllItems();
 					operator.addItem("=");
 					operator.addItem("!=");
 					operator.addItem("<");
@@ -93,6 +106,9 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 					//if it is nums, add text box for 3rd input
 					nodePropertyValueNums = new JTextField();
 					nodePropertyValueString = null;
+					panel2.add(nodePropertyValueNums);
+					panel2.add(goButton);
+					panel2.validate();
 					
 					nodePropertyValueNums.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e)
@@ -106,11 +122,17 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 				
 				else if(selectedNodePropertyType.equals(Boolean.TYPE))
 				{
+					operator.removeAllItems();
+					nodePropertyValueString.removeAllItems();
+					
 					operator.addItem("=");
 					
 					//if it is bool, add comboBox for 3rd input
 					nodePropertyValueString = new JComboBox();
 					nodePropertyValueNums = null;
+					panel2.add(nodePropertyValueString);
+					panel2.add(goButton);
+					panel2.validate();
 					
 					nodePropertyValueString.addItem("True");
 					nodePropertyValueString.addItem("False");
@@ -128,15 +150,20 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 				
 				else if(selectedNodePropertyType.equals(String.class))
 				{
+					operator.removeAllItems();
 					operator.addItem("Equals");
 					operator.addItem("Does not equal");
 					
 					//if it is string, add comboBox for 3rd input
 					nodePropertyValueString = new JComboBox();
 					nodePropertyValueNums = null;
+					panel2.add(nodePropertyValueString);
+					panel2.add(goButton);
+					panel2.validate();
 					
 					ArrayList<String> tempList = new ArrayList<String>();
 					List<String> valuesList = new ArrayList<String>();
+					nodePropertyValueString.removeAllItems();
 					
 					//get all the values in Column
 					valuesList = selectedColumn.getValues(String.class);
@@ -180,24 +207,23 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 				InclusionFactorHandler myIFHandler = new InclusionFactorHandler();
 				myIFHandler.handleIF(selectedColumn, selectedOperator, 
 					selectedNodePropertyVal, myNet);
+				dispose();
         	}
 		}
 				);
 		
-		panel1.setLayout(new GridLayout(1, 4, 80, 15));
+		panel1.setLayout(new GridLayout(1, 2, 15, 15));
+		panel2.setLayout(new GridLayout(1, 2, 15, 15));
+		panel3.setLayout(new GridLayout(1, 2, 15, 15));
 		panel1.add(nodeProperty);
 		panel1.add(operator);
-		if(nodePropertyValueNums.equals(null))
-			panel1.add(nodePropertyValueString);
-		else if(nodePropertyValueString.equals(null))
-			panel1.add(nodePropertyValueNums);
-		panel1.add(goButton);
-		
+		panel3.add(panel1);
+		panel3.add(panel2);
 		Container container = getContentPane();
-		container.add(panel1);
-		setSize(400, 400);
+		container.add(panel3);
+		setSize(400, 100);
+		setResizable(false);
+		setLocationRelativeTo(null);
         setVisible(true);
 	}
-	
-	
 }
