@@ -20,6 +20,7 @@ import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.task.NetworkViewTaskFactory;
 import org.nrnb.pathexplorer.logic.MyNetAddedListener;
 import org.nrnb.pathexplorer.ui.AddAsSource;
+import org.nrnb.pathexplorer.ui.ExcludeNode;
 import org.nrnb.pathexplorer.ui.SetAsTarget;
 import org.nrnb.pathexplorer.view.MyNetViewTaskFactory;
 import org.nrnb.pathexplorer.view.RefreshState;
@@ -74,11 +75,16 @@ public class PathExplorer extends AbstractCySwingApp {
                 new Properties());
 	  	System.out.println("Set as Target registered");
 	  	
+	  	//Exclude Node in Node Context menu
+	  	registrar.registerService(new ExcludeNode(adapter),CyNodeViewContextMenuFactory.class,
+                new Properties());
+	  	System.out.println("Exclude Node registered");
+	  	
 	  	//Refresh button in Network Context Menu
 	  	Properties refreshProps = new Properties();
 	  	refreshProps.setProperty("enableFor", "networkAndView");
 	  	refreshProps.setProperty("preferredAction", "NEW");
-	  	refreshProps.setProperty("preferredMenu", "NETWORK_EDIT_MENU");
+	  	//refreshProps.setProperty("preferredMenu", "NETWORK_EDIT_MENU");
 	  	refreshProps.setProperty("accelerator", "cmd x");
 	  	refreshProps.setProperty("menuGravity", "0.1f");
 	  	refreshProps.setProperty("title", "Refresh");
@@ -91,7 +97,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	Properties excludeNodesProps = new Properties();
 	  	excludeNodesProps.setProperty("enableFor", "networkAndView");
 	  	excludeNodesProps.setProperty("preferredAction", "NEW");
-	  	excludeNodesProps.setProperty("preferredMenu", "NETWORK_EDIT_MENU");
+	  	//excludeNodesProps.setProperty("preferredMenu", "NETWORK_EDIT_MENU");
 	  	excludeNodesProps.setProperty("accelerator", "cmd x");
 	  	excludeNodesProps.setProperty("menuGravity", "0.1f");
 	  	excludeNodesProps.setProperty("title", "Exclude Nodes With..");
