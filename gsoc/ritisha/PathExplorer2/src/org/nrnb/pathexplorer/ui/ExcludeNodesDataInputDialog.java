@@ -1,6 +1,7 @@
 package org.nrnb.pathexplorer.ui;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,10 +36,13 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 	private Collection<CyColumn> allNodeTableColumns;
 	private CyColumn selectedColumn;
 	private Object selectedNodePropertyVal;
+	private CySwingAppAdapter adapter;
+	
 	public ExcludeNodesDataInputDialog(CyNetwork myNetwork, CySwingAppAdapter adapt)
 	{
 		//Initialize all variables except nodePropertyValues
 		super("Exclude Nodes with..");
+		this.adapter = adapt;
 		this.myNet = myNetwork;
 		nodeProperty = new JComboBox();
 		operator = new JComboBox();
@@ -54,11 +58,12 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 		panel1.validate();
 		panel2.invalidate();
 		
-		nodeProperty.setSize(25, 12);
-		operator.setSize(25, 12);
-		nodePropertyValueNums.setSize(25, 12);
-		nodePropertyValueString.setSize(25, 12);
-		goButton.setSize(25, 12);
+		nodeProperty.setPreferredSize(new Dimension(25, 25));
+		nodeProperty.setMaximumSize(new Dimension(25, 25));
+		operator.setSize(12, 12);
+		nodePropertyValueNums.setSize(12, 12);
+		nodePropertyValueString.setSize(12, 12);
+		goButton.setSize(12, 12);
 		
 		//get all columns with node properties
 		CyTable nodeTable = myNet.getDefaultNodeTable();
@@ -204,7 +209,7 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				//take the values, set the apt InclusionFactor
-				InclusionFactorHandler myIFHandler = new InclusionFactorHandler();
+				InclusionFactorHandler myIFHandler = new InclusionFactorHandler(adapter);
 				myIFHandler.handleIF(selectedColumn, selectedOperator, 
 					selectedNodePropertyVal, myNet);
 				dispose();

@@ -40,5 +40,17 @@ public class MyNodeViewTask extends AbstractTask{
 			style.apply(netView);
 			netView.updateView();
 		}
-	} 
+	}
+	
+	public void removeBorderMethod()
+	{
+		nodeView.setVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH, 0.0);
+		
+		nodeView.setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH,
+				0.0);
+		
+		VisualStyle style = visualMappingManager.getDefaultVisualStyle();
+		style.apply(netView);
+		netView.updateView();
+	}
 }

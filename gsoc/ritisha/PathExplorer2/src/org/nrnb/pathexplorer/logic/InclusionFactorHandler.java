@@ -3,27 +3,44 @@ package org.nrnb.pathexplorer.logic;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.cytoscape.app.swing.CySwingAppAdapter;
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.model.CyColumn;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.model.View;
+import org.nrnb.pathexplorer.view.MyNodeViewTask;
 
 //this class currently handles setting of the inclusionFactor value in myNodeTable. A similar one for edges
 //will be made
 
 public class InclusionFactorHandler {
 	
+	CySwingAppAdapter adapter;
+	CyApplicationManager myAppManager;
+	
+	public InclusionFactorHandler(CySwingAppAdapter adapt)
+	{
+		this.adapter = adapt;
+		myAppManager = adapter.getCyApplicationManager();
+	}
 	public void handleIF(CyColumn selectedCol, String selectedOp, 
 			Object selectedVal, CyNetwork myNet)
 	{
 		//get the default node table and myNodeTable and list of all nodes in the network
 		CyTable myNodeTable, myDefaultNodeTable;
+		CyNetworkView netView;
+		View<CyNode> nodeView;
+		MyNodeViewTask removeBorder;
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		CyRow row1, row2;
 		myDefaultNodeTable = myNet.getDefaultNodeTable();
 		myNodeTable = myNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		allNodes = myNet.getNodeList();
+		netView = myAppManager.getCurrentNetworkView();
 		
 		//based on type of selectedColumn, proceed further
 		if(selectedCol.getType().equals(String.class))
@@ -38,6 +55,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}
 			}
