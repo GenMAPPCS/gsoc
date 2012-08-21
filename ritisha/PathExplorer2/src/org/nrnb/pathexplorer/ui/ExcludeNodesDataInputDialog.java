@@ -41,7 +41,6 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 		//Initialize all variables except nodePropertyValues
 		super();
 		setTitle("Exclude Nodes with..");
-		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		adapter = adapt;
 		myNet = myNetwork;
 		nodeProperty = new JComboBox();
