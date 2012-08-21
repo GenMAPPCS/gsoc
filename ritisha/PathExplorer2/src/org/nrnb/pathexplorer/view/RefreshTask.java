@@ -42,6 +42,7 @@ public class RefreshTask extends AbstractNetworkViewTask{
 	  		{
 	  			row = tempTable.getRow(currNode.getSUID());
 		  		row.set("inclusionFactor", true);
+		  		row.set("inPaths", false);
 	  		}
 	  	}
 	  	

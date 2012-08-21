@@ -14,6 +14,7 @@ import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
+import org.nrnb.pathexplorer.view.MyNodeViewTask;
 
 public class ExcludeNode implements CyNodeViewContextMenuFactory{
 
@@ -31,14 +32,17 @@ public class ExcludeNode implements CyNodeViewContextMenuFactory{
 			{
 				CyNetwork net;
 				CyNode node;
+				MyNodeViewTask removeBorder;
 				net = netView.getModel();
 				node = nodeView.getModel();
 				CyTable tempTable = net.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 				CyRow row = tempTable.getRow(node.getSUID());
 				row.set("inclusionFactor", false);
+				removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+				removeBorder.removeBorderMethod();
 			}
 		});
-		float gravity = 1.0f;
+		float gravity = 3.0f;
 		CyMenuItem excludeNode = new CyMenuItem(menuItem, gravity);
 		return excludeNode;
 	}

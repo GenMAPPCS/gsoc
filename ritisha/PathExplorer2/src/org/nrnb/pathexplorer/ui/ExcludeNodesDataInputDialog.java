@@ -5,15 +5,14 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyTable;
 
@@ -22,54 +21,43 @@ import org.cytoscape.model.CyNetwork;
 import org.nrnb.pathexplorer.logic.InclusionFactorHandler;
 
 @SuppressWarnings("serial")
-public class ExcludeNodesDataInputDialog extends JFrame {
+public class ExcludeNodesDataInputDialog extends JDialog {
 
 	private JComboBox nodeProperty;
 	private JComboBox operator;
-	private JComboBox nodePropertyValueString;
-	private JTextField nodePropertyValueNums;
+	private JComboBox nodePropertyValue;
 	private JButton goButton;
-	private JPanel panel1, panel2, panel3;
-	private CyNetwork myNet;
+	private JPanel panel1;
 	private String selectedNodeProperty;
 	private String selectedOperator;
-	private Collection<CyColumn> allNodeTableColumns;
 	private CyColumn selectedColumn;
 	private Object selectedNodePropertyVal;
+	private Collection<CyColumn> allNodeTableColumns;
 	private CySwingAppAdapter adapter;
+	private CyNetwork myNet;
 	
 	public ExcludeNodesDataInputDialog(CyNetwork myNetwork, CySwingAppAdapter adapt)
 	{
 		//Initialize all variables except nodePropertyValues
-		super("Exclude Nodes with..");
-		this.adapter = adapt;
-		this.myNet = myNetwork;
+		super();
+		setTitle("Exclude Nodes with..");
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		adapter = adapt;
+		myNet = myNetwork;
 		nodeProperty = new JComboBox();
 		operator = new JComboBox();
+		nodePropertyValue = new JComboBox();
+		nodePropertyValue.setEditable(true);
 		goButton = new JButton("Go");
 		panel1 = new JPanel();
-		panel2 = new JPanel();
-		panel3 = new JPanel();
 		selectedNodePropertyVal = new Object();
-		nodePropertyValueNums = new JTextField();
-		nodePropertyValueString = new JComboBox();
 		this.allNodeTableColumns = new ArrayList<CyColumn>();
-		
-		panel1.validate();
-		panel2.invalidate();
-		
-		nodeProperty.setPreferredSize(new Dimension(25, 25));
-		nodeProperty.setMaximumSize(new Dimension(25, 25));
-		operator.setSize(12, 12);
-		nodePropertyValueNums.setSize(12, 12);
-		nodePropertyValueString.setSize(12, 12);
-		goButton.setSize(12, 12);
 		
 		//get all columns with node properties
 		CyTable nodeTable = myNet.getDefaultNodeTable();
 		this.allNodeTableColumns = nodeTable.getColumns();
 		     
-		//set values in the nodeProperty comboBoxe
+		//set values in the nodeProperty comboBoxes
 		for(CyColumn currCol : allNodeTableColumns)
 		{
 			nodeProperty.addItem(currCol.getName());
@@ -80,26 +68,26 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 		nodeProperty.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				panel2.removeAll();
-				panel2.invalidate();
+				System.out.println("1st drop down listener");
 				selectedNodeProperty = (String) nodeProperty.getSelectedItem();
-				
-				Class<?> selectedNodePropertyType = null;
+				System.out.println("selected item is " + selectedNodeProperty);
+				int i = 0;
 				for(CyColumn currCol : allNodeTableColumns)
 				{
-					if(currCol.getName().equals(selectedNodeProperty));
-					{
-						selectedNodePropertyType = currCol.getType(); 
+					i++;
+					if(selectedNodeProperty.equals(currCol.getName()))
+					{ 
 						selectedColumn = currCol;
-						
+						System.out.println(selectedColumn.getType() + " "+ currCol.getName()+ ":"+ selectedNodeProperty +" "+ i);
 					}
 				}
 				
-				if(selectedNodePropertyType.equals(Integer.TYPE) || 
-						selectedNodePropertyType.equals(Long.TYPE) ||
-						selectedNodePropertyType.equals(Double.TYPE))
+				if(selectedColumn.getType().equals(Integer.class) || 
+						selectedColumn.getType().equals(Long.class) ||
+						selectedColumn.getType().equals(Double.class))
 						//=, <, >, <=, >=, != 
 				{
+					System.out.println("Type is number");
 					operator.removeAllItems();
 					operator.addItem("=");
 					operator.addItem("!=");
@@ -108,67 +96,30 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 					operator.addItem("<=");
 					operator.addItem(">=");
 					
-					//if it is nums, add text box for 3rd input
-					nodePropertyValueNums = new JTextField();
-					nodePropertyValueString = null;
-					panel2.add(nodePropertyValueNums);
-					panel2.add(goButton);
-					panel2.validate();
-					
-					nodePropertyValueNums.addActionListener(new ActionListener(){
-						public void actionPerformed(ActionEvent e)
-						{
-							selectedNodePropertyVal = nodePropertyValueNums.getText();
-			        	}
-					}
-							);
-			
+					nodePropertyValue.removeAll();
 				}
 				
-				else if(selectedNodePropertyType.equals(Boolean.TYPE))
+				else if(selectedColumn.getType().equals(Boolean.class))
 				{
+					System.out.println("Type is boolean");
 					operator.removeAllItems();
-					nodePropertyValueString.removeAllItems();
+					nodePropertyValue.removeAllItems();
 					
 					operator.addItem("=");
-					
-					//if it is bool, add comboBox for 3rd input
-					nodePropertyValueString = new JComboBox();
-					nodePropertyValueNums = null;
-					panel2.add(nodePropertyValueString);
-					panel2.add(goButton);
-					panel2.validate();
-					
-					nodePropertyValueString.addItem("True");
-					nodePropertyValueString.addItem("False");
-					
-					nodePropertyValueString.addActionListener(new ActionListener(){
-						public void actionPerformed(ActionEvent e)
-						{
-							selectedNodePropertyVal = nodePropertyValueString.getSelectedItem();
-			        	}
-					}
-							);
-
+					nodePropertyValue.addItem("True");
+					nodePropertyValue.addItem("False");
 				}
-					
-				
-				else if(selectedNodePropertyType.equals(String.class))
+									
+				else if(selectedColumn.getType().equals(String.class))
 				{
+					System.out.println("Type is string");
 					operator.removeAllItems();
 					operator.addItem("Equals");
 					operator.addItem("Does not equal");
 					
-					//if it is string, add comboBox for 3rd input
-					nodePropertyValueString = new JComboBox();
-					nodePropertyValueNums = null;
-					panel2.add(nodePropertyValueString);
-					panel2.add(goButton);
-					panel2.validate();
-					
 					ArrayList<String> tempList = new ArrayList<String>();
 					List<String> valuesList = new ArrayList<String>();
-					nodePropertyValueString.removeAllItems();
+					nodePropertyValue.removeAllItems();
 					
 					//get all the values in Column
 					valuesList = selectedColumn.getValues(String.class);
@@ -178,29 +129,11 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 					{
 						if(!myVal.equals(null) && !tempList.contains(myVal))
 						{
-							nodePropertyValueString.addItem(myVal);
+							nodePropertyValue.addItem(myVal);
 							tempList.add(myVal);
 						}
-					}
-					
-					nodePropertyValueString.addActionListener(new ActionListener(){
-						public void actionPerformed(ActionEvent e)
-						{
-							selectedNodePropertyVal = nodePropertyValueString.getSelectedItem();
-			        	}
-					}
-							);
-					
+					}	
 				}
-			}
-        	}
-				);
-		
-		//get the selected operator
-		operator.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
-				selectedOperator = (String) operator.getSelectedItem();
 			}
         	}
 				);
@@ -209,6 +142,8 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				//take the values, set the apt InclusionFactor
+				selectedOperator = (String) operator.getSelectedItem();
+				selectedNodePropertyVal = nodePropertyValue.getSelectedItem();
 				InclusionFactorHandler myIFHandler = new InclusionFactorHandler(adapter);
 				myIFHandler.handleIF(selectedColumn, selectedOperator, 
 					selectedNodePropertyVal, myNet);
@@ -217,16 +152,22 @@ public class ExcludeNodesDataInputDialog extends JFrame {
 		}
 				);
 		
-		panel1.setLayout(new GridLayout(1, 2, 15, 15));
-		panel2.setLayout(new GridLayout(1, 2, 15, 15));
-		panel3.setLayout(new GridLayout(1, 2, 15, 15));
+		panel1.setLayout(new GridLayout(1, 4, 15, 15));
+		
+		nodeProperty.setPreferredSize(new Dimension(25, 25));
+		nodeProperty.setMaximumSize(new Dimension(25, 25));
+		operator.setSize(12, 12);
+		nodePropertyValue.setSize(12, 12);
+		goButton.setSize(12, 12);
+		
 		panel1.add(nodeProperty);
 		panel1.add(operator);
-		panel3.add(panel1);
-		panel3.add(panel2);
+		panel1.add(nodePropertyValue);
+		panel1.add(goButton);
 		Container container = getContentPane();
-		container.add(panel3);
+		container.add(panel1);
 		setSize(400, 100);
+		setAlwaysOnTop(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
         setVisible(true);
