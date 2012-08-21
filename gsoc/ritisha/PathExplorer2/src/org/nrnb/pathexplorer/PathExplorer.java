@@ -117,6 +117,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	Properties selectPathsProps = new Properties();
 	  	selectPathsProps.setProperty("enableFor", "networkAndView");
 	  	selectPathsProps.setProperty("preferredAction", "NEW");
+	  	excludeNodesProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	selectPathsProps.setProperty("menuGravity", "2.0f");
 	  	selectPathsProps.setProperty("title", "Select Paths");
 	  	
@@ -127,6 +128,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	Properties refreshProps = new Properties();
 	  	refreshProps.setProperty("enableFor", "networkAndView");
 	  	refreshProps.setProperty("preferredAction", "NEW");
+	  	excludeNodesProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	refreshProps.setProperty("menuGravity", "3.0f");
 	  	refreshProps.setProperty("title", "Clear Paths");
 	  	

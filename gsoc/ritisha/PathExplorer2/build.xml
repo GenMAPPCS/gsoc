@@ -16,7 +16,7 @@
 	<property name="build.classes" value="${build.dir}/classes" />
 	
 	<!-- The Cytoscape3 API jar -->
-	<property name="cy3api.jar" value="Cytoscape3-api.jar"/>
+	<property name="cy3api.jar" value="Cytoscape3-api-M5.jar"/>
 	
 	<!-- The manifest file -->
 	<property name="manifest.file" value="app-manifest.txt"/>
