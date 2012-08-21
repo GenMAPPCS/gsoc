@@ -154,11 +154,11 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 		
 		panel1.setLayout(new GridLayout(1, 4, 15, 15));
 		
-		nodeProperty.setPreferredSize(new Dimension(25, 25));
-		nodeProperty.setMaximumSize(new Dimension(25, 25));
-		operator.setSize(12, 12);
-		nodePropertyValue.setSize(12, 12);
-		goButton.setSize(12, 12);
+		nodeProperty.setPreferredSize(new Dimension(25, 12));
+		nodeProperty.setMaximumSize(new Dimension(25, 12));
+		operator.setSize(12, 6);
+		nodePropertyValue.setSize(25, 12);
+		goButton.setSize(12, 6);
 		
 		panel1.add(nodeProperty);
 		panel1.add(operator);

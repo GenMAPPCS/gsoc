@@ -41,7 +41,7 @@ public class InclusionFactorHandler {
 		myNodeTable = myNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		allNodes = myNet.getNodeList();
 		netView = myAppManager.getCurrentNetworkView();
-		
+		System.out.println("Excluded nodes:\n");
 		//based on type of selectedColumn, proceed further
 		if(selectedCol.getType().equals(String.class))
 		{
@@ -55,6 +55,7 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						//System.out.println(currNode.toString());
 						nodeView = netView.getNodeView(currNode);
 						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
 						removeBorder.removeBorderMethod();
@@ -70,6 +71,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}
 			}
@@ -87,6 +91,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}		
 			}
@@ -99,6 +106,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -116,6 +126,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -128,6 +141,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -140,6 +156,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -152,6 +171,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -164,6 +186,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -176,6 +201,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -193,6 +221,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -205,6 +236,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -217,6 +251,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -229,6 +266,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -241,6 +281,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -253,6 +296,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -270,6 +316,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -282,6 +331,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -294,6 +346,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -306,6 +361,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -318,6 +376,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
@@ -330,6 +391,9 @@ public class InclusionFactorHandler {
 					{
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("inclusionFactor", false);
+						nodeView = netView.getNodeView(currNode);
+						removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+						removeBorder.removeBorderMethod();
 					}
 				}	
 			}
