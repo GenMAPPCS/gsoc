@@ -22,16 +22,15 @@ public class SetAsTarget implements CyNodeViewContextMenuFactory{
 	public CyMenuItem createMenuItem(final CyNetworkView netView, final View<CyNode> nodeView)
 	{
 		
-		JMenuItem menuItem = new JMenuItem("Set As Target");
+		JMenuItem menuItem = new JMenuItem("Find paths to here");
 		menuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event)
 			{
 				FindAllPaths pathsFinder = new FindAllPaths(netView , nodeView.getModel(), adapter);
-				System.out.println("In SetAsTarget, calling allPathsMethos");
 				pathsFinder.allPathsMethod_target();
 			}
 		});
-		float gravity = 1.0f;
+		float gravity = 2.0f;
 		CyMenuItem setAsTarget = new CyMenuItem(menuItem, gravity);
 		return setAsTarget;
 	}

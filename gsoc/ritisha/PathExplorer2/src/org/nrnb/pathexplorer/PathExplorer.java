@@ -18,12 +18,18 @@ import org.cytoscape.model.CyTable;
 import org.cytoscape.model.CyTableFactory;
 import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.task.NetworkViewTaskFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
+import org.cytoscape.view.vizmap.VisualStyle;
+import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.nrnb.pathexplorer.logic.MyNetAddedListener;
 import org.nrnb.pathexplorer.ui.AddAsSource;
+import org.nrnb.pathexplorer.ui.ClearPathsNCM;
 import org.nrnb.pathexplorer.ui.ExcludeNode;
+import org.nrnb.pathexplorer.ui.SelectPathsNCM;
 import org.nrnb.pathexplorer.ui.SetAsTarget;
 import org.nrnb.pathexplorer.view.MyNetViewTaskFactory;
 import org.nrnb.pathexplorer.view.RefreshState;
+import org.nrnb.pathexplorer.view.SelectPaths;
 import org.cytoscape.model.events.NetworkAddedListener;
 
 public class PathExplorer extends AbstractCySwingApp {
@@ -31,6 +37,9 @@ public class PathExplorer extends AbstractCySwingApp {
 	CyTableFactory myTableFactory;
 	CyNetworkManager myNetManager;
 	CyNetworkTableManager myNetTableManager;
+	VisualMappingManager myVisMappingManager;
+	VisualStyleFactory myVisStyleFactory;
+	public static VisualStyle baseVisualStyle;
 	
 	public PathExplorer(CySwingAppAdapter adapter)
 	{
@@ -40,7 +49,11 @@ public class PathExplorer extends AbstractCySwingApp {
 		Set<CyNetwork> allNets = new HashSet<CyNetwork>();
 	  	CyTable tempTable;
 	  	List<CyNode> allNodes = new ArrayList<CyNode>();
-		
+	  	VisualStyle tempVisualStyle;
+	  	myVisMappingManager = adapter.getVisualMappingManager();
+	  	myVisStyleFactory = adapter.getVisualStyleFactory();
+	  	tempVisualStyle = myVisMappingManager.getCurrentVisualStyle();
+		baseVisualStyle = myVisStyleFactory.createVisualStyle(tempVisualStyle);
 	  	//Add inclusionFactor attribute for all node
 	  	
 	  	myNetManager = adapter.getCyNetworkManager();
@@ -51,61 +64,75 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	for(CyNetwork currNet : allNets)
 	  	{
 	  		tempTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
-	  		tempTable.createColumn("inclusionFactor", boolean.class, true, true);
+	  		tempTable.createColumn("inclusionFactor", Boolean.class, true, true);
+	  		tempTable.createColumn("inPaths", Boolean.class, true, false);
 	  		
 	  		allNodes = currNet.getNodeList();
 	  		for(CyNode currNode : allNodes)
 	  		{
 	  			row = tempTable.getRow(currNode.getSUID());
 		  		row.set("inclusionFactor", true);
+		  		row.set("inPaths", false);
 	  		}
 	  	}
 	  	
 	  	//for newly added networks
 	  	registrar.registerService(new MyNetAddedListener(), NetworkAddedListener.class, new Properties());
 	  	
-	  	//Add as Source in context menu of Node
+	  	//registering all the context menus:-
+	  	
+	  	//Find paths from here (Add as Source) in Node context menu
 	  	registrar.registerService(new AddAsSource(adapter),
 	                                  CyNodeViewContextMenuFactory.class,
 	                                  new Properties());
-	  	System.out.println("Add as source registered");
 	  	
-	  	//Set as Target in Node context menu
+	  	//Find paths to here (Set as Target) in Node context menu
 	  	registrar.registerService(new SetAsTarget(adapter),CyNodeViewContextMenuFactory.class,
                 new Properties());
-	  	System.out.println("Set as Target registered");
 	  	
 	  	//Exclude Node in Node Context menu
 	  	registrar.registerService(new ExcludeNode(adapter),CyNodeViewContextMenuFactory.class,
                 new Properties());
-	  	System.out.println("Exclude Node registered");
 	  	
-	  	//Refresh button in Network Context Menu
-	  	Properties refreshProps = new Properties();
-	  	refreshProps.setProperty("enableFor", "networkAndView");
-	  	refreshProps.setProperty("preferredAction", "NEW");
-	  	//refreshProps.setProperty("preferredMenu", "NETWORK_EDIT_MENU");
-	  	refreshProps.setProperty("accelerator", "cmd x");
-	  	refreshProps.setProperty("menuGravity", "0.1f");
-	  	refreshProps.setProperty("title", "Refresh");
+	  	//Select Paths in Node Context Menu
+	  	registrar.registerService(new SelectPathsNCM(adapter),CyNodeViewContextMenuFactory.class,
+                new Properties());
 	  	
-	  	registrar.registerService(new RefreshState(adapter), 
-	  			NetworkViewTaskFactory.class, refreshProps);
-	  	System.out.println("Refresh registered..");
+	  	//Clear Paths in Node Context Menu
+	  	registrar.registerService(new ClearPathsNCM(adapter),CyNodeViewContextMenuFactory.class,
+                new Properties());
 	  	
-	  	//Exclude nodes with.. in context menu of network
+	   //Exclude nodes with.. in context menu of network
 	  	Properties excludeNodesProps = new Properties();
 	  	excludeNodesProps.setProperty("enableFor", "networkAndView");
 	  	excludeNodesProps.setProperty("preferredAction", "NEW");
-	  	//excludeNodesProps.setProperty("preferredMenu", "NETWORK_EDIT_MENU");
-	  	excludeNodesProps.setProperty("accelerator", "cmd x");
-	  	excludeNodesProps.setProperty("menuGravity", "0.1f");
+	  	//excludeNodesProps.setProperty("accelerator", "cmd x");
+	  	excludeNodesProps.setProperty("menuGravity", "1.0f");
 	  	excludeNodesProps.setProperty("title", "Exclude Nodes With..");
 	  	
 	  	registrar.registerService(new MyNetViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, excludeNodesProps);
-	  	System.out.println("Exclude nodes with registered..");
+	  	
+	  	//Select Paths in Network Context Menu
+	  	Properties selectPathsProps = new Properties();
+	  	selectPathsProps.setProperty("enableFor", "networkAndView");
+	  	selectPathsProps.setProperty("preferredAction", "NEW");
+	  	//refreshProps.setProperty("accelerator", "cmd x");
+	  	selectPathsProps.setProperty("menuGravity", "2.0f");
+	  	selectPathsProps.setProperty("title", "Select Paths");
+	  	
+	  	registrar.registerService(new SelectPaths(adapter), 
+	  			NetworkViewTaskFactory.class, selectPathsProps);
+	  	
+	  	//Clear Paths (Refresh button) in Network Context Menu
+	  	Properties refreshProps = new Properties();
+	  	refreshProps.setProperty("enableFor", "networkAndView");
+	  	refreshProps.setProperty("preferredAction", "NEW");
+	  	//refreshProps.setProperty("accelerator", "cmd x");
+	  	refreshProps.setProperty("menuGravity", "3.0f");
+	  	refreshProps.setProperty("title", "Clear Paths");
+	  	
+	  	registrar.registerService(new RefreshState(adapter), 
+	  			NetworkViewTaskFactory.class, refreshProps);
 	}
-	
-
 }

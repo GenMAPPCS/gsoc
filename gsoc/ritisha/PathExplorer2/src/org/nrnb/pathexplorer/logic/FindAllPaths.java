@@ -44,16 +44,18 @@ public class FindAllPaths
 		ArrayList<CyNode> allNodes = (ArrayList<CyNode>) net.getNodeList();
 		//adding code for exclude nodes with...
 		CyRow row;
+		ArrayList<CyNode> tempList = new ArrayList<CyNode>();
 		for(CyNode currNode : allNodes)
 		{
 			//check what is the inclusionFactor for that node, if false, remove that node
 			row = myNodeTable.getRow(currNode.getSUID());
-			Object temp = row.getRaw("inclusionFactor");
+			Object temp = new Object(); 
+			temp = (Boolean)row.getRaw("inclusionFactor");
 			Boolean myBool = new Boolean(false);
 			if(temp.equals(myBool))
-				allNodes.remove(currNode);
-
+				tempList.add(currNode);
 		}
+		allNodes.removeAll(tempList);
 		
 		LinkedList<CyNode> visited = new LinkedList<CyNode>();
 		for(CyNode destiNode : allNodes)
@@ -72,15 +74,18 @@ public class FindAllPaths
 			ArrayList<CyNode> allNodes = (ArrayList<CyNode>) net.getNodeList();
 			//adding code for exclude nodes with...
 			CyRow row;
+			ArrayList<CyNode> tempList = new ArrayList<CyNode>();
 			for(CyNode currNode : allNodes)
 			{
 				//check what is the inclusionFactor for that node, if false, remove that node
 				row = myNodeTable.getRow(currNode.getSUID());
-				Object temp = row.getRaw("inclusionFactor");
+				Object temp = new Object(); 
+				temp = (Boolean)row.getRaw("inclusionFactor");
 				Boolean myBool = new Boolean(false);
 				if(temp.equals(myBool))
-					allNodes.remove(currNode);
+					tempList.add(currNode);
 			}
+			allNodes.removeAll(tempList);
 			
 			LinkedList<CyNode> visited = new LinkedList<CyNode>();
 			for(CyNode sourceNode : allNodes)
@@ -100,18 +105,19 @@ public class FindAllPaths
 		CyRow row;
 		ArrayList<CyNode> adjNodes = new ArrayList<CyNode>();
 		adjNodes = (ArrayList<CyNode>)net.getNeighborList(last, CyEdge.Type.OUTGOING);
-		
+		ArrayList<CyNode> tempList = new ArrayList<CyNode>(); 
 		//adding code for exclude nodes with..
 		for(CyNode currNode : adjNodes)
 		{
 			//check what is the inclusionFactor for that node, if false, remove that node
 			row = myNodeTable.getRow(currNode.getSUID());
-			Object temp = row.getRaw("inclusionFactor");
+			Object temp = new Object(); 
+			temp = (Boolean)row.getRaw("inclusionFactor");
 			Boolean myBool = new Boolean(false);
 			if(temp.equals(myBool))
-				adjNodes.remove(currNode);
-
+				tempList.add(currNode);
 		}
+		adjNodes.removeAll(tempList);
 	
 		for(CyNode currNode : adjNodes)
 		{
