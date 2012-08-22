@@ -22,14 +22,14 @@ import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.nrnb.pathexplorer.logic.MyNetAddedListener;
+import org.nrnb.pathexplorer.tasks.RefreshState;
+import org.nrnb.pathexplorer.tasks.RefreshStateFromNode;
+import org.nrnb.pathexplorer.tasks.SelectPaths;
+import org.nrnb.pathexplorer.tasks.SelectPathsFromNode;
 import org.nrnb.pathexplorer.ui.AddAsSource;
-import org.nrnb.pathexplorer.ui.ExcludeNode;
+import org.nrnb.pathexplorer.tasks.ExcludeNode;
 import org.nrnb.pathexplorer.ui.SetAsTarget;
 import org.nrnb.pathexplorer.view.MyNetViewTaskFactory;
-import org.nrnb.pathexplorer.view.RefreshState;
-import org.nrnb.pathexplorer.view.RefreshStateFromNode;
-import org.nrnb.pathexplorer.view.SelectPaths;
-import org.nrnb.pathexplorer.view.SelectPathsFromNode;
 
 public class PathExplorer extends AbstractCySwingApp {
 	
@@ -82,28 +82,29 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	registrar.registerService(new SetAsTarget(adapter),CyNodeViewContextMenuFactory.class,
                 new Properties());
 	  	
-	  	//Exclude Node in Node Context menu
-	  	registrar.registerService(new ExcludeNode(),CyNodeViewContextMenuFactory.class,
-                new Properties());
 	  	
-//	  	//Select Paths in Node Context Menu
-//	  	registrar.registerService(new SelectPathsNCM(adapter),CyNodeViewContextMenuFactory.class,
-//                new Properties());
-	  	
-//	  	//Clear Paths in Node Context Menu
-//	  	registrar.registerService(new ClearPathsNCM(adapter),CyNodeViewContextMenuFactory.class,
-//                new Properties());
 	  	
 	   //Exclude nodes with.. in context menu of network
-	  	Properties excludeNodesProps = new Properties();
-	  	excludeNodesProps.setProperty("enableFor", "networkAndView");
-	  	excludeNodesProps.setProperty("preferredAction", "NEW");
-	  	excludeNodesProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	excludeNodesProps.setProperty("menuGravity", "8.0f");
-	  	excludeNodesProps.setProperty("title", "Exclude Nodes With..");
+	  	Properties excludeNodesWithProps = new Properties();
+	  	excludeNodesWithProps.setProperty("enableFor", "networkAndView");
+	  	excludeNodesWithProps.setProperty("preferredAction", "NEW");
+	  	excludeNodesWithProps.setProperty("preferredMenu", "PathExplorer[100]");
+	  	excludeNodesWithProps.setProperty("menuGravity", "8.0f");
+	  	excludeNodesWithProps.setProperty("title", "Exclude Nodes With..");
 	  	
 	  	registrar.registerService(new MyNetViewTaskFactory(adapter), 
-	  			NetworkViewTaskFactory.class, excludeNodesProps);
+	  			NetworkViewTaskFactory.class, excludeNodesWithProps);
+	  	
+	  	//Exclude nodes in Node Context Menu
+	  	Properties excludeNodeProps = new Properties();
+	  	excludeNodeProps.setProperty("preferredAction", "NEW");
+	  	excludeNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
+	  	excludeNodeProps.setProperty("menuGravity", "8.0f");
+	  	excludeNodeProps.setProperty("title", "Exclude node");
+	  	
+	  	registrar.registerService(new ExcludeNode(), 
+	  			NodeViewTaskFactory.class, excludeNodeProps);
+	  	
 	  	
 	  	//Select Paths in Network Context Menu
 	  	Properties selectPathsProps = new Properties();
@@ -113,7 +114,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	selectPathsProps.setProperty("menuGravity", "9.0f");
 	  	selectPathsProps.setProperty("title", "Select Paths");
 	  	
-	  	registrar.registerService(new SelectPaths(adapter), 
+	  	registrar.registerService(new SelectPaths(), 
 	  			NetworkViewTaskFactory.class, selectPathsProps);
 	  	
 	  	//Select Paths in Node Context Menu
@@ -123,7 +124,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	selectPathsNodeProps.setProperty("menuGravity", "9.0f");
 	  	selectPathsNodeProps.setProperty("title", "Select Paths");
 	  	
-	  	registrar.registerService(new SelectPathsFromNode(adapter), 
+	  	registrar.registerService(new SelectPathsFromNode(), 
 	  			NodeViewTaskFactory.class, selectPathsNodeProps);
 	  	
 	  	//Clear Paths (Refresh button) in Network Context Menu
