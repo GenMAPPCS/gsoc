@@ -1,48 +1,32 @@
 package org.nrnb.pathexplorer.view;
 
-import javax.swing.SwingUtilities;
-
 import org.cytoscape.model.CyEdge;
+import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyRow;
+import org.cytoscape.model.CyTable;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
 import org.cytoscape.view.presentation.property.BasicVisualLexicon;
-import org.cytoscape.view.vizmap.VisualMappingManager;
-import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
-
 public class MyEdgeViewTask extends AbstractTask {
 	private View<CyEdge> edgeView;
-	private CyNetworkView netView;
-	private VisualMappingManager visualMappingManager;
-	//private CySwingAppAdapter adapter;
+	private CyTable hiddenEdgeTable;
 
-	public MyEdgeViewTask(View<CyEdge> edgeView, CyNetworkView netView, VisualMappingManager visualMappingManager) {
+	public MyEdgeViewTask(View<CyEdge> edgeView, CyNetworkView netView) {
 		this.edgeView = edgeView;
-		this.netView = netView;
-		//this.adapter = adapter;
-		this.visualMappingManager = visualMappingManager;
+		this.hiddenEdgeTable = netView.getModel().getTable(CyEdge.class,
+				CyNetwork.HIDDEN_ATTRS);
 	}
 
 	public void run(TaskMonitor tm) throws Exception {
-	    
-	    // Double edge width size
-	    final double newEdgeWidthSize = 12.0; 
-	    	
-			    SwingUtilities.invokeLater(new Runnable() {
-			        public void run() {
-			            edgeView.setVisualProperty(BasicVisualLexicon.EDGE_WIDTH, newEdgeWidthSize);
-			            
-			            edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH,
-			                    newEdgeWidthSize);
-			            
-			            //VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
-			            VisualStyle style = visualMappingManager.getDefaultVisualStyle();
-			            style.apply(netView);
-			            netView.updateView();
-			        }
-			    });
+		// set isInPath to true
+		CyRow row;
+		row = hiddenEdgeTable.getRow(edgeView.getModel().getSUID());
+		row.set("isInPath", true);
+
+		edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH, 12.0);
 	}
-			    
+
 }

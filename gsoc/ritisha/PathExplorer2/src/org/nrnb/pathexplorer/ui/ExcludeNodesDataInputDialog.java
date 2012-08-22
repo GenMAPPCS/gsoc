@@ -5,20 +5,20 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import org.cytoscape.app.swing.CySwingAppAdapter;
-import org.cytoscape.model.CyTable;
 
+import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyColumn;
 import org.cytoscape.model.CyNetwork;
-import org.nrnb.pathexplorer.logic.InclusionFactorHandler;
+import org.cytoscape.model.CyTable;
+import org.nrnb.pathexplorer.logic.ExclusionHandler;
 
 @SuppressWarnings("serial")
 public class ExcludeNodesDataInputDialog extends JDialog {
@@ -116,7 +116,7 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 					operator.addItem("Equals");
 					operator.addItem("Does not equal");
 					
-					ArrayList<String> tempList = new ArrayList<String>();
+					ArrayList<String> stringList = new ArrayList<String>();
 					List<String> valuesList = new ArrayList<String>();
 					nodePropertyValue.removeAllItems();
 					
@@ -126,10 +126,10 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 					//add these in comboBox, without repeat
 					for(String myVal : valuesList)
 					{
-						if(!myVal.equals(null) && !tempList.contains(myVal))
+						if(!myVal.equals(null) && !stringList.contains(myVal))
 						{
 							nodePropertyValue.addItem(myVal);
-							tempList.add(myVal);
+							stringList.add(myVal);
 						}
 					}	
 				}
@@ -140,10 +140,10 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 		goButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				//take the values, set the apt InclusionFactor
+				//take the values, set the apt isExcludedFromPaths
 				selectedOperator = (String) operator.getSelectedItem();
 				selectedNodePropertyVal = nodePropertyValue.getSelectedItem();
-				InclusionFactorHandler myIFHandler = new InclusionFactorHandler(adapter);
+				ExclusionHandler myIFHandler = new ExclusionHandler(adapter);
 				myIFHandler.handleIF(selectedColumn, selectedOperator, 
 					selectedNodePropertyVal, myNet);
 				dispose();

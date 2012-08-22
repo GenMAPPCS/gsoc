@@ -1,8 +1,8 @@
 package org.nrnb.pathexplorer.view;
 
+import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.task.AbstractNetworkViewTask;
 import org.cytoscape.view.model.CyNetworkView;
-import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.ui.ExcludeNodesDataInputDialog;
 
@@ -17,6 +17,6 @@ public class MyNetViewTask extends AbstractNetworkViewTask {
 	}
 	
 	public void run(TaskMonitor tm) throws Exception {
-		ExcludeNodesDataInputDialog inputDialog = new ExcludeNodesDataInputDialog(view.getModel(), adapter);
+		new ExcludeNodesDataInputDialog(view.getModel(), adapter);
 	}
 }

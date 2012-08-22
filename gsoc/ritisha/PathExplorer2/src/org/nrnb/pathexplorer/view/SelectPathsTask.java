@@ -25,19 +25,17 @@ public class SelectPathsTask extends AbstractNetworkViewTask{
 		CyNetwork net;
 		CyRow row;
 		net = netView.getModel();
-		CyTable tempTable = net.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
+		CyTable hiddenNodeTable = net.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		allNodes = net.getNodeList();
 		ArrayList<CyNode> toSelect = new ArrayList<CyNode>();
 		for(CyNode currNode : allNodes)
 		{
-			//if inPaths = true, put it in toSelect
-			row = tempTable.getRow(currNode.getSUID());
-			Object temp = new Object(); 
-			temp = (Boolean)row.getRaw("inPaths");
-			Boolean myBool = new Boolean(true);
-			if(temp.equals(myBool))
-				toSelect.add(currNode);
+			//if isInPath = true, put it in toSelect
+			row = hiddenNodeTable.getRow(currNode.getSUID());
+			Boolean isInPath = (Boolean)row.getRaw("isInPath");
+			if (isInPath != null && isInPath)
+					toSelect.add(currNode);			
 		}
 		
 		System.out.println("Selecting nodes: "+ toSelect.toString());
@@ -47,6 +45,8 @@ public class SelectPathsTask extends AbstractNetworkViewTask{
 			row.set(CyNetwork.SELECTED, true);
 		}
 		
+		//refresh to view new selection
+		netView.updateView();
 	}
 
 }
