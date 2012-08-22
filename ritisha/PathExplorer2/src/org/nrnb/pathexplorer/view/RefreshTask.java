@@ -1,51 +1,71 @@
 package org.nrnb.pathexplorer.view;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.cytoscape.app.swing.CySwingAppAdapter;
+import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
-import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.task.AbstractNetworkViewTask;
 import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.presentation.property.BasicVisualLexicon;
+import org.cytoscape.view.vizmap.VisualMappingManager;
+import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.TaskMonitor;
 
-public class RefreshTask extends AbstractNetworkViewTask{
-	
+public class RefreshTask extends AbstractNetworkViewTask {
+
+	private CyNetworkView netView;
 	private CySwingAppAdapter adapter;
-	
-	public RefreshTask(CyNetworkView netView, CySwingAppAdapter adapter)
-	{
-		super(netView);	
+
+	public RefreshTask(CyNetworkView netView, CySwingAppAdapter adapter) {
+		super(netView);
 		this.adapter = adapter;
+		this.netView = netView;
 	}
-	
+
 	public void run(TaskMonitor tm) throws Exception {
-		
-		CyNetworkManager myNetManager = adapter.getCyNetworkManager();
-		Set<CyNetwork> allNets = new HashSet<CyNetwork>();
+
+		CyNetwork currNet = netView.getModel();
 		List<CyNode> allNodes = new ArrayList<CyNode>();
-		CyTable tempTable;
+		List<CyEdge> allEdges = new ArrayList<CyEdge>();
+		CyTable hiddenNodeTable;
+		CyTable hiddenEdgeTable;
 		CyRow row;
-		allNets = myNetManager.getNetworkSet();
-	  	System.out.println("Refreshin, setting IF to true for all nodes of all networks");
-	  	for(CyNetwork currNet : allNets)
-	  	{
-	  		tempTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
-	  		allNodes = currNet.getNodeList();
-	  		for(CyNode currNode : allNodes)
-	  		{
-	  			row = tempTable.getRow(currNode.getSUID());
-		  		row.set("inclusionFactor", true);
-		  		row.set("inPaths", false);
-	  		}
-	  	}
-	  	
-	  //add code to refresh the visual mapping of all the nodes.
+		System.out
+				.println("Refresh Task: clearing all path nodes and edges of current network");
+		hiddenNodeTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
+		allNodes = currNet.getNodeList();
+		for (CyNode currNode : allNodes) {
+			row = hiddenNodeTable.getRow(currNode.getSUID());
+			Boolean isNodeInPath = (Boolean)row.get("isInPath", Boolean.class);
+			if (isNodeInPath){
+			row.set("isInPath", false);
+				// clear node override
+				netView.getNodeView(currNode).clearValueLock(
+					BasicVisualLexicon.NODE_BORDER_WIDTH);		
+			}
+		}
+		hiddenEdgeTable = currNet.getTable(CyEdge.class, CyNetwork.HIDDEN_ATTRS);
+		allEdges = currNet.getEdgeList();
+		for (CyEdge currEdge : allEdges) {
+			row = hiddenEdgeTable.getRow(currEdge.getSUID());
+			Boolean isEdgeInPath = row.get("isInPath", Boolean.class);
+			if (isEdgeInPath){
+			row.set("isInPath", false);
+				// clear edge override
+				netView.getEdgeView(currEdge).clearValueLock(
+					BasicVisualLexicon.EDGE_WIDTH);
+			}
+		}
+
+		// re-apply current visual style and refresh network view
+		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
+        VisualStyle style = visualMappingManager.getCurrentVisualStyle();
+        style.apply(netView);
+		netView.updateView();
 	}
 }

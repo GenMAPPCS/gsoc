@@ -1,12 +1,9 @@
 package org.nrnb.pathexplorer.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkTableManager;
 import org.cytoscape.model.CyNode;
-import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.model.events.NetworkAddedEvent;
 import org.cytoscape.model.events.NetworkAddedListener;
@@ -14,6 +11,8 @@ import org.cytoscape.model.events.NetworkAddedListener;
 public class MyNetAddedListener implements NetworkAddedListener{
 	
 	CyNetworkTableManager myNetTableManager;
+  	CyTable hiddenNodeTable;
+  	CyTable hiddenEdgeTable;
 	
 	public MyNetAddedListener()
 	{
@@ -22,21 +21,14 @@ public class MyNetAddedListener implements NetworkAddedListener{
 	
 	public void handleEvent(NetworkAddedEvent e)
 	{
-		System.out.println("Got new net, adding IF");
-		CyNetwork myNet = e.getNetwork();
-		List<CyNode> allNodes = new ArrayList<CyNode>();
-		CyRow row;
-		CyTable tempTable = myNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
-		tempTable.createColumn("inclusionFactor", Boolean.class, true, true);
-		tempTable.createColumn("inPaths", Boolean.class, true, false);
-  		
-  		allNodes = myNet.getNodeList();
-  		for(CyNode currNode : allNodes)
-  		{
-  			row = tempTable.getRow(currNode.getSUID());
-	  		row.set("inclusionFactor", true);
-	  		row.set("inPaths", false);
-  		}
+		System.out.println("Got new net, adding columns to hidden table");
+		CyNetwork currNet = e.getNetwork();
+  		hiddenNodeTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
+  		hiddenNodeTable.createColumn("isExcludedFromPaths", Boolean.class, true, Boolean.FALSE);
+  		hiddenNodeTable.createColumn("isInPath", Boolean.class, true, Boolean.FALSE);
+  		hiddenEdgeTable = currNet.getTable(CyEdge.class, CyNetwork.HIDDEN_ATTRS);
+  		hiddenEdgeTable.createColumn("isInPath", Boolean.class, true, Boolean.FALSE);
+
 		
 	}
 

@@ -9,6 +9,7 @@ import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.vizmap.VisualMappingManager;
+import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.TaskIterator;
 import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.view.MyEdgeViewTaskFactory;
@@ -38,15 +39,14 @@ public class SteadyFlowImplementer {
 		CyNode node1;
 		CyEdge edge;
 		Iterator<CyNode> itr;
-		TaskIterator tItr, tempTaskItr;
+		TaskIterator tItr;
 		TaskMonitor tm = null;
 		ArrayList<CyEdge> edgeList;
-		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
 		MyNodeViewTaskFactory nodeFactory;
-		nodeFactory = new MyNodeViewTaskFactory(visualMappingManager);
+		nodeFactory = new MyNodeViewTaskFactory();
 		
 		MyEdgeViewTaskFactory edgeFactory;
-		edgeFactory = new MyEdgeViewTaskFactory(visualMappingManager);
+		edgeFactory = new MyEdgeViewTaskFactory();
 			
 		itr = path.iterator();
 		node1 = (CyNode) itr.next();
@@ -60,10 +60,8 @@ public class SteadyFlowImplementer {
 		    {
 		    	edge = edgeList.get(0);
 		    
-		    	tempTaskItr = nodeFactory.createTaskIterator(netView.getNodeView(node1), netView);
-		    	tItr.append(tempTaskItr);
-		    	tempTaskItr = edgeFactory.createTaskIterator(netView.getEdgeView(edge), netView);
-		    	tItr.append(tempTaskItr);
+		    	tItr.append(nodeFactory.createTaskIterator(netView.getNodeView(node1), netView));
+		    	tItr.append(edgeFactory.createTaskIterator(netView.getEdgeView(edge), netView));
 		    }
 		    else
 		    	System.out.println("empty edge error");
@@ -77,5 +75,11 @@ public class SteadyFlowImplementer {
 				e.printStackTrace();
 			}
 		}while(tItr.hasNext());
+		
+		//re-apply current visual style and refresh network view
+		VisualMappingManager visualMappingManager = adapter.getVisualMappingManager();
+        VisualStyle style = visualMappingManager.getCurrentVisualStyle();
+        style.apply(netView);
+		netView.updateView();
 	}
 }

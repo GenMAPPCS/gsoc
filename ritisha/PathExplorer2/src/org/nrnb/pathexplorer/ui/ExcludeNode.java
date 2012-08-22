@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
-import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.application.swing.CyMenuItem;
 import org.cytoscape.application.swing.CyNodeViewContextMenuFactory;
 import org.cytoscape.model.CyNetwork;
@@ -17,11 +16,8 @@ import org.cytoscape.view.model.View;
 import org.nrnb.pathexplorer.view.MyNodeViewTask;
 
 public class ExcludeNode implements CyNodeViewContextMenuFactory{
-
-	CySwingAppAdapter adapter;
 	
-	public ExcludeNode(CySwingAppAdapter adapter){
-		this.adapter = adapter;		
+	public ExcludeNode(){	
 	}
 	
 	public CyMenuItem createMenuItem(final CyNetworkView netView, final View<CyNode> nodeView)
@@ -35,10 +31,10 @@ public class ExcludeNode implements CyNodeViewContextMenuFactory{
 				MyNodeViewTask removeBorder;
 				net = netView.getModel();
 				node = nodeView.getModel();
-				CyTable tempTable = net.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
-				CyRow row = tempTable.getRow(node.getSUID());
-				row.set("inclusionFactor", false);
-				removeBorder = new MyNodeViewTask(nodeView, netView, adapter.getVisualMappingManager());
+				CyTable hiddenNodeTable = net.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
+				CyRow row = hiddenNodeTable.getRow(node.getSUID());
+				row.set("isExcludedFromPaths", true);
+				removeBorder = new MyNodeViewTask(nodeView, netView);
 				removeBorder.removeBorderMethod();
 			}
 		});
