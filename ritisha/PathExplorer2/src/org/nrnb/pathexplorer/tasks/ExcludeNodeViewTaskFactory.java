@@ -6,19 +6,20 @@ import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
 import org.cytoscape.work.TaskIterator;
 
-public class SelectPathsFromNode extends AbstractNodeViewTaskFactory {
+public class ExcludeNodeViewTaskFactory extends AbstractNodeViewTaskFactory {
 
 	
-	public SelectPathsFromNode(){
+	public ExcludeNodeViewTaskFactory(){
 	}
 	
 	public boolean isReady(View<CyNode> nodeView, CyNetworkView networkView) {
-		return nodeView != null && networkView != null;
+		//add condition that clicked node is not already excluded
+		return true;
 	}
 
 	public TaskIterator createTaskIterator(View<CyNode> nodeView,
 			CyNetworkView networkView) {
-		return new TaskIterator(new SelectPathsTask(networkView));
+		return new TaskIterator(new ExcludeNodeViewTask(nodeView, networkView));
 	}
 
 

@@ -4,13 +4,14 @@ import org.cytoscape.task.AbstractNetworkViewTaskFactory;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.work.TaskIterator;
 
-public class SelectPaths extends AbstractNetworkViewTaskFactory {
+public class SelectPathsNetworkViewTaskFactory extends AbstractNetworkViewTaskFactory {
 
-	public SelectPaths() {
+	public SelectPathsNetworkViewTaskFactory() {
 	}
 
 	public boolean isReady(CyNetworkView networkView) {
-		return networkView != null;
+		//add condition that a path exists
+		return true;
 	}
 
 	public TaskIterator createTaskIterator(CyNetworkView netView) {

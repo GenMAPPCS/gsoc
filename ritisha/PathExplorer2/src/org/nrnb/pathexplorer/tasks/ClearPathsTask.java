@@ -16,12 +16,12 @@ import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.TaskMonitor;
 
-public class RefreshTask extends AbstractNetworkViewTask {
+public class ClearPathsTask extends AbstractNetworkViewTask {
 
 	private CyNetworkView netView;
 	private CySwingAppAdapter adapter;
 
-	public RefreshTask(CyNetworkView netView, CySwingAppAdapter adapter) {
+	public ClearPathsTask(CyNetworkView netView, CySwingAppAdapter adapter) {
 		super(netView);
 		this.adapter = adapter;
 		this.netView = netView;

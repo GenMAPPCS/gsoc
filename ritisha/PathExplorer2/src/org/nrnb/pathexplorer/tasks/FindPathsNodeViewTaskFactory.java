@@ -7,20 +7,25 @@ import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
 import org.cytoscape.work.TaskIterator;
 
-public class RefreshStateFromNode extends AbstractNodeViewTaskFactory {
-	
+public class FindPathsNodeViewTaskFactory extends AbstractNodeViewTaskFactory {
+
 	CySwingAppAdapter adapter;
-
-	public RefreshStateFromNode(CySwingAppAdapter adapter) {
+	String direction;
+	
+	public FindPathsNodeViewTaskFactory(CySwingAppAdapter adapter, String direction){
 		this.adapter = adapter;
+		this.direction = direction;
 	}
-
+	
 	public boolean isReady(View<CyNode> nodeView, CyNetworkView networkView) {
-		return nodeView != null && networkView != null;
+		//add condition that clicked node is not excluded
+		return true;
 	}
 
 	public TaskIterator createTaskIterator(View<CyNode> nodeView,
 			CyNetworkView networkView) {
-		return new TaskIterator(new RefreshTask(networkView, adapter));
+		return new TaskIterator(new FindPathsNodeViewTask(nodeView, networkView, adapter, direction));
 	}
+
+
 }
