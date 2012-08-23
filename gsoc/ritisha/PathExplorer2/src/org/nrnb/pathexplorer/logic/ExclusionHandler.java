@@ -12,7 +12,7 @@ import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
-import org.nrnb.pathexplorer.view.MyNodeViewTask;
+import org.nrnb.pathexplorer.tasks.SetVisualBypassNodeViewTask;
 
 //this class currently handles setting of the isExcludedFromPaths value in myNodeTable. A similar one for edges
 //will be made
@@ -34,7 +34,7 @@ public class ExclusionHandler {
 		CyTable myNodeTable, myDefaultNodeTable;
 		CyNetworkView netView;
 		View<CyNode> nodeView;
-		MyNodeViewTask removeBorder;
+		SetVisualBypassNodeViewTask removeBorder;
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		CyRow row1, row2;
 		myDefaultNodeTable = myNet.getDefaultNodeTable();
@@ -57,7 +57,7 @@ public class ExclusionHandler {
 						row2.set("isExcludedFromPaths", true);
 						//System.out.println(currNode.toString());
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}
@@ -72,7 +72,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}
@@ -92,7 +92,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}		
@@ -107,7 +107,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -127,7 +127,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -142,7 +142,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -157,7 +157,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -172,7 +172,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -187,7 +187,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -202,7 +202,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -222,7 +222,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -237,7 +237,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -252,7 +252,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -267,7 +267,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -282,7 +282,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -297,7 +297,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -317,7 +317,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -332,7 +332,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -347,7 +347,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -362,7 +362,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -377,7 +377,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	
@@ -392,7 +392,7 @@ public class ExclusionHandler {
 						row2 = myNodeTable.getRow(currNode.getSUID());
 						row2.set("isExcludedFromPaths", true);
 						nodeView = netView.getNodeView(currNode);
-						removeBorder = new MyNodeViewTask(nodeView, netView);
+						removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
 						removeBorder.removeBorderMethod();
 					}
 				}	

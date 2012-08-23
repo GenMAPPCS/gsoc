@@ -35,10 +35,10 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 	private Collection<CyColumn> allNodeTableColumns;
 	private CySwingAppAdapter adapter;
 	private CyNetwork myNet;
-	
-	public ExcludeNodesDataInputDialog(CyNetwork myNetwork, CySwingAppAdapter adapt)
-	{
-		//Initialize all variables except nodePropertyValues
+
+	public ExcludeNodesDataInputDialog(CyNetwork myNetwork,
+			CySwingAppAdapter adapt) {
+		// Initialize all variables except nodePropertyValues
 		super();
 		setTitle("Exclude Nodes with..");
 		adapter = adapt;
@@ -51,40 +51,39 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 		panel1 = new JPanel();
 		selectedNodePropertyVal = new Object();
 		this.allNodeTableColumns = new ArrayList<CyColumn>();
-		
-		//get all columns with node properties
+
+		// get all columns with node properties
 		CyTable nodeTable = myNet.getDefaultNodeTable();
 		this.allNodeTableColumns = nodeTable.getColumns();
-		     
-		//set values in the nodeProperty comboBoxes
-		for(CyColumn currCol : allNodeTableColumns)
-		{
+
+		// set values in the nodeProperty comboBoxes
+		for (CyColumn currCol : allNodeTableColumns) {
 			nodeProperty.addItem(currCol.getName());
 		}
-		
-		//based on the selected node property, the options in operator comboBox change. Use listener.
-		//String, Integer, Long, Double, Boolean, and Lists
-		nodeProperty.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
+
+		// based on the selected node property, the options in operator comboBox
+		// change. Use listener.
+		// String, Integer, Long, Double, Boolean, and Lists
+		nodeProperty.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				System.out.println("1st drop down listener");
 				selectedNodeProperty = (String) nodeProperty.getSelectedItem();
 				System.out.println("selected item is " + selectedNodeProperty);
 				int i = 0;
-				for(CyColumn currCol : allNodeTableColumns)
-				{
+				for (CyColumn currCol : allNodeTableColumns) {
 					i++;
-					if(selectedNodeProperty.equals(currCol.getName()))
-					{ 
+					if (selectedNodeProperty.equals(currCol.getName())) {
 						selectedColumn = currCol;
-						System.out.println(selectedColumn.getType() + " "+ currCol.getName()+ ":"+ selectedNodeProperty +" "+ i);
+						System.out.println(selectedColumn.getType() + " "
+								+ currCol.getName() + ":"
+								+ selectedNodeProperty + " " + i);
 					}
 				}
-				
-				if(selectedColumn.getType().equals(Integer.class) || 
-						selectedColumn.getType().equals(Long.class) ||
-						selectedColumn.getType().equals(Double.class))
-						//=, <, >, <=, >=, != 
+
+				if (selectedColumn.getType().equals(Integer.class)
+						|| selectedColumn.getType().equals(Long.class)
+						|| selectedColumn.getType().equals(Double.class))
+				// =, <, >, <=, >=, !=
 				{
 					System.out.println("Type is number");
 					operator.removeAllItems();
@@ -94,71 +93,67 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 					operator.addItem(">");
 					operator.addItem("<=");
 					operator.addItem(">=");
-					
+
 					nodePropertyValue.removeAll();
 				}
-				
-				else if(selectedColumn.getType().equals(Boolean.class))
-				{
+
+				else if (selectedColumn.getType().equals(Boolean.class)) {
 					System.out.println("Type is boolean");
 					operator.removeAllItems();
 					nodePropertyValue.removeAllItems();
-					
+
 					operator.addItem("=");
 					nodePropertyValue.addItem("True");
 					nodePropertyValue.addItem("False");
 				}
-									
-				else if(selectedColumn.getType().equals(String.class))
-				{
+
+				else if (selectedColumn.getType().equals(String.class)) {
 					System.out.println("Type is string");
 					operator.removeAllItems();
 					operator.addItem("Equals");
 					operator.addItem("Does not equal");
-					
+
 					ArrayList<String> stringList = new ArrayList<String>();
 					List<String> valuesList = new ArrayList<String>();
 					nodePropertyValue.removeAllItems();
-					
-					//get all the values in Column
+
+					// get all the values in Column
 					valuesList = selectedColumn.getValues(String.class);
-					
-					//add these in comboBox, without repeat
-					for(String myVal : valuesList)
-					{
-						if(!myVal.equals(null) && !stringList.contains(myVal))
-						{
+
+					// add these in comboBox, without repeat
+					for (String myVal : valuesList) {
+						if (!myVal.equals(null) && !stringList.contains(myVal)) {
 							nodePropertyValue.addItem(myVal);
 							stringList.add(myVal);
 						}
-					}	
+					}
 				}
 			}
-        	}
-				);
-		
-		goButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e)
-			{
-				//take the values, set the apt isExcludedFromPaths
+		});
+
+		goButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// take the values, set the apt isExcludedFromPaths
 				selectedOperator = (String) operator.getSelectedItem();
 				selectedNodePropertyVal = nodePropertyValue.getSelectedItem();
 				ExclusionHandler myIFHandler = new ExclusionHandler(adapter);
-				myIFHandler.handleIF(selectedColumn, selectedOperator, 
-					selectedNodePropertyVal, myNet);
+				myIFHandler.handleIF(selectedColumn, selectedOperator,
+						selectedNodePropertyVal, myNet);
+
+				// TODO: Then rerun last FindPaths call or clear path if
+				// excluded node = source or target node from last FindPaths call
 				dispose();
-        	}
-		}
-				);
-		
+			}
+		});
+
 		panel1.setLayout(new GridLayout(1, 4, 15, 15));
-		
+
 		nodeProperty.setPreferredSize(new Dimension(25, 12));
 		nodeProperty.setMaximumSize(new Dimension(25, 12));
 		operator.setSize(12, 6);
 		nodePropertyValue.setSize(25, 12);
 		goButton.setSize(12, 6);
-		
+
 		panel1.add(nodeProperty);
 		panel1.add(operator);
 		panel1.add(nodePropertyValue);
@@ -169,6 +164,6 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
-        setVisible(true);
+		setVisible(true);
 	}
 }
