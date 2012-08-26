@@ -76,8 +76,12 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	mySessionManager = adapter.getCySessionManager();
 	  	CySession session;
 	  	session = mySessionManager.getCurrentSession();
+	  	if(session.equals(null))
+	  		System.out.println("session null");
 	  	Set<CyProperty<?>> props = new HashSet<CyProperty<?>>();
 	  	props = session.getProperties();
+	  	if(props.equals(null))
+	  		System.out.println("props null");
 	  	boolean flag = false;
 	  	
 	  	//for node border width
