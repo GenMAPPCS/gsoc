@@ -29,6 +29,7 @@ import org.nrnb.pathexplorer.tasks.IncludeNetworkViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.IncludeNodeViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.SelectPathsNetworkViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.SelectPathsNodeViewTaskFactory;
+import org.nrnb.pathexplorer.tasks.SettingsNetworkViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.SettingsNodeViewTaskFactory;
 
 
@@ -77,17 +78,20 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	session = mySessionManager.getCurrentSession();
 	  	Set<CyProperty<?>> props = new HashSet<CyProperty<?>>();
 	  	props = session.getProperties();
+	  	boolean flag = false;
 	  	
 	  	//for node border width
 	  	for (CyProperty<?> prop : props) {
 	  	    if (prop.getName().equals(NodeBorderWidthInPaths)) {
 	  	        nodeBorderWidthProperty = (CyProperty<Properties>) prop;
+	  	        flag = true;
 	  	        break;
 	  	    }
 	  	}
 	  	
-	  	if (nodeBorderWidthProperty.equals(null))
+	  	if (!flag)
 	  	{
+	  		flag = false;
 	  		//create nodeBorderWidthProperty
 	  		nodeBorderWidthProps.setProperty(NodeBorderWidthInPaths, NodeBorderWidthInPathsValue.toString());
 	  		nodeBorderWidthProperty = new 
@@ -105,12 +109,14 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	for (CyProperty<?> prop : props) {
 	  	    if (prop.getName().equals(EdgeWidthInPaths)) {
 	  	        edgeWidthProperty = (CyProperty<Properties>) prop;
+	  	        flag = true;
 	  	        break;
 	  	    }
 	  	}
 	  	
-	  	if (edgeWidthProperty.equals(null))
+	  	if (!flag)
 	  	{
+	  		flag = false;
 	  		//create edgeWidthProperty
 	  		edgeWidthProps.setProperty(EdgeWidthInPaths, EdgeWidthInPathsValue.toString());
 	  		edgeWidthProperty = new 
@@ -248,6 +254,14 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	registrar.registerService(new ClearPathsNetworkViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, refreshProps);
 	  	
-	 
+	  	 //Settings  
+	  	Properties settingsNetworkProps = new Properties();
+	  	settingsNetworkProps.setProperty("preferredAction", "NEW");
+	  	settingsNetworkProps.setProperty("preferredMenu", "PathExplorer[100]");
+	  	settingsNetworkProps.setProperty("menuGravity", "12.0f");
+	  	settingsNetworkProps.setProperty("title", "Settings");
+	  	
+	  	registrar.registerService(new SettingsNetworkViewTaskFactory(adapter), 
+	  			NetworkViewTaskFactory.class, refreshNodeProps);
 	}
 }
