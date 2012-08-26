@@ -28,7 +28,7 @@ public class SetVisualBypassEdgeViewTask extends AbstractEdgeViewTask {
 		row = hiddenEdgeTable.getRow(edgeView.getModel().getSUID());
 		row.set("isInPath", true);
 
-		edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH, PathExplorer.edgeWidthInPaths.doubleValue());
+		edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH, PathExplorer.EdgeWidthInPathsValue.doubleValue());
 	}
 
 }
