@@ -30,7 +30,7 @@ public class SetVisualBypassNodeViewTask extends AbstractNodeViewTask {
 		row = hiddenNodeTable.getRow(nodeView.getModel().getSUID());
 		row.set("isInPath", true);
 
-		nodeView.setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH, PathExplorer.nodeBorderWidthInPaths.doubleValue());
+		nodeView.setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH, PathExplorer.NodeBorderWidthInPathsValue.doubleValue());
 	}
 
 	public void removeBorderMethod() {

@@ -14,11 +14,10 @@ import org.cytoscape.model.events.NetworkAddedListener;
 import org.cytoscape.property.CyProperty;
 import org.cytoscape.property.SimpleCyProperty;
 import org.cytoscape.service.util.CyServiceRegistrar;
+import org.cytoscape.session.CySession;
+import org.cytoscape.session.CySessionManager;
 import org.cytoscape.task.NetworkViewTaskFactory;
 import org.cytoscape.task.NodeViewTaskFactory;
-import org.cytoscape.view.vizmap.VisualMappingManager;
-import org.cytoscape.view.vizmap.VisualStyle;
-import org.cytoscape.view.vizmap.VisualStyleFactory;
 import org.nrnb.pathexplorer.logic.FindAllPaths;
 import org.nrnb.pathexplorer.logic.TableHandler;
 import org.nrnb.pathexplorer.tasks.ClearPathsNetworkViewTaskFactory;
@@ -32,30 +31,26 @@ import org.nrnb.pathexplorer.tasks.SelectPathsNetworkViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.SelectPathsNodeViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.SettingsNodeViewTaskFactory;
 
+
 public class PathExplorer extends AbstractCySwingApp {
 	
 	CyTableFactory myTableFactory;
 	CyNetworkManager myNetManager;
 	CyNetworkTableManager myNetTableManager;
-	VisualMappingManager myVisMappingManager;
-	VisualStyleFactory myVisStyleFactory;
-	public static VisualStyle baseVisualStyle;
-	public static Double nodeBorderWidthInPaths;
-	public static Double edgeWidthInPaths;
 	public static boolean findPathsLastCalled;
+	public static String NodeBorderWidthInPaths = "NODE_BORDER_WIDTH_IN_PATHS";
+	public static String EdgeWidthInPaths = "EDGE_WIDTH_IN_PATHS";
+	public static Double EdgeWidthInPathsValue = 20.0;
+	public static Double NodeBorderWidthInPathsValue = 12.0;
+	public static Properties nodeBorderWidthProps = new Properties();
+	public static Properties edgeWidthProps = new Properties();
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public PathExplorer(CySwingAppAdapter adapter)
 	{
 		super(adapter);
 	  	final CyServiceRegistrar registrar = adapter.getCyServiceRegistrar();
 		Set<CyNetwork> allNets = new HashSet<CyNetwork>();
-	  	VisualStyle currVisualStyle;
-	  	myVisMappingManager = adapter.getVisualMappingManager();
-	  	myVisStyleFactory = adapter.getVisualStyleFactory();
-	  	currVisualStyle = myVisMappingManager.getCurrentVisualStyle();
-		baseVisualStyle = myVisStyleFactory.createVisualStyle(currVisualStyle);
-		nodeBorderWidthInPaths = 20.0;
-		edgeWidthInPaths = 12.0;
 		findPathsLastCalled = false;
 		
 	  	myNetManager = adapter.getCyNetworkManager();
@@ -73,20 +68,63 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	//for newly added networks
 	  	registrar.registerService(new TableHandler(), NetworkAddedListener.class, new Properties());
 	  	
-	  	@SuppressWarnings({ "rawtypes", "unchecked" })
-		SimpleCyProperty<Properties> nodeBorderWidthProperty = new 
-				SimpleCyProperty("NodeBorderWidthInPaths", 
-						new Properties(), Float.TYPE, CyProperty.SavePolicy.SESSION_FILE_AND_CONFIG_DIR );
-		Properties nodeBorderWidthProps = nodeBorderWidthProperty.getProperties();
-		nodeBorderWidthProps.setProperty(nodeBorderWidthProperty.getName(), nodeBorderWidthInPaths.toString());
-		
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		SimpleCyProperty<Properties> edgeWidthProperty = new 
-				SimpleCyProperty("EdgeWidthInPaths", 
-						new Properties(), Float.TYPE, CyProperty.SavePolicy.SESSION_FILE_AND_CONFIG_DIR );
-		Properties edgeWidthProps = edgeWidthProperty.getProperties();
-		edgeWidthProps.setProperty(edgeWidthProperty.getName(), edgeWidthInPaths.toString());
-		
+	  	//Path properties
+	  	CyProperty<Properties> nodeBorderWidthProperty = null;
+	  	CyProperty<Properties> edgeWidthProperty = null;
+	  	CySessionManager mySessionManager;
+	  	mySessionManager = adapter.getCySessionManager();
+	  	CySession session;
+	  	session = mySessionManager.getCurrentSession();
+	  	Set<CyProperty<?>> props = new HashSet<CyProperty<?>>();
+	  	props = session.getProperties();
+	  	
+	  	//for node border width
+	  	for (CyProperty<?> prop : props) {
+	  	    if (prop.getName().equals(NodeBorderWidthInPaths)) {
+	  	        nodeBorderWidthProperty = (CyProperty<Properties>) prop;
+	  	        break;
+	  	    }
+	  	}
+	  	
+	  	if (nodeBorderWidthProperty.equals(null))
+	  	{
+	  		//create nodeBorderWidthProperty
+	  		nodeBorderWidthProps.setProperty(NodeBorderWidthInPaths, NodeBorderWidthInPathsValue.toString());
+	  		nodeBorderWidthProperty = new 
+					SimpleCyProperty(NodeBorderWidthInPaths, 
+							nodeBorderWidthProps, Float.TYPE, CyProperty.SavePolicy.SESSION_FILE_AND_CONFIG_DIR );
+	  	}
+	  	//if not null, set NodeBorderWidthInPathsValue from property
+	  	else
+	  	{
+	  		nodeBorderWidthProps = nodeBorderWidthProperty.getProperties();
+	  		NodeBorderWidthInPathsValue = Double.valueOf((String)nodeBorderWidthProps.get(NodeBorderWidthInPaths));
+	  	}
+	  	
+	  	//for edge width
+	  	for (CyProperty<?> prop : props) {
+	  	    if (prop.getName().equals(EdgeWidthInPaths)) {
+	  	        edgeWidthProperty = (CyProperty<Properties>) prop;
+	  	        break;
+	  	    }
+	  	}
+	  	
+	  	if (edgeWidthProperty.equals(null))
+	  	{
+	  		//create edgeWidthProperty
+	  		edgeWidthProps.setProperty(EdgeWidthInPaths, EdgeWidthInPathsValue.toString());
+	  		edgeWidthProperty = new 
+					SimpleCyProperty(EdgeWidthInPaths, 
+						edgeWidthProps, Float.TYPE, CyProperty.SavePolicy.SESSION_FILE_AND_CONFIG_DIR );
+	  	}
+	  	//if not null, set EdgeWidthInPathsValue from property
+	  	else
+	  	{
+	  		edgeWidthProps = edgeWidthProperty.getProperties();
+	  		EdgeWidthInPathsValue = Double.valueOf((String)edgeWidthProps.get(EdgeWidthInPaths));
+	  	}
+	  	
+	  	
 	  	/*
 	  	 * Registering NODE context menus
 	  	 */
