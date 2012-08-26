@@ -2,10 +2,12 @@ package org.nrnb.pathexplorer.tasks;
 
 import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.model.CyRow;
 import org.cytoscape.task.AbstractNodeViewTaskFactory;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
 import org.cytoscape.work.TaskIterator;
+import org.nrnb.pathexplorer.logic.TableHandler;
 
 public class FindPathsNodeViewTaskFactory extends AbstractNodeViewTaskFactory {
 
@@ -18,7 +20,12 @@ public class FindPathsNodeViewTaskFactory extends AbstractNodeViewTaskFactory {
 	}
 	
 	public boolean isReady(View<CyNode> nodeView, CyNetworkView networkView) {
-		//add condition that clicked node is not excluded
+		//condition that clicked node is not excluded
+		CyRow row = TableHandler.hiddenNodeTable.getRow(nodeView.getModel().getSUID());
+		Boolean isExcluded = (Boolean) row.get("isExcludedFromPaths",
+				Boolean.class);
+		if (isExcluded)
+			return false;
 		return true;
 	}
 

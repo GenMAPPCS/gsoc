@@ -15,6 +15,7 @@ import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.TaskMonitor;
+import org.nrnb.pathexplorer.PathExplorer;
 
 public class ClearPathsTask extends AbstractNetworkViewTask {
 
@@ -34,9 +35,10 @@ public class ClearPathsTask extends AbstractNetworkViewTask {
 		List<CyEdge> allEdges = new ArrayList<CyEdge>();
 		CyTable hiddenNodeTable;
 		CyTable hiddenEdgeTable;
-		CyRow row;
+		CyRow row, row1;
 		System.out
 				.println("Refresh Task: clearing all path nodes and edges of current network");
+		PathExplorer.findPathsLastCalled = false;
 		hiddenNodeTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		allNodes = currNet.getNodeList();
 		for (CyNode currNode : allNodes) {
@@ -44,6 +46,8 @@ public class ClearPathsTask extends AbstractNetworkViewTask {
 			Boolean isNodeInPath = (Boolean)row.get("isInPath", Boolean.class);
 			if (isNodeInPath){
 			row.set("isInPath", false);
+			row1 = currNet.getRow(currNode);
+			row1.set(CyNetwork.SELECTED, false);
 				// clear node override
 				netView.getNodeView(currNode).clearValueLock(
 					BasicVisualLexicon.NODE_BORDER_WIDTH);		
