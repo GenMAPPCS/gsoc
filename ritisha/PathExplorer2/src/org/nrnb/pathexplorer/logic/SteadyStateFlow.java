@@ -43,7 +43,6 @@ public class SteadyStateFlow {
 	 */
 	public void implementSteadyFlow(LinkedList<CyNode> path) {
 		CyNode node1;
-		CyEdge edge;
 		Iterator<CyNode> itr;
 		TaskIterator tItr;
 		TaskMonitor tm = null;
@@ -62,14 +61,14 @@ public class SteadyStateFlow {
 		while (itr.hasNext()) {
 			edgeList = new ArrayList<CyEdge>(net.getConnectingEdgeList(node1,
 					node1 = itr.next(), CyEdge.Type.ANY));
-			System.out.println("last node: " + node1.toString());
 			if (!edgeList.isEmpty()) {
-				edge = edgeList.get(0);
-
+				for(CyEdge edge : edgeList)
+				{
+					tItr.append(edgeFactory.createTaskIterator(
+							netView.getEdgeView(edge), netView));
+				}
 				tItr.append(nodeFactory.createTaskIterator(
 						netView.getNodeView(node1), netView));
-				tItr.append(edgeFactory.createTaskIterator(
-						netView.getEdgeView(edge), netView));
 			} else
 				System.out.println("empty edge error");
 		}

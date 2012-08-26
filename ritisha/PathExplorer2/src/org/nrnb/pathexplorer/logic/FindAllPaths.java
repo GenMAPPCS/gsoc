@@ -73,35 +73,6 @@ public class FindAllPaths {
 		}
 	}
 
-	// // Method to find all paths. Taking the target node, finds all simple
-	// paths
-	// // between all other nodes and it
-	// public void allPathsMethod_target() {
-	// ArrayList<CyNode> allNodes = (ArrayList<CyNode>) net.getNodeList();
-	// // adding code for exclude nodes with...
-	// CyRow row;
-	// ArrayList<CyNode> nodeList = new ArrayList<CyNode>();
-	// for (CyNode currNode : allNodes) {
-	// // check the value of isExcludedFromPaths for that node, if true,
-	// // remove that node
-	// row = hiddenNodeTable.getRow(currNode.getSUID());
-	// Boolean isExcluded = (Boolean) row.get("isExcludedFromPaths",
-	// Boolean.class);
-	// if (isExcluded)
-	// nodeList.add(currNode);
-	// }
-	// allNodes.removeAll(nodeList);
-	//
-	// LinkedList<CyNode> visited = new LinkedList<CyNode>();
-	// for (CyNode sourceNode : allNodes) {
-	// if (sourceNode.equals(theNode))
-	// continue;
-	// visited.clear();
-	// visited.add(sourceNode);
-	// DFS(net, visited, theNode);
-	// }
-	// }
-
 	// Method to find simplePaths
 	private void DFS(CyNetwork net, LinkedList<CyNode> visited, CyNode destiNode) {
 		CyNode last = visited.getLast();

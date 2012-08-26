@@ -12,33 +12,34 @@ import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.work.TaskIterator;
 import org.nrnb.pathexplorer.logic.TableHandler;
 
-public class ClearPathsNetworkViewTaskFactory extends AbstractNetworkViewTaskFactory {
+public class IncludeNetworkViewTaskFactory  extends AbstractNetworkViewTaskFactory{
 	
 	CySwingAppAdapter adapter;
 
-	public ClearPathsNetworkViewTaskFactory(CySwingAppAdapter adapter) {
+	public IncludeNetworkViewTaskFactory(CySwingAppAdapter adapter) {
 		this.adapter = adapter;
 	}
 
 	public boolean isReady(CyNetworkView netView) {
-		//condition that a path exists
+		//condition that atleast one node is excluded
 		CyNetwork net = netView.getModel();
 		CyRow row;
-		Boolean isInPath;
+		Boolean isExcluded;
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		allNodes = net.getNodeList();
 		for(CyNode currNode : allNodes)
 		{
 			row = TableHandler.hiddenNodeTable.getRow(currNode.getSUID());
-			isInPath = (Boolean) row.get("isInPath",
+			isExcluded = (Boolean) row.get("isExcludedFromPaths",
 					Boolean.class);
-			if(isInPath)
+			if(isExcluded)
 				return true;
 		}
 		return false;
 	}
 
 	public TaskIterator createTaskIterator(CyNetworkView netView) {
-		return new TaskIterator(new ClearPathsTask(netView, adapter));
+		return new TaskIterator(new IncludeNetworkViewTask(netView, adapter));
 	}
+
 }

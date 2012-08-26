@@ -11,8 +11,8 @@ import org.cytoscape.model.events.NetworkAddedListener;
 public class TableHandler implements NetworkAddedListener{
 	
 	CyNetworkTableManager myNetTableManager;
-  	static CyTable hiddenNodeTable;
-  	static CyTable hiddenEdgeTable;
+  	public static CyTable hiddenNodeTable;
+  	public static CyTable hiddenEdgeTable;
 	
 	public TableHandler()
 	{

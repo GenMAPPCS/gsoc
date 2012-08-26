@@ -9,6 +9,7 @@ import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
 import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 import org.cytoscape.work.TaskMonitor;
+import org.nrnb.pathexplorer.PathExplorer;
 
 public class SetVisualBypassNodeViewTask extends AbstractNodeViewTask {
 	private View<CyNode> nodeView;
@@ -29,7 +30,7 @@ public class SetVisualBypassNodeViewTask extends AbstractNodeViewTask {
 		row = hiddenNodeTable.getRow(nodeView.getModel().getSUID());
 		row.set("isInPath", true);
 
-		nodeView.setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH, 20.0);
+		nodeView.setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH, PathExplorer.nodeBorderWidthInPaths.doubleValue());
 	}
 
 	public void removeBorderMethod() {

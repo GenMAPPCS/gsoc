@@ -1,19 +1,16 @@
 package org.nrnb.pathexplorer.ui;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-
 import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyColumn;
 import org.cytoscape.model.CyNetwork;
@@ -27,7 +24,6 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 	private JComboBox operator;
 	private JComboBox nodePropertyValue;
 	private JButton goButton;
-	private JPanel panel1;
 	private String selectedNodeProperty;
 	private String selectedOperator;
 	private CyColumn selectedColumn;
@@ -48,7 +44,6 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 		nodePropertyValue = new JComboBox();
 		nodePropertyValue.setEditable(true);
 		goButton = new JButton("Go");
-		panel1 = new JPanel();
 		selectedNodePropertyVal = new Object();
 		this.allNodeTableColumns = new ArrayList<CyColumn>();
 
@@ -65,18 +60,12 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 		// change. Use listener.
 		// String, Integer, Long, Double, Boolean, and Lists
 		nodeProperty.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("1st drop down listener");
 				selectedNodeProperty = (String) nodeProperty.getSelectedItem();
-				System.out.println("selected item is " + selectedNodeProperty);
-				int i = 0;
 				for (CyColumn currCol : allNodeTableColumns) {
-					i++;
 					if (selectedNodeProperty.equals(currCol.getName())) {
 						selectedColumn = currCol;
-						System.out.println(selectedColumn.getType() + " "
-								+ currCol.getName() + ":"
-								+ selectedNodeProperty + " " + i);
 					}
 				}
 
@@ -85,7 +74,6 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 						|| selectedColumn.getType().equals(Double.class))
 				// =, <, >, <=, >=, !=
 				{
-					System.out.println("Type is number");
 					operator.removeAllItems();
 					operator.addItem("=");
 					operator.addItem("!=");
@@ -95,12 +83,13 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 					operator.addItem(">=");
 
 					nodePropertyValue.removeAll();
+					nodePropertyValue.setEditable(true);
 				}
 
 				else if (selectedColumn.getType().equals(Boolean.class)) {
-					System.out.println("Type is boolean");
 					operator.removeAllItems();
 					nodePropertyValue.removeAllItems();
+					nodePropertyValue.setEditable(false);
 
 					operator.addItem("=");
 					nodePropertyValue.addItem("True");
@@ -108,7 +97,6 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 				}
 
 				else if (selectedColumn.getType().equals(String.class)) {
-					System.out.println("Type is string");
 					operator.removeAllItems();
 					operator.addItem("Equals");
 					operator.addItem("Does not equal");
@@ -116,6 +104,7 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 					ArrayList<String> stringList = new ArrayList<String>();
 					List<String> valuesList = new ArrayList<String>();
 					nodePropertyValue.removeAllItems();
+					nodePropertyValue.setEditable(false);
 
 					// get all the values in Column
 					valuesList = selectedColumn.getValues(String.class);
@@ -128,6 +117,50 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 						}
 					}
 				}
+				
+				else {
+					//List, which can again be String, Integer, Long, Double, Boolean
+					operator.removeAllItems();
+					operator.addItem("Contains");
+					operator.addItem("Does not contain");
+					
+					nodePropertyValue.removeAllItems();
+					
+					if (selectedColumn.getListElementType().equals(Integer.class)
+							|| selectedColumn.getListElementType().equals(Long.class)
+							|| selectedColumn.getListElementType().equals(Double.class)) {
+					
+						nodePropertyValue.setEditable(true);
+					}
+					
+					else if(selectedColumn.getListElementType().equals(Boolean.class)) {
+						nodePropertyValue.addItem("True");
+						nodePropertyValue.addItem("False");
+						nodePropertyValue.setEditable(false);
+					}
+					
+					else if(selectedColumn.getListElementType().equals(String.class)){
+				
+						ArrayList<String> stringList = new ArrayList<String>();
+						List<String> valuesList = new ArrayList<String>();
+						nodePropertyValue.setEditable(false);
+						@SuppressWarnings("rawtypes")
+						Iterator<List> itr = selectedColumn.getValues(List.class).iterator();
+						
+						while(itr.hasNext())
+						{
+							valuesList = itr.next();
+							for(String myVal : valuesList)
+							{
+								if(!myVal.equals(null) && !stringList.contains(myVal))
+								{
+									nodePropertyValue.addItem(myVal);
+									stringList.add(myVal);
+								}
+							}
+						}
+					}
+				}
 			}
 		});
 
@@ -137,30 +170,40 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 				selectedOperator = (String) operator.getSelectedItem();
 				selectedNodePropertyVal = nodePropertyValue.getSelectedItem();
 				ExclusionHandler myIFHandler = new ExclusionHandler(adapter);
-				myIFHandler.handleIF(selectedColumn, selectedOperator,
-						selectedNodePropertyVal, myNet);
-
-				// TODO: Then rerun last FindPaths call or clear path if
-				// excluded node = source or target node from last FindPaths call
+				try {
+					myIFHandler.handleIF(selectedColumn, selectedOperator,
+							selectedNodePropertyVal, myNet);
+				} catch (Throwable e1) {
+					e1.printStackTrace();
+				}
+				
 				dispose();
 			}
 		});
 
-		panel1.setLayout(new GridLayout(1, 4, 15, 15));
-
-		nodeProperty.setPreferredSize(new Dimension(25, 12));
-		nodeProperty.setMaximumSize(new Dimension(25, 12));
-		operator.setSize(12, 6);
-		nodePropertyValue.setSize(25, 12);
-		goButton.setSize(12, 6);
-
-		panel1.add(nodeProperty);
-		panel1.add(operator);
-		panel1.add(nodePropertyValue);
-		panel1.add(goButton);
-		Container container = getContentPane();
-		container.add(panel1);
-		setSize(400, 100);
+		GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+ 
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addComponent(nodeProperty)
+            .addComponent(operator)
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addComponent(nodePropertyValue)
+                .addComponent(goButton))
+        );
+        
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(nodeProperty)
+                .addComponent(operator)
+                .addComponent(nodePropertyValue))
+			.addComponent(goButton)
+        );
+ 
+        setTitle("Exclude Nodes with..");
+        pack();
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
