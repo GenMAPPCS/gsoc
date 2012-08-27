@@ -86,10 +86,12 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//for node border width
 	  	for (CyProperty<?> prop : props) {
-	  	    if (prop.getName().equals(NodeBorderWidthInPaths)) {
+	  	    if (prop.getName() != null){
+	  	    	if (prop.getName().equals(NodeBorderWidthInPaths)) {
 	  	        nodeBorderWidthProperty = (CyProperty<Properties>) prop;
 	  	        flag = true;
 	  	        break;
+	  	    	}
 	  	    }
 	  	}
 	  	
@@ -111,7 +113,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//for edge width
 	  	for (CyProperty<?> prop : props) {
-	  	    if (prop.getName().equals(EdgeWidthInPaths)) {
+	  	    if (prop.getName() != null && prop.getName().equals(EdgeWidthInPaths)) {
 	  	        edgeWidthProperty = (CyProperty<Properties>) prop;
 	  	        flag = true;
 	  	        break;
@@ -208,7 +210,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	settingsNodeProps.setProperty("title", "Settings");
 	  	
 	  	registrar.registerService(new SettingsNodeViewTaskFactory(adapter), 
-	  			NodeViewTaskFactory.class, refreshNodeProps);
+	  			NodeViewTaskFactory.class, settingsNodeProps);
 	  	
 	  
 	  	/*
@@ -266,6 +268,6 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	settingsNetworkProps.setProperty("title", "Settings");
 	  	
 	  	registrar.registerService(new SettingsNetworkViewTaskFactory(adapter), 
-	  			NetworkViewTaskFactory.class, refreshNodeProps);
+	  			NetworkViewTaskFactory.class, settingsNetworkProps);
 	}
 }
