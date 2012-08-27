@@ -176,7 +176,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	includeNodeProps.setProperty("preferredAction", "NEW");
 	  	includeNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	includeNodeProps.setProperty("menuGravity", "9.0f");
-	  	includeNodeProps.setProperty("title", "Include node");
+	  	includeNodeProps.setProperty("title", "Reinclude node");
 	  	
 	  	registrar.registerService(new IncludeNodeViewTaskFactory(adapter), 
 	  			NodeViewTaskFactory.class, includeNodeProps);
@@ -186,7 +186,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	selectPathsNodeProps.setProperty("preferredAction", "NEW");
 	  	selectPathsNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	selectPathsNodeProps.setProperty("menuGravity", "10.0f");
-	  	selectPathsNodeProps.setProperty("title", "Select all paths");
+	  	selectPathsNodeProps.setProperty("title", "Select paths");
 	  	
 	  	registrar.registerService(new SelectPathsNodeViewTaskFactory(), 
 	  			NodeViewTaskFactory.class, selectPathsNodeProps);
@@ -197,7 +197,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	refreshNodeProps.setProperty("preferredAction", "NEW");
 	  	refreshNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	refreshNodeProps.setProperty("menuGravity", "11.0f");
-	  	refreshNodeProps.setProperty("title", "Clear all paths");
+	  	refreshNodeProps.setProperty("title", "Clear paths");
 	  	
 	  	registrar.registerService(new ClearPathsNodeViewTaskFactory(adapter), 
 	  			NodeViewTaskFactory.class, refreshNodeProps);
@@ -233,7 +233,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	includeAllNodesProps.setProperty("preferredAction", "NEW");
 	  	includeAllNodesProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	includeAllNodesProps.setProperty("menuGravity", "9.0f");
-	  	includeAllNodesProps.setProperty("title", "Include all nodes");
+	  	includeAllNodesProps.setProperty("title", "Reinclude all nodes");
 	  	
 	  	registrar.registerService(new IncludeNetworkViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, includeNodeProps);
@@ -244,7 +244,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	selectPathsProps.setProperty("preferredAction", "NEW");
 	  	selectPathsProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	selectPathsProps.setProperty("menuGravity", "10.0f");
-	  	selectPathsProps.setProperty("title", "Select all paths");
+	  	selectPathsProps.setProperty("title", "Select paths");
 	  	
 	  	registrar.registerService(new SelectPathsNetworkViewTaskFactory(), 
 	  			NetworkViewTaskFactory.class, selectPathsProps);
@@ -255,7 +255,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	refreshProps.setProperty("preferredAction", "NEW");
 	  	refreshProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	refreshProps.setProperty("menuGravity", "11.0f");
-	  	refreshProps.setProperty("title", "Clear all paths");
+	  	refreshProps.setProperty("title", "Clear paths");
 	  	
 	  	registrar.registerService(new ClearPathsNetworkViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, refreshProps);
