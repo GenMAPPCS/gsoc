@@ -41,9 +41,11 @@ public class SteadyStateFlow {
 
 	public void steadyStateFlowImpl(Set<CyNode> pathNodes, Set<CyEdge> pathEdges) {
 		for (CyNode n : pathNodes) {
+			TableHandler.hiddenNodeTable.getRow(n.getSUID()).set(TableHandler.IN_PATH_COL, true);
 			netView.getNodeView(n).setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH, PathExplorer.NodeBorderWidthInPathsValue.doubleValue());
 		}
 		for (CyEdge e : pathEdges){
+			TableHandler.hiddenEdgeTable.getRow(e.getSUID()).set(TableHandler.IN_PATH_COL, true);
 			netView.getEdgeView(e).setLockedValue(BasicVisualLexicon.EDGE_WIDTH, PathExplorer.EdgeWidthInPathsValue.doubleValue());
 		}
 		

@@ -42,8 +42,8 @@ public class PathExplorer extends AbstractCySwingApp {
 	public static boolean findPathsLastCalled;
 	public static String NodeBorderWidthInPaths = "NODE_BORDER_WIDTH_IN_PATHS";
 	public static String EdgeWidthInPaths = "EDGE_WIDTH_IN_PATHS";
-	public static Double EdgeWidthInPathsValue = 20.0;
-	public static Double NodeBorderWidthInPathsValue = 12.0;
+	public static Double EdgeWidthInPathsValue = 12.0;
+	public static Double NodeBorderWidthInPathsValue = 20.0;
 	public static Properties nodeBorderWidthProps = new Properties();
 	public static Properties edgeWidthProps = new Properties();
 	
