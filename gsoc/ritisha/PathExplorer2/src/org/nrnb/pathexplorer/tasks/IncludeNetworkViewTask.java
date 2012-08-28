@@ -38,13 +38,13 @@ public class IncludeNetworkViewTask extends AbstractNetworkViewTask {
 		Boolean isExcluded;
 		for(CyNode currNode : allNodes)
 		{
-			row = TableHandler.hiddenNodeTable.getRow(currNode.getSUID());
-			isExcluded = (Boolean) row.get("isExcludedFromPaths",
+			row = TableHandler.defaultNodeTable.getRow(currNode.getSUID());
+			isExcluded = (Boolean) row.get(TableHandler.EXCLUDED_COL,
 					Boolean.class);
 			if(isExcluded)
 			{
 				//include it
-				row = TableHandler.hiddenNodeTable.getRow(currNode.getSUID());
+				row.set(TableHandler.EXCLUDED_COL, false);
 				// clear node override
 				netView.getNodeView(currNode).clearValueLock(
 					BasicVisualLexicon.NODE_BORDER_WIDTH);
@@ -58,7 +58,7 @@ public class IncludeNetworkViewTask extends AbstractNetworkViewTask {
 			ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
 			refresher.run(tm);
 			FindAllPaths pathsFinder = new FindAllPaths(FindPathsNodeViewTask.netView , FindPathsNodeViewTask.nodeView.getModel(), adapter);
-			pathsFinder.allPathsMethod(FindPathsNodeViewTask.direction);
+			pathsFinder.findAllPathsMethod(FindPathsNodeViewTask.direction);
 		}
 	}
 }

@@ -29,8 +29,8 @@ public class IncludeNodeViewTask extends AbstractNodeViewTask{
 		CyNode node;
 		CyRow row;
 		node = nodeView.getModel();
-		row = TableHandler.hiddenNodeTable.getRow(node.getSUID());
-		row.set("isExcludedFromPaths", false);
+		row = TableHandler.defaultNodeTable.getRow(node.getSUID());
+		row.set(TableHandler.EXCLUDED_COL, false);
 		// clear node override
 		netView.getNodeView(node).clearValueLock(
 			BasicVisualLexicon.NODE_BORDER_WIDTH);		
@@ -42,7 +42,7 @@ public class IncludeNodeViewTask extends AbstractNodeViewTask{
 			ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
 			refresher.run(tm);
 			FindAllPaths pathsFinder = new FindAllPaths(FindPathsNodeViewTask.netView , FindPathsNodeViewTask.nodeView.getModel(), adapter);
-			pathsFinder.allPathsMethod(FindPathsNodeViewTask.direction);
+			pathsFinder.findAllPathsMethod(FindPathsNodeViewTask.direction);
 		}
 	}
 

@@ -10,6 +10,7 @@ import org.cytoscape.view.model.View;
 import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.PathExplorer;
+import org.nrnb.pathexplorer.logic.TableHandler;
 
 public class SetVisualBypassNodeViewTask extends AbstractNodeViewTask {
 	private View<CyNode> nodeView;
@@ -28,7 +29,7 @@ public class SetVisualBypassNodeViewTask extends AbstractNodeViewTask {
 		// set isInPath to true
 		CyRow row;
 		row = hiddenNodeTable.getRow(nodeView.getModel().getSUID());
-		row.set("isInPath", true);
+		row.set(TableHandler.IN_PATH_COL, true);
 
 		nodeView.setLockedValue(BasicVisualLexicon.NODE_BORDER_WIDTH, PathExplorer.NodeBorderWidthInPathsValue.doubleValue());
 	}

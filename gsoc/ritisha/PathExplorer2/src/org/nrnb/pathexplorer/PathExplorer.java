@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.cytoscape.app.swing.AbstractCySwingApp;
 import org.cytoscape.app.swing.CySwingAppAdapter;
+import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.CyNetworkTableManager;
@@ -148,7 +149,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	findPathsFromProps.setProperty("menuGravity", "6.0f");
 	  	findPathsFromProps.setProperty("title", "Find paths from here");
 	  	
-	  	registrar.registerService(new FindPathsNodeViewTaskFactory(adapter, FindAllPaths.FROM_HERE), 
+	  	registrar.registerService(new FindPathsNodeViewTaskFactory(adapter, CyEdge.Type.OUTGOING), 
 	  			NodeViewTaskFactory.class, findPathsFromProps);
 	  	  	
 	  	//Find paths TO here 
@@ -158,7 +159,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	findPathsToProps.setProperty("menuGravity", "7.0f");
 	  	findPathsToProps.setProperty("title", "Find paths to here");
 	  	
-	  	registrar.registerService(new FindPathsNodeViewTaskFactory(adapter, FindAllPaths.TO_HERE), 
+	  	registrar.registerService(new FindPathsNodeViewTaskFactory(adapter, CyEdge.Type.INCOMING), 
 	  			NodeViewTaskFactory.class, findPathsToProps);
 	  	
 	  	//Exclude node

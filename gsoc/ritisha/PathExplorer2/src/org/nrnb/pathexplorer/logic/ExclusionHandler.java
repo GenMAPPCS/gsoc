@@ -32,15 +32,14 @@ public class ExclusionHandler {
 	public void handleIF(CyColumn selectedCol, String selectedOp, 
 			Object selectedVal, CyNetwork myNet) throws Throwable
 	{
-		//get the default node table and myNodeTable and list of all nodes in the network
-		CyTable myNodeTable, myDefaultNodeTable;
+		//get the default node table and myDefaultNodeTable and list of all nodes in the network
+		CyTable myDefaultNodeTable;
 		CyNetworkView netView;
 		View<CyNode> nodeView;
 		SetVisualBypassNodeViewTask removeBorder;
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		CyRow row1, row2, row3;
 		myDefaultNodeTable = myNet.getDefaultNodeTable();
-		myNodeTable = myNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		allNodes = myNet.getNodeList();
 		netView = myAppManager.getCurrentNetworkView();
 		
@@ -55,8 +54,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(selectedVal.equals(row1.getRaw(selectedCol.getName())))
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -72,8 +71,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(!selectedVal.equals(row1.getRaw(selectedCol.getName())))
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -94,8 +93,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(row1.getRaw(selectedCol.getName()).equals(true))
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -111,8 +110,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(row1.getRaw(selectedCol.getName()).equals(false))
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -133,8 +132,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) == 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -150,8 +149,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) != 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -167,8 +166,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) < 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -184,8 +183,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) > 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -201,8 +200,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) <= 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -218,8 +217,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Integer)row1.getRaw(selectedCol.getName())).compareTo((Integer)selectedVal) >= 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -240,8 +239,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) == 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -257,8 +256,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) != 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -274,8 +273,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) < 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -291,8 +290,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) > 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -308,8 +307,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) <= 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -325,8 +324,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Long)row1.getRaw(selectedCol.getName())).compareTo((Long)selectedVal) >= 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -347,8 +346,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) == 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -364,8 +363,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) != 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -381,8 +380,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) < 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -398,8 +397,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) > 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -415,8 +414,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) <= 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -432,8 +431,8 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					if(((Double)row1.getRaw(selectedCol.getName())).compareTo((Double)selectedVal) >= 0)
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -456,8 +455,8 @@ public class ExclusionHandler {
 					stringList = (ArrayList<String>)row1.getRaw(selectedCol.getName());
 					if(stringList.contains(selectedVal))
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -474,8 +473,8 @@ public class ExclusionHandler {
 					stringList = (ArrayList<String>)row1.getRaw(selectedCol.getName());
 					if(!stringList.contains(selectedVal))
 					{
-						row2 = myNodeTable.getRow(currNode.getSUID());
-						row2.set("isExcludedFromPaths", true);
+						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
+						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
 						row3.set(CyNetwork.SELECTED, false);
 						nodeView = netView.getNodeView(currNode);
@@ -494,7 +493,8 @@ public class ExclusionHandler {
 			ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
 			refresher.run(tm);
 			FindAllPaths pathsFinder = new FindAllPaths(FindPathsNodeViewTask.netView , FindPathsNodeViewTask.nodeView.getModel(), adapter);
-			pathsFinder.allPathsMethod(FindPathsNodeViewTask.direction);
+//			pathsFinder.allPathsMethod(FindPathsNodeViewTask.direction);
+			pathsFinder.findAllPathsMethod(FindPathsNodeViewTask.direction);
 		}
 	}
 }

@@ -10,6 +10,7 @@ import org.cytoscape.view.model.View;
 import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.PathExplorer;
+import org.nrnb.pathexplorer.logic.TableHandler;
 
 public class SetVisualBypassEdgeViewTask extends AbstractEdgeViewTask {
 	private View<CyEdge> edgeView;
@@ -26,7 +27,7 @@ public class SetVisualBypassEdgeViewTask extends AbstractEdgeViewTask {
 		// set isInPath to true
 		CyRow row;
 		row = hiddenEdgeTable.getRow(edgeView.getModel().getSUID());
-		row.set("isInPath", true);
+		row.set(TableHandler.IN_PATH_COL, true);
 
 		edgeView.setLockedValue(BasicVisualLexicon.EDGE_WIDTH, PathExplorer.EdgeWidthInPathsValue.doubleValue());
 	}

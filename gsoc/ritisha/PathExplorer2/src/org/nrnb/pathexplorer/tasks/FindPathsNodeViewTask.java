@@ -1,6 +1,7 @@
 package org.nrnb.pathexplorer.tasks;
 
 import org.cytoscape.app.swing.CySwingAppAdapter;
+import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.task.AbstractNodeViewTask;
 import org.cytoscape.view.model.CyNetworkView;
@@ -15,9 +16,9 @@ public class FindPathsNodeViewTask extends AbstractNodeViewTask{
 	public static CyNetworkView netView;
 	public static View<CyNode> nodeView;
 	CySwingAppAdapter adapter;
-	public static String direction;
+	public static CyEdge.Type direction;
 	
-	public FindPathsNodeViewTask(View<CyNode> nodeView, CyNetworkView netView, CySwingAppAdapter adapter, String direction)
+	public FindPathsNodeViewTask(View<CyNode> nodeView, CyNetworkView netView, CySwingAppAdapter adapter, CyEdge.Type direction)
 	{
 		super(nodeView,netView);	
 		FindPathsNodeViewTask.netView = netView;
@@ -31,7 +32,7 @@ public class FindPathsNodeViewTask extends AbstractNodeViewTask{
 		ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
 		refresher.run(tm);
 		FindAllPaths pathsFinder = new FindAllPaths(netView , nodeView.getModel(), adapter);
-		pathsFinder.allPathsMethod(direction);
+		pathsFinder.findAllPathsMethod(direction);
 	}
 
 }
