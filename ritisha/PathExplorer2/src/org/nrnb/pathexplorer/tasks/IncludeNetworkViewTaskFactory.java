@@ -29,8 +29,8 @@ public class IncludeNetworkViewTaskFactory  extends AbstractNetworkViewTaskFacto
 		allNodes = net.getNodeList();
 		for(CyNode currNode : allNodes)
 		{
-			row = TableHandler.hiddenNodeTable.getRow(currNode.getSUID());
-			isExcluded = (Boolean) row.get("isExcludedFromPaths",
+			row = TableHandler.defaultNodeTable.getRow(currNode.getSUID());
+			isExcluded = (Boolean) row.get(TableHandler.EXCLUDED_COL,
 					Boolean.class);
 			if(isExcluded)
 				return true;

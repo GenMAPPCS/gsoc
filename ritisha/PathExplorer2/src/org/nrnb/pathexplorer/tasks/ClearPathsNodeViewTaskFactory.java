@@ -20,7 +20,7 @@ public class ClearPathsNodeViewTaskFactory extends AbstractNodeViewTaskFactory {
 	public boolean isReady(View<CyNode> nodeView, CyNetworkView networkView) {
 		//condition that clicked node is in a path
 		CyRow row = TableHandler.hiddenNodeTable.getRow(nodeView.getModel().getSUID());
-		Boolean isInPath = (Boolean) row.get("isInPath",
+		Boolean isInPath = (Boolean) row.get(TableHandler.IN_PATH_COL,
 				Boolean.class);
 		return isInPath;
 	}

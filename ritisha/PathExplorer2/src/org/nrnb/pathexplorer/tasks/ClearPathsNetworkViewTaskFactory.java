@@ -30,7 +30,7 @@ public class ClearPathsNetworkViewTaskFactory extends AbstractNetworkViewTaskFac
 		for(CyNode currNode : allNodes)
 		{
 			row = TableHandler.hiddenNodeTable.getRow(currNode.getSUID());
-			isInPath = (Boolean) row.get("isInPath",
+			isInPath = (Boolean) row.get(TableHandler.IN_PATH_COL,
 					Boolean.class);
 			if(isInPath)
 				return true;

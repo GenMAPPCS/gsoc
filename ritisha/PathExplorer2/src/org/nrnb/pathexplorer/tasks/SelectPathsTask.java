@@ -10,6 +10,7 @@ import org.cytoscape.model.CyTable;
 import org.cytoscape.task.AbstractNetworkViewTask;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.work.TaskMonitor;
+import org.nrnb.pathexplorer.logic.TableHandler;
 
 public class SelectPathsTask extends AbstractNetworkViewTask{
 
@@ -33,7 +34,7 @@ public class SelectPathsTask extends AbstractNetworkViewTask{
 		{
 			//if isInPath = true, put it in toSelect
 			row = hiddenNodeTable.getRow(currNode.getSUID());
-			Boolean isInPath = (Boolean)row.getRaw("isInPath");
+			Boolean isInPath = (Boolean)row.getRaw(TableHandler.IN_PATH_COL);
 			if (isInPath != null && isInPath)
 					toSelect.add(currNode);			
 		}

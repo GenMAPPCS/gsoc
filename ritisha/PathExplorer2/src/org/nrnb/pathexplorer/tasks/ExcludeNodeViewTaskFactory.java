@@ -19,8 +19,8 @@ public class ExcludeNodeViewTaskFactory extends AbstractNodeViewTaskFactory {
 	
 	public boolean isReady(View<CyNode> nodeView, CyNetworkView networkView) {
 		//condition that clicked node is not already excluded
-		CyRow row = TableHandler.hiddenNodeTable.getRow(nodeView.getModel().getSUID());
-		Boolean isExcluded = (Boolean) row.get("isExcludedFromPaths",
+		CyRow row = TableHandler.defaultNodeTable.getRow(nodeView.getModel().getSUID());
+		Boolean isExcluded = (Boolean) row.get(TableHandler.EXCLUDED_COL,
 				Boolean.class);
 		return !isExcluded;
 	}

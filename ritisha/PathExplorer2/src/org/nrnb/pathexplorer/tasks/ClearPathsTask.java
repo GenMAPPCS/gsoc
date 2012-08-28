@@ -16,6 +16,7 @@ import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.PathExplorer;
+import org.nrnb.pathexplorer.logic.TableHandler;
 
 public class ClearPathsTask extends AbstractNetworkViewTask {
 
@@ -43,9 +44,9 @@ public class ClearPathsTask extends AbstractNetworkViewTask {
 		allNodes = currNet.getNodeList();
 		for (CyNode currNode : allNodes) {
 			row = hiddenNodeTable.getRow(currNode.getSUID());
-			Boolean isNodeInPath = (Boolean)row.get("isInPath", Boolean.class);
+			Boolean isNodeInPath = (Boolean)row.get(TableHandler.IN_PATH_COL, Boolean.class);
 			if (isNodeInPath){
-			row.set("isInPath", false);
+			row.set(TableHandler.IN_PATH_COL, false);
 			row1 = currNet.getRow(currNode);
 			row1.set(CyNetwork.SELECTED, false);
 				// clear node override
@@ -57,9 +58,9 @@ public class ClearPathsTask extends AbstractNetworkViewTask {
 		allEdges = currNet.getEdgeList();
 		for (CyEdge currEdge : allEdges) {
 			row = hiddenEdgeTable.getRow(currEdge.getSUID());
-			Boolean isEdgeInPath = row.get("isInPath", Boolean.class);
+			Boolean isEdgeInPath = row.get(TableHandler.IN_PATH_COL, Boolean.class);
 			if (isEdgeInPath){
-			row.set("isInPath", false);
+			row.set(TableHandler.IN_PATH_COL, false);
 				// clear edge override
 				netView.getEdgeView(currEdge).clearValueLock(
 					BasicVisualLexicon.EDGE_WIDTH);

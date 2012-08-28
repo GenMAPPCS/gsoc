@@ -11,6 +11,7 @@ import org.cytoscape.view.model.View;
 import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.PathExplorer;
 import org.nrnb.pathexplorer.logic.FindAllPaths;
+import org.nrnb.pathexplorer.logic.TableHandler;
 
 public class ExcludeNodeViewTask extends AbstractNodeViewTask {
 
@@ -31,10 +32,9 @@ public class ExcludeNodeViewTask extends AbstractNodeViewTask {
 		SetVisualBypassNodeViewTask removeBorder;
 		net = netView.getModel();
 		node = nodeView.getModel();
-		CyTable hiddenNodeTable = net.getTable(CyNode.class,
-				CyNetwork.HIDDEN_ATTRS);
-		CyRow row = hiddenNodeTable.getRow(node.getSUID());
-		row.set("isExcludedFromPaths", true);
+		CyTable defaultNodeTable = net.getDefaultNodeTable();
+		CyRow row = defaultNodeTable.getRow(node.getSUID());
+		row.set(TableHandler.EXCLUDED_COL, true);
 		CyRow row1 = net.getRow(node);
 		row1.set(CyNetwork.SELECTED, false);
 		removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
@@ -47,7 +47,7 @@ public class ExcludeNodeViewTask extends AbstractNodeViewTask {
 			ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
 			refresher.run(tm);
 			FindAllPaths pathsFinder = new FindAllPaths(FindPathsNodeViewTask.netView , FindPathsNodeViewTask.nodeView.getModel(), adapter);
-			pathsFinder.allPathsMethod(FindPathsNodeViewTask.direction);
+			pathsFinder.findAllPathsMethod(FindPathsNodeViewTask.direction);
 		}
 	}
 
