@@ -33,7 +33,10 @@ public class IncludeNodeViewTask extends AbstractNodeViewTask{
 		row.set(TableHandler.EXCLUDED_COL, false);
 		// clear node override
 		netView.getNodeView(node).clearValueLock(
-			BasicVisualLexicon.NODE_BORDER_WIDTH);		
+				BasicVisualLexicon.NODE_BORDER_WIDTH);		
+		netView.getNodeView(node).clearValueLock(
+				BasicVisualLexicon.NODE_TRANSPARENCY);		
+		//Note: visual style will be refreshed by FindAllPaths below...
 		
 		// Then rerun last FindPaths call or clear path if excluded node =
 		// source or target node from last FindPaths call

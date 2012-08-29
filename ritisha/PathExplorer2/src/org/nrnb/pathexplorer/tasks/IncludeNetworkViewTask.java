@@ -48,11 +48,15 @@ public class IncludeNetworkViewTask extends AbstractNetworkViewTask {
 				// clear node override
 				netView.getNodeView(currNode).clearValueLock(
 					BasicVisualLexicon.NODE_BORDER_WIDTH);
+				netView.getNodeView(currNode).clearValueLock(
+						BasicVisualLexicon.NODE_TRANSPARENCY);
 			}
+			//Note: visual style will be refreshed by FindAllPaths below...
 		}
 
 		// Then rerun last FindPaths call or clear path if excluded node =
 		// source or target node from last FindPaths call
+		System.out.println("LASTCALLED? "+ PathExplorer.findPathsLastCalled);
 		if(PathExplorer.findPathsLastCalled)
 		{
 			ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
