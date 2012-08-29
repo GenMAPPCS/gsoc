@@ -16,7 +16,7 @@ import org.nrnb.pathexplorer.PathExplorer;
 public class SettingsDialog extends JDialog{
 
 	private static final long serialVersionUID = 8557472793959930782L;
-	JLabel headingLabel, nodeBorderWidthLabel, edgeWidthLabel;
+	JLabel nodeBorderWidthLabel, edgeWidthLabel;
 	JTextField nodeBorderWidthInput, edgeWidthInput;
 	JButton setButton;
 	CyNetworkView netView;
@@ -27,7 +27,6 @@ public class SettingsDialog extends JDialog{
 		super();
 		this.netView = netView;
 		this.adapter = adapter;
-		headingLabel = new JLabel("Set path properties");
 		nodeBorderWidthLabel = new JLabel("Node Border Width");
 		edgeWidthLabel = new JLabel("Edge Width");
 		nodeBorderWidthInput = new JTextField(PathExplorer.NodeBorderWidthInPathsValue.toString());
@@ -56,7 +55,6 @@ public class SettingsDialog extends JDialog{
  
         layout.setHorizontalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                .addComponent(headingLabel)
                 .addComponent(nodeBorderWidthLabel)
                 .addComponent(edgeWidthLabel))
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
@@ -66,7 +64,6 @@ public class SettingsDialog extends JDialog{
         );
         
         layout.setVerticalGroup(layout.createSequentialGroup()
-        	.addComponent(headingLabel)
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(nodeBorderWidthLabel)
                 .addComponent(nodeBorderWidthInput))
@@ -76,7 +73,7 @@ public class SettingsDialog extends JDialog{
 			.addComponent(setButton)
         );
  
-        setTitle("Settings");
+        setTitle("Set Path Properties");
         pack();
 		setAlwaysOnTop(true);
 		setResizable(false);

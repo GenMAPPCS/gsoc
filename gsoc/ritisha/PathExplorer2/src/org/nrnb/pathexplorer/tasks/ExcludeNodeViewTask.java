@@ -10,6 +10,7 @@ import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
 import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.PathExplorer;
+import org.nrnb.pathexplorer.logic.ExclusionHandler;
 import org.nrnb.pathexplorer.logic.FindAllPaths;
 import org.nrnb.pathexplorer.logic.TableHandler;
 
@@ -29,7 +30,6 @@ public class ExcludeNodeViewTask extends AbstractNodeViewTask {
 	public void run(TaskMonitor tm) throws Exception {
 		CyNetwork net;
 		CyNode node;
-		SetVisualBypassNodeViewTask removeBorder;
 		net = netView.getModel();
 		node = nodeView.getModel();
 		CyTable defaultNodeTable = net.getDefaultNodeTable();
@@ -37,8 +37,8 @@ public class ExcludeNodeViewTask extends AbstractNodeViewTask {
 		row.set(TableHandler.EXCLUDED_COL, true);
 		CyRow row1 = net.getRow(node);
 		row1.set(CyNetwork.SELECTED, false);
-		removeBorder = new SetVisualBypassNodeViewTask(nodeView, netView);
-		removeBorder.removeBorderMethod();
+		ExclusionHandler eh = new ExclusionHandler(adapter);
+		eh.visuallyExcludeNode(nodeView, netView);
 
 		// Then rerun last FindPaths call or clear path if excluded node =
 		// source or target node from last FindPaths call

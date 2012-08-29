@@ -1,8 +1,5 @@
 package org.nrnb.pathexplorer.logic;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Set;
 
 import org.cytoscape.app.swing.CySwingAppAdapter;
@@ -13,11 +10,7 @@ import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
-import org.cytoscape.work.TaskIterator;
-import org.cytoscape.work.TaskMonitor;
 import org.nrnb.pathexplorer.PathExplorer;
-import org.nrnb.pathexplorer.tasks.SetVisualBypassEdgeViewTaskFactory;
-import org.nrnb.pathexplorer.tasks.SetVisualBypassNodeViewTaskFactory;
 
 /**
  * This class implements the highlighting of paths into or out from a selected
