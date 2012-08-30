@@ -424,7 +424,7 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					stringList = (ArrayList<String>) row1.getRaw(selectedCol
 							.getName());
-					if (stringList.contains(selectedVal)) {
+					if (stringList != null && stringList.contains(selectedVal)) {
 						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
 						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
@@ -438,7 +438,7 @@ public class ExclusionHandler {
 					row1 = myDefaultNodeTable.getRow(currNode.getSUID());
 					stringList = (ArrayList<String>) row1.getRaw(selectedCol
 							.getName());
-					if (!stringList.contains(selectedVal)) {
+					if (stringList != null && !stringList.contains(selectedVal)) {
 						row2 = myDefaultNodeTable.getRow(currNode.getSUID());
 						row2.set(TableHandler.EXCLUDED_COL, true);
 						row3 = myNet.getRow(currNode);
