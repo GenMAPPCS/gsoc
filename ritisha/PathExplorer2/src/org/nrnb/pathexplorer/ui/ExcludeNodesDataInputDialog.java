@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -143,22 +142,19 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 					else if(selectedColumn.getListElementType().equals(String.class)){
 				
 						ArrayList<String> stringList = new ArrayList<String>();
-						List<String> valuesList = new ArrayList<String>();
 						nodeAttrValue.setEditable(false);
 						@SuppressWarnings("rawtypes")
-						Iterator<List> itr = selectedColumn.getValues(List.class).iterator();
-						
-						while(itr.hasNext())
-						{
-							valuesList = itr.next();
-							for(String myVal : valuesList)
-							{
+						List<List> valuesList = new ArrayList<List>();
+						valuesList = selectedColumn.getValues(List.class);
+						for (List<String> list: valuesList){
+							for (String myVal: list){
 								if(!myVal.equals(null) && !stringList.contains(myVal))
 								{
 									nodeAttrValue.addItem(myVal);
 									stringList.add(myVal);
 								}
 							}
+							
 						}
 					}
 				}
