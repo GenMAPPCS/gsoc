@@ -7,7 +7,6 @@ import org.cytoscape.task.AbstractNodeViewTask;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
 import org.cytoscape.work.TaskMonitor;
-import org.nrnb.pathexplorer.PathExplorer;
 import org.nrnb.pathexplorer.logic.FindAllPaths;
 
 
@@ -25,12 +24,12 @@ public class FindPathsNodeViewTask extends AbstractNodeViewTask{
 		FindPathsNodeViewTask.nodeView = nodeView;
 		this.adapter = adapter;
 		FindPathsNodeViewTask.direction = direction;
-		PathExplorer.findPathsLastCalled = true;
 	}
 	
 	public void run(TaskMonitor tm) throws Exception {
 		ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
-		refresher.run(tm);
+		TaskMonitor tm1 = null;
+		refresher.run(tm1);
 		FindAllPaths pathsFinder = new FindAllPaths(netView , nodeView.getModel(), adapter);
 		pathsFinder.findAllPathsMethod(direction);
 	}

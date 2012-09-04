@@ -22,7 +22,6 @@ public class TableHandler implements NetworkAddedListener {
 	}
 
 	public void handleEvent(NetworkAddedEvent e) {
-		System.out.println("Got new net, adding columns to hidden table");
 		createColumns(e.getNetwork());
 
 	}

@@ -4,7 +4,6 @@ import java.util.Set;
 
 import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyEdge;
-import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.presentation.property.BasicVisualLexicon;
@@ -20,14 +19,14 @@ public class SteadyStateFlow {
 
 	// private LinkedList<CyNode> path = new LinkedList<CyNode>();
 	private CyNetworkView netView;
-	private CyNetwork net;
+	//private CyNetwork net;
 	private CySwingAppAdapter adapter;
 
 	public SteadyStateFlow(CySwingAppAdapter adapter, CyNetworkView netView) {
 		if (!netView.equals(null)) {
 			this.adapter = adapter;
 			this.netView = netView;
-			this.net = netView.getModel();
+			//this.net = netView.getModel();
 		} else
 			System.out.println("All paths and network view null error");
 	}

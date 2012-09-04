@@ -25,9 +25,7 @@ public class FindPathsNodeViewTaskFactory extends AbstractNodeViewTaskFactory {
 		CyRow row = TableHandler.defaultNodeTable.getRow(nodeView.getModel().getSUID());
 		Boolean isExcluded = (Boolean) row.get(TableHandler.EXCLUDED_COL,
 				Boolean.class);
-		if (isExcluded)
-			return false;
-		return true;
+		return !isExcluded;
 	}
 
 	public TaskIterator createTaskIterator(View<CyNode> nodeView,

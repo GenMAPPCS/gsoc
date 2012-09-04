@@ -9,8 +9,6 @@ import org.cytoscape.app.swing.CySwingAppAdapter;
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkManager;
-import org.cytoscape.model.CyNetworkTableManager;
-import org.cytoscape.model.CyTableFactory;
 import org.cytoscape.model.events.NetworkAddedListener;
 import org.cytoscape.property.CyProperty;
 import org.cytoscape.property.SimpleCyProperty;
@@ -19,7 +17,6 @@ import org.cytoscape.session.CySession;
 import org.cytoscape.session.CySessionManager;
 import org.cytoscape.task.NetworkViewTaskFactory;
 import org.cytoscape.task.NodeViewTaskFactory;
-import org.nrnb.pathexplorer.logic.FindAllPaths;
 import org.nrnb.pathexplorer.logic.TableHandler;
 import org.nrnb.pathexplorer.tasks.ClearPathsNetworkViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.ClearPathsNodeViewTaskFactory;
@@ -33,13 +30,10 @@ import org.nrnb.pathexplorer.tasks.SelectPathsNodeViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.SettingsNetworkViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.SettingsNodeViewTaskFactory;
 
-
 public class PathExplorer extends AbstractCySwingApp {
 	
-	CyTableFactory myTableFactory;
+	
 	CyNetworkManager myNetManager;
-	CyNetworkTableManager myNetTableManager;
-	public static boolean findPathsLastCalled;
 	public static String NodeBorderWidthInPaths = "NODE_BORDER_WIDTH_IN_PATHS";
 	public static String EdgeWidthInPaths = "EDGE_WIDTH_IN_PATHS";
 	public static Double EdgeWidthInPathsValue = 12.0;
@@ -53,13 +47,11 @@ public class PathExplorer extends AbstractCySwingApp {
 		super(adapter);
 	  	final CyServiceRegistrar registrar = adapter.getCyServiceRegistrar();
 		Set<CyNetwork> allNets = new HashSet<CyNetwork>();
-		findPathsLastCalled = false;
 		
 	  	myNetManager = adapter.getCyNetworkManager();
 	  	
 	  	//for all existing networks in the system
 	  	allNets = myNetManager.getNetworkSet();
-	  	System.out.println("Got all networks, adding IF");
 	  	for(CyNetwork currNet : allNets)
 	  	{
 	  		//initialize hidden tables for each network
@@ -98,7 +90,6 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	if (!flag)
 	  	{
-	  		flag = false;
 	  		//create nodeBorderWidthProperty
 	  		nodeBorderWidthProps.setProperty(NodeBorderWidthInPaths, NodeBorderWidthInPathsValue.toString());
 	  		nodeBorderWidthProperty = new 
@@ -108,6 +99,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	//if not null, set NodeBorderWidthInPathsValue from property
 	  	else
 	  	{
+	  		flag = false;
 	  		nodeBorderWidthProps = nodeBorderWidthProperty.getProperties();
 	  		NodeBorderWidthInPathsValue = Double.valueOf((String)nodeBorderWidthProps.get(NodeBorderWidthInPaths));
 	  	}
@@ -123,7 +115,6 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	if (!flag)
 	  	{
-	  		flag = false;
 	  		//create edgeWidthProperty
 	  		edgeWidthProps.setProperty(EdgeWidthInPaths, EdgeWidthInPathsValue.toString());
 	  		edgeWidthProperty = new 
@@ -133,6 +124,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	//if not null, set EdgeWidthInPathsValue from property
 	  	else
 	  	{
+	  		flag = false;
 	  		edgeWidthProps = edgeWidthProperty.getProperties();
 	  		EdgeWidthInPathsValue = Double.valueOf((String)edgeWidthProps.get(EdgeWidthInPaths));
 	  	}
@@ -220,7 +212,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	   //Exclude nodes with.. 
 	  	Properties excludeNodesWithProps = new Properties();
-	  	excludeNodesWithProps.setProperty("enableFor", "networkAndView");
+	  	//excludeNodesWithProps.setProperty("enableFor", "networkAndView");
 	  	excludeNodesWithProps.setProperty("preferredAction", "NEW");
 	  	excludeNodesWithProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	excludeNodesWithProps.setProperty("menuGravity", "8.0f");
@@ -241,7 +233,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//Select Paths 
 	  	Properties selectPathsProps = new Properties();
-	  	selectPathsProps.setProperty("enableFor", "networkAndView");
+	  	//selectPathsProps.setProperty("enableFor", "networkAndView");
 	  	selectPathsProps.setProperty("preferredAction", "NEW");
 	  	selectPathsProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	selectPathsProps.setProperty("menuGravity", "10.0f");
@@ -252,7 +244,7 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//Clear Paths (Refresh button) 
 	  	Properties refreshProps = new Properties();
-	  	refreshProps.setProperty("enableFor", "networkAndView");
+	  	//refreshProps.setProperty("enableFor", "networkAndView");
 	  	refreshProps.setProperty("preferredAction", "NEW");
 	  	refreshProps.setProperty("preferredMenu", "PathExplorer[100]");
 	  	refreshProps.setProperty("menuGravity", "11.0f");
