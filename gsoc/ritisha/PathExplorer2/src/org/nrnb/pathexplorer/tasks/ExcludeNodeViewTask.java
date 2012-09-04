@@ -9,7 +9,6 @@ import org.cytoscape.task.AbstractNodeViewTask;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.View;
 import org.cytoscape.work.TaskMonitor;
-import org.nrnb.pathexplorer.PathExplorer;
 import org.nrnb.pathexplorer.logic.ExclusionHandler;
 import org.nrnb.pathexplorer.logic.FindAllPaths;
 import org.nrnb.pathexplorer.logic.TableHandler;
@@ -42,10 +41,10 @@ public class ExcludeNodeViewTask extends AbstractNodeViewTask {
 
 		// Then rerun last FindPaths call or clear path if excluded node =
 		// source or target node from last FindPaths call
-		if(PathExplorer.findPathsLastCalled)
+		ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
+		refresher.run(tm);
+		if((Boolean)TableHandler.hiddenNodeTable.getRow(FindPathsNodeViewTask.nodeView.getModel().getSUID()).getRaw(TableHandler.IN_PATH_COL))
 		{
-			ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
-			refresher.run(tm);
 			FindAllPaths pathsFinder = new FindAllPaths(FindPathsNodeViewTask.netView , FindPathsNodeViewTask.nodeView.getModel(), adapter);
 			pathsFinder.findAllPathsMethod(FindPathsNodeViewTask.direction);
 		}

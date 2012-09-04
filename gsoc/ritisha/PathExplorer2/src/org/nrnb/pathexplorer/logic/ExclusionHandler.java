@@ -16,7 +16,6 @@ import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.TaskMonitor;
-import org.nrnb.pathexplorer.PathExplorer;
 import org.nrnb.pathexplorer.tasks.ClearPathsTask;
 import org.nrnb.pathexplorer.tasks.FindPathsNodeViewTask;
 
@@ -452,10 +451,10 @@ public class ExclusionHandler {
 
 		// Then rerun last FindPaths call or clear path if excluded node =
 		// source or target node from last FindPaths call
-		if (PathExplorer.findPathsLastCalled) {
-			TaskMonitor tm = null;
-			ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
-			refresher.run(tm);
+		TaskMonitor tm = null;
+		ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
+		refresher.run(tm);
+		if ((Boolean)TableHandler.hiddenNodeTable.getRow(FindPathsNodeViewTask.nodeView.getModel().getSUID()).getRaw(TableHandler.IN_PATH_COL)) {
 			FindAllPaths pathsFinder = new FindAllPaths(
 					FindPathsNodeViewTask.netView,
 					FindPathsNodeViewTask.nodeView.getModel(), adapter);

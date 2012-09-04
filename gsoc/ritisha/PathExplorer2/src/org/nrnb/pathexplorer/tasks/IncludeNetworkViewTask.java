@@ -11,7 +11,6 @@ import org.cytoscape.task.AbstractNetworkViewTask;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 import org.cytoscape.work.TaskMonitor;
-import org.nrnb.pathexplorer.PathExplorer;
 import org.nrnb.pathexplorer.logic.FindAllPaths;
 import org.nrnb.pathexplorer.logic.TableHandler;
 
@@ -56,11 +55,11 @@ public class IncludeNetworkViewTask extends AbstractNetworkViewTask {
 
 		// Then rerun last FindPaths call or clear path if excluded node =
 		// source or target node from last FindPaths call
-		System.out.println("LASTCALLED? "+ PathExplorer.findPathsLastCalled);
-		if(PathExplorer.findPathsLastCalled)
+		ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
+		refresher.run(tm);
+		//System.out.println("LASTCALLED? "+ (Boolean)TableHandler.hiddenNodeTable.getRow(FindPathsNodeViewTask.nodeView.getModel().getSUID()).getRaw(TableHandler.IN_PATH_COL));
+		if((Boolean)TableHandler.hiddenNodeTable.getRow(FindPathsNodeViewTask.nodeView.getModel().getSUID()).getRaw(TableHandler.IN_PATH_COL))
 		{
-			ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
-			refresher.run(tm);
 			FindAllPaths pathsFinder = new FindAllPaths(FindPathsNodeViewTask.netView , FindPathsNodeViewTask.nodeView.getModel(), adapter);
 			pathsFinder.findAllPathsMethod(FindPathsNodeViewTask.direction);
 		}

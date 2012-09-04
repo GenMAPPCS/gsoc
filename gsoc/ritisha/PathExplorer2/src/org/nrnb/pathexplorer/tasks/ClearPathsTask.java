@@ -8,14 +8,12 @@ import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
-import org.cytoscape.model.CyTable;
 import org.cytoscape.task.AbstractNetworkViewTask;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.presentation.property.BasicVisualLexicon;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.TaskMonitor;
-import org.nrnb.pathexplorer.PathExplorer;
 import org.nrnb.pathexplorer.logic.TableHandler;
 
 public class ClearPathsTask extends AbstractNetworkViewTask {
@@ -34,16 +32,11 @@ public class ClearPathsTask extends AbstractNetworkViewTask {
 		CyNetwork currNet = netView.getModel();
 		List<CyNode> allNodes = new ArrayList<CyNode>();
 		List<CyEdge> allEdges = new ArrayList<CyEdge>();
-		CyTable hiddenNodeTable;
-		CyTable hiddenEdgeTable;
 		CyRow row, row1;
-		System.out
-				.println("Refresh Task: clearing all path nodes and edges of current network");
-		PathExplorer.findPathsLastCalled = false;
-		hiddenNodeTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
+		//hiddenNodeTable = currNet.getTable(CyNode.class, CyNetwork.HIDDEN_ATTRS);
 		allNodes = currNet.getNodeList();
 		for (CyNode currNode : allNodes) {
-			row = hiddenNodeTable.getRow(currNode.getSUID());
+			row = TableHandler.hiddenNodeTable.getRow(currNode.getSUID());
 			Boolean isNodeInPath = (Boolean)row.get(TableHandler.IN_PATH_COL, Boolean.class);
 			if (isNodeInPath){
 			row.set(TableHandler.IN_PATH_COL, false);
@@ -54,11 +47,11 @@ public class ClearPathsTask extends AbstractNetworkViewTask {
 					BasicVisualLexicon.NODE_BORDER_WIDTH);		
 			}
 		}
-		hiddenEdgeTable = currNet.getTable(CyEdge.class, CyNetwork.HIDDEN_ATTRS);
+		//hiddenEdgeTable = currNet.getTable(CyEdge.class, CyNetwork.HIDDEN_ATTRS);
 		allEdges = currNet.getEdgeList();
 		for (CyEdge currEdge : allEdges) {
-			row = hiddenEdgeTable.getRow(currEdge.getSUID());
-			Boolean isEdgeInPath = row.get(TableHandler.IN_PATH_COL, Boolean.class);
+			row = TableHandler.hiddenEdgeTable.getRow(currEdge.getSUID());
+			Boolean isEdgeInPath = (Boolean)row.get("isInPath", Boolean.class);
 			if (isEdgeInPath){
 			row.set(TableHandler.IN_PATH_COL, false);
 				// clear edge override

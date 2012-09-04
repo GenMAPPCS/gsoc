@@ -60,7 +60,6 @@ public class ExcludeNodesDataInputDialog extends JDialog {
 		// change. Use listener.
 		// String, Integer, Long, Double, Boolean, and Lists
 		nodeAttr.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				selectedNodeAttr = (String) nodeAttr.getSelectedItem();
 				for (CyColumn currCol : allNodeTableColumns) {
