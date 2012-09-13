@@ -186,11 +186,11 @@ public class ExcludeNodesDataInputDialog extends JDialog {
         layout.setAutoCreateContainerGaps(true);
  
         layout.setHorizontalGroup(layout.createSequentialGroup()
-            .addComponent(nodeAttr)
+        	.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                 .addComponent(nodeAttr)
+                 .addComponent(goButton))
             .addComponent(operator)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                .addComponent(nodeAttrValue)
-                .addComponent(goButton))
+            .addComponent(nodeAttrValue)
         );
         
         layout.setVerticalGroup(layout.createSequentialGroup()

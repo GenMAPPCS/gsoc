@@ -454,7 +454,9 @@ public class ExclusionHandler {
 		TaskMonitor tm = null;
 		ClearPathsTask refresher = new ClearPathsTask(netView, adapter);
 		refresher.run(tm);
-		if ((Boolean)TableHandler.hiddenNodeTable.getRow(FindPathsNodeViewTask.nodeView.getModel().getSUID()).getRaw(TableHandler.IN_PATH_COL)) {
+		if(!FindPathsNodeViewTask.nodeView.equals(null) && (Boolean)TableHandler.hiddenNodeTable.
+				getRow(FindPathsNodeViewTask.nodeView.getModel().getSUID()).get(TableHandler.IN_PATH_COL,Boolean.class))
+		{
 			FindAllPaths pathsFinder = new FindAllPaths(
 					FindPathsNodeViewTask.netView,
 					FindPathsNodeViewTask.nodeView.getModel(), adapter);

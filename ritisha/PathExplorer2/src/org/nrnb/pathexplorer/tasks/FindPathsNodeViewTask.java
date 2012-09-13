@@ -13,9 +13,9 @@ import org.nrnb.pathexplorer.logic.FindAllPaths;
 public class FindPathsNodeViewTask extends AbstractNodeViewTask{
 
 	public static CyNetworkView netView;
-	public static View<CyNode> nodeView;
+	public static View<CyNode> nodeView = null;
 	CySwingAppAdapter adapter;
-	public static CyEdge.Type direction;
+	public static CyEdge.Type direction = null;
 	
 	public FindPathsNodeViewTask(View<CyNode> nodeView, CyNetworkView netView, CySwingAppAdapter adapter, CyEdge.Type direction)
 	{
