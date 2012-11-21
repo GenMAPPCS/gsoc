@@ -17,6 +17,11 @@ import org.cytoscape.session.CySession;
 import org.cytoscape.session.CySessionManager;
 import org.cytoscape.task.NetworkViewTaskFactory;
 import org.cytoscape.task.NodeViewTaskFactory;
+import static org.cytoscape.work.ServiceProperties.MENU_GRAVITY;
+import static org.cytoscape.work.ServiceProperties.IN_MENU_BAR;
+import static org.cytoscape.work.ServiceProperties.PREFERRED_ACTION;
+import static org.cytoscape.work.ServiceProperties.PREFERRED_MENU;
+import static org.cytoscape.work.ServiceProperties.TITLE;
 import org.nrnb.pathexplorer.logic.TableHandler;
 import org.nrnb.pathexplorer.tasks.ClearPathsNetworkViewTaskFactory;
 import org.nrnb.pathexplorer.tasks.ClearPathsNodeViewTaskFactory;
@@ -136,50 +141,55 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//Find paths FROM here 
 	  	Properties findPathsFromProps = new Properties();
-	  	findPathsFromProps.setProperty("preferredAction", "NEW");
-	  	findPathsFromProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	findPathsFromProps.setProperty("menuGravity", "6.0f");
-	  	findPathsFromProps.setProperty("title", "Find paths from here");
+	  	findPathsFromProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	findPathsFromProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	findPathsFromProps.setProperty(MENU_GRAVITY, "6.0f");
+	  	findPathsFromProps.setProperty(IN_MENU_BAR, "false");
+	  	findPathsFromProps.setProperty(TITLE, "Find paths from here");
 	  	
 	  	registrar.registerService(new FindPathsNodeViewTaskFactory(adapter, CyEdge.Type.OUTGOING), 
 	  			NodeViewTaskFactory.class, findPathsFromProps);
 	  	  	
 	  	//Find paths TO here 
 	  	Properties findPathsToProps = new Properties();
-	  	findPathsToProps.setProperty("preferredAction", "NEW");
-	  	findPathsToProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	findPathsToProps.setProperty("menuGravity", "7.0f");
-	  	findPathsToProps.setProperty("title", "Find paths to here");
+	  	findPathsToProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	findPathsToProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	findPathsToProps.setProperty(MENU_GRAVITY, "7.0f");
+	  	findPathsToProps.setProperty(IN_MENU_BAR, "false");
+	  	findPathsToProps.setProperty(TITLE, "Find paths to here");
 	  	
 	  	registrar.registerService(new FindPathsNodeViewTaskFactory(adapter, CyEdge.Type.INCOMING), 
 	  			NodeViewTaskFactory.class, findPathsToProps);
 	  	
 	  	//Exclude node
 	  	Properties excludeNodeProps = new Properties();
-	  	excludeNodeProps.setProperty("preferredAction", "NEW");
-	  	excludeNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	excludeNodeProps.setProperty("menuGravity", "8.0f");
-	  	excludeNodeProps.setProperty("title", "Exclude node");
+	  	excludeNodeProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	excludeNodeProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	excludeNodeProps.setProperty(MENU_GRAVITY, "8.0f");
+	  	excludeNodeProps.setProperty(IN_MENU_BAR, "false");
+	  	excludeNodeProps.setProperty(TITLE, "Exclude node");
 	  	
 	  	registrar.registerService(new ExcludeNodeViewTaskFactory(adapter), 
 	  			NodeViewTaskFactory.class, excludeNodeProps);
 	  	
 	  //Include node
 	  	Properties includeNodeProps = new Properties();
-	  	includeNodeProps.setProperty("preferredAction", "NEW");
-	  	includeNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	includeNodeProps.setProperty("menuGravity", "9.0f");
-	  	includeNodeProps.setProperty("title", "Reinclude node");
+	  	includeNodeProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	includeNodeProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	includeNodeProps.setProperty(MENU_GRAVITY, "9.0f");
+	  	includeNodeProps.setProperty(IN_MENU_BAR, "false");
+	  	includeNodeProps.setProperty(TITLE, "Reinclude node");
 	  	
 	  	registrar.registerService(new IncludeNodeViewTaskFactory(adapter), 
 	  			NodeViewTaskFactory.class, includeNodeProps);
 	  	
 	  	//Select Paths 
 	  	Properties selectPathsNodeProps = new Properties();
-	  	selectPathsNodeProps.setProperty("preferredAction", "NEW");
-	  	selectPathsNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	selectPathsNodeProps.setProperty("menuGravity", "10.0f");
-	  	selectPathsNodeProps.setProperty("title", "Select path");
+	  	selectPathsNodeProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	selectPathsNodeProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	selectPathsNodeProps.setProperty(MENU_GRAVITY, "10.0f");
+	  	selectPathsNodeProps.setProperty(IN_MENU_BAR, "false");
+	  	selectPathsNodeProps.setProperty(TITLE, "Select path");
 	  	
 	  	registrar.registerService(new SelectPathsNodeViewTaskFactory(), 
 	  			NodeViewTaskFactory.class, selectPathsNodeProps);
@@ -187,20 +197,22 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	
 	  	//Clear Paths (Refresh button) 
 	  	Properties refreshNodeProps = new Properties();
-	  	refreshNodeProps.setProperty("preferredAction", "NEW");
-	  	refreshNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	refreshNodeProps.setProperty("menuGravity", "11.0f");
-	  	refreshNodeProps.setProperty("title", "Clear path");
+	  	refreshNodeProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	refreshNodeProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	refreshNodeProps.setProperty(MENU_GRAVITY, "11.0f");
+	  	refreshNodeProps.setProperty(IN_MENU_BAR, "false");
+	  	refreshNodeProps.setProperty(TITLE, "Clear path");
 	  	
 	  	registrar.registerService(new ClearPathsNodeViewTaskFactory(adapter), 
 	  			NodeViewTaskFactory.class, refreshNodeProps);
 	  	
 	  //Settings  
 	  	Properties settingsNodeProps = new Properties();
-	  	settingsNodeProps.setProperty("preferredAction", "NEW");
-	  	settingsNodeProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	settingsNodeProps.setProperty("menuGravity", "12.0f");
-	  	settingsNodeProps.setProperty("title", "Settings");
+	  	settingsNodeProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	settingsNodeProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	settingsNodeProps.setProperty(MENU_GRAVITY, "12.0f");
+	  	settingsNodeProps.setProperty(IN_MENU_BAR, "false");
+	  	settingsNodeProps.setProperty(TITLE, "Settings");
 	  	
 	  	registrar.registerService(new SettingsNodeViewTaskFactory(adapter), 
 	  			NodeViewTaskFactory.class, settingsNodeProps);
@@ -213,20 +225,22 @@ public class PathExplorer extends AbstractCySwingApp {
 	   //Exclude nodes with.. 
 	  	Properties excludeNodesWithProps = new Properties();
 	  	//excludeNodesWithProps.setProperty("enableFor", "networkAndView");
-	  	excludeNodesWithProps.setProperty("preferredAction", "NEW");
-	  	excludeNodesWithProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	excludeNodesWithProps.setProperty("menuGravity", "8.0f");
-	  	excludeNodesWithProps.setProperty("title", "Exclude nodes with...");
+	  	excludeNodesWithProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	excludeNodesWithProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	excludeNodesWithProps.setProperty(MENU_GRAVITY, "8.0f");
+	  	excludeNodesWithProps.setProperty(IN_MENU_BAR, "false");
+	  	excludeNodesWithProps.setProperty(TITLE, "Exclude nodes with...");
 	  	
 	  	registrar.registerService(new ExcludeNetworkViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, excludeNodesWithProps);
 	  	
 	  	 //Include all nodes
 	  	Properties includeAllNodesProps = new Properties();
-	  	includeAllNodesProps.setProperty("preferredAction", "NEW");
-	  	includeAllNodesProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	includeAllNodesProps.setProperty("menuGravity", "9.0f");
-	  	includeAllNodesProps.setProperty("title", "Reinclude all nodes");
+	  	includeAllNodesProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	includeAllNodesProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	includeAllNodesProps.setProperty(MENU_GRAVITY, "9.0f");
+	  	includeAllNodesProps.setProperty(IN_MENU_BAR, "false");
+	  	includeAllNodesProps.setProperty(TITLE, "Reinclude all nodes");
 	  	
 	  	registrar.registerService(new IncludeNetworkViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, includeAllNodesProps);
@@ -234,10 +248,11 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	//Select Paths 
 	  	Properties selectPathsProps = new Properties();
 	  	//selectPathsProps.setProperty("enableFor", "networkAndView");
-	  	selectPathsProps.setProperty("preferredAction", "NEW");
-	  	selectPathsProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	selectPathsProps.setProperty("menuGravity", "10.0f");
-	  	selectPathsProps.setProperty("title", "Select path");
+	  	selectPathsProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	selectPathsProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	selectPathsProps.setProperty(MENU_GRAVITY, "10.0f");
+	  	selectPathsProps.setProperty(IN_MENU_BAR, "false");
+	  	selectPathsProps.setProperty(TITLE, "Select path");
 	  	
 	  	registrar.registerService(new SelectPathsNetworkViewTaskFactory(), 
 	  			NetworkViewTaskFactory.class, selectPathsProps);
@@ -245,20 +260,22 @@ public class PathExplorer extends AbstractCySwingApp {
 	  	//Clear Paths (Refresh button) 
 	  	Properties refreshProps = new Properties();
 	  	//refreshProps.setProperty("enableFor", "networkAndView");
-	  	refreshProps.setProperty("preferredAction", "NEW");
-	  	refreshProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	refreshProps.setProperty("menuGravity", "11.0f");
-	  	refreshProps.setProperty("title", "Clear path");
+	  	refreshProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	refreshProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	refreshProps.setProperty(MENU_GRAVITY, "11.0f");
+	  	refreshProps.setProperty(IN_MENU_BAR, "false");
+	  	refreshProps.setProperty(TITLE, "Clear path");
 	  	
 	  	registrar.registerService(new ClearPathsNetworkViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, refreshProps);
 	  	
 	  	 //Settings  
 	  	Properties settingsNetworkProps = new Properties();
-	  	settingsNetworkProps.setProperty("preferredAction", "NEW");
-	  	settingsNetworkProps.setProperty("preferredMenu", "PathExplorer[100]");
-	  	settingsNetworkProps.setProperty("menuGravity", "12.0f");
-	  	settingsNetworkProps.setProperty("title", "Settings");
+	  	settingsNetworkProps.setProperty(PREFERRED_ACTION, "NEW");
+	  	settingsNetworkProps.setProperty(PREFERRED_MENU, "PathExplorer[100]");
+	  	settingsNetworkProps.setProperty(MENU_GRAVITY, "12.0f");
+	  	settingsNetworkProps.setProperty(IN_MENU_BAR, "false");
+	  	settingsNetworkProps.setProperty(TITLE, "Settings");
 	  	
 	  	registrar.registerService(new SettingsNetworkViewTaskFactory(adapter), 
 	  			NetworkViewTaskFactory.class, settingsNetworkProps);
